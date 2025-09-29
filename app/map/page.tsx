@@ -24,7 +24,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 // Lab data with coordinates on the floor plan
-const labsData = {
+const labsData: Record<string, any> = {
   "301": {
     id: "quantum",
     name: "Quantum Computing Lab",
