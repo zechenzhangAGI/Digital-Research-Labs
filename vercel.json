@@ -1,0 +1,11 @@
+{
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "https://physics-lab-hub.vercel.app",
+    "SKIP_BUILD_SCRIPT_WARNINGS": "true"
+  }
+}
