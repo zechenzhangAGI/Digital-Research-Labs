@@ -597,7 +597,7 @@ export default function MapPage() {
                     <div>
                       <h4 className="text-sm font-semibold mb-2">Key Equipment</h4>
                       <div className="flex flex-wrap gap-1">
-                        {labsData[selectedLab].equipment.map((item) => (
+                        {labsData[selectedLab].equipment.map((item: string) => (
                           <Badge key={item} variant="outline" className="text-xs">
                             {item}
                           </Badge>
@@ -646,7 +646,7 @@ export default function MapPage() {
             <CardContent className="p-0">
               <ScrollArea className="h-[200px]">
                 <div className="p-4 space-y-2">
-                  {Object.entries(labsData).map(([room, lab]) => (
+                  {Object.entries(labsData).map(([room, lab]: [string, any]) => (
                     <button
                       key={room}
                       onClick={() => setSelectedLab(room)}
