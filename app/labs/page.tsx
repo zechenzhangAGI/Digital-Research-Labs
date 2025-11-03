@@ -135,7 +135,7 @@ export default function LabsPage() {
   return (
     <div>
       {/* Header Section with Container */}
-      <div className="container py-12 pb-8">
+      <div className="container mx-auto px-4 py-12 pb-8">
         <div className="mb-10">
           <h1 className="text-5xl font-light tracking-tight mb-4">Research Labs</h1>
           <p className="text-lg text-muted-foreground font-light">
@@ -172,7 +172,7 @@ export default function LabsPage() {
       </div>
 
       {/* Labs Grid - With Small Margins */}
-      <div className="px-4 pb-4">
+      <div className="container mx-auto px-4 pb-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredLabs.map((lab) => (
             <LabFlashCard

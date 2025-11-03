@@ -32,67 +32,53 @@ import Image from "next/image";
 
 // Comprehensive lab data
 const labsDetailData: Record<string, any> = {
-  quantum: {
-    name: "Quantum Computing Lab",
-    pi: "Prof. Sarah Chen",
-    email: "schen@physics.harvard.edu",
+  franklin: {
+    name: "Franklin Lab",
+    pi: "Melissa Franklin",
+    email: "franklin@physics.harvard.edu",
     phone: "+1 (617) 495-1234",
-    website: "quantum.physics.harvard.edu",
-    location: "Jefferson Laboratory, Room 301",
-    established: 2018,
-    type: "Quantum",
+    website: "franklin.physics.harvard.edu",
+    location: "Lyman 237",
+    established: 2010,
+    type: "Particle Physics",
     members: {
-      faculty: 2,
-      postdocs: 4,
-      graduate: 6,
-      undergraduate: 3
+      faculty: 1,
+      postdocs: 3,
+      graduate: 8,
+      undergraduate: 2
     },
-    description: `The Quantum Computing Lab at Harvard Physics is at the forefront of quantum information science,
-    developing next-generation quantum processors and algorithms. Our research spans from fundamental quantum mechanics
-    to practical quantum computing applications.`,
+    description: `Searching for new particles using particle accelerators at CERN.`,
     research: [
-      "Ion trap quantum computing",
-      "Quantum error correction",
-      "Quantum algorithms for optimization",
-      "Hybrid classical-quantum algorithms",
-      "Quantum simulation of many-body systems"
+      "ATLAS experiment at CERN",
+      "Higgs boson properties",
+      "Beyond Standard Model physics",
+      "Dark matter searches",
+      "Precision measurements"
     ],
     equipment: [
       {
-        name: "Ion Trap System",
-        description: "State-of-the-art trapped ion quantum computer with 32 qubits",
+        name: "ATLAS Detector Access",
+        description: "Remote access and control for ATLAS experiment at CERN",
         status: "operational"
       },
       {
-        name: "Dilution Refrigerator",
-        description: "BlueFors XLD system reaching 10mK for superconducting qubits",
-        status: "operational"
-      },
-      {
-        name: "Quantum Control Electronics",
-        description: "Arbitrary waveform generators and control systems",
+        name: "Data Analysis Cluster",
+        description: "High-performance computing for particle physics analysis",
         status: "operational"
       }
     ],
     publications: [
       {
-        title: "Demonstration of quantum advantage in optimization problems",
+        title: "Observation of Higgs boson decay to bottom quarks",
         journal: "Nature Physics",
         year: 2024,
         doi: "10.1038/nature12345"
-      },
-      {
-        title: "Error correction in trapped ion quantum computers",
-        journal: "Science",
-        year: 2023,
-        doi: "10.1126/science.abc1234"
       }
     ],
     images: [
-      { url: "/api/placeholder/800/600", caption: "Main laboratory space" },
-      { url: "/api/placeholder/800/600", caption: "Ion trap quantum processor" },
-      { url: "/api/placeholder/800/600", caption: "Control room" },
-      { url: "/api/placeholder/800/600", caption: "Dilution refrigerator setup" }
+      { url: "https://atlas.cern/sites/default/files/2025-09/ATLAS-OO-banner.jpg", caption: "ATLAS detector at CERN" },
+      { url: "/api/placeholder/800/600", caption: "Data analysis lab" },
+      { url: "/api/placeholder/800/600", caption: "Team meeting" }
     ],
     videos: [
       { url: "/api/placeholder/video", title: "Lab Tour", duration: "5:23" },
@@ -103,80 +89,201 @@ const labsDetailData: Record<string, any> = {
       { agency: "DOE", program: "Quantum Computing Research", amount: "$1.8M", period: "2022-2025" }
     ]
   },
-  biophysics: {
-    name: "Molecular Biophysics Lab",
-    pi: "Prof. Michael Zhang",
-    email: "mzhang@physics.harvard.edu",
+  cohen: {
+    name: "Cohen Lab",
+    pi: "Adam Cohen",
+    email: "cohen@physics.harvard.edu",
     phone: "+1 (617) 495-5678",
-    website: "biophysics.physics.harvard.edu",
-    location: "Jefferson Laboratory, Room 304",
+    website: "cohenweb.rc.fas.harvard.edu",
+    location: "Mallinckrodt 115",
     established: 2015,
     type: "Biophysics",
     members: {
-      faculty: 3,
+      faculty: 1,
       postdocs: 5,
-      graduate: 8,
+      graduate: 10,
       undergraduate: 2
     },
-    description: `The Molecular Biophysics Lab investigates the physical principles underlying biological processes
-    at the molecular and cellular level. We use advanced optical techniques and single-molecule manipulation to
-    understand protein folding, molecular motors, and cellular mechanics.`,
+    description: `Developing optical techniques to visualize voltage dynamics in neural tissue.`,
     research: [
-      "Single-molecule FRET studies",
-      "Optical tweezers for force spectroscopy",
-      "Super-resolution microscopy",
-      "Protein folding dynamics",
-      "Cell membrane mechanics"
+      "Voltage imaging",
+      "Optogenetics",
+      "Neural dynamics",
+      "Single-cell electrophysiology",
+      "Optical methods for neuroscience"
     ],
     equipment: [
       {
-        name: "TIRF Microscope",
-        description: "Total Internal Reflection Fluorescence microscope for single-molecule imaging",
+        name: "Custom Microscopy System",
+        description: "High-speed voltage imaging microscope",
         status: "operational"
       },
       {
-        name: "Optical Tweezers",
-        description: "Dual-beam optical trap for force measurements",
+        name: "Patch Clamp Rig",
+        description: "Electrophysiology equipment",
         status: "operational"
-      },
-      {
-        name: "AFM",
-        description: "Atomic Force Microscope for nanoscale imaging",
-        status: "maintenance"
       }
     ],
     publications: [
       {
-        title: "Direct observation of protein folding intermediates",
+        title: "All-optical electrophysiology in mammalian neurons",
         journal: "Cell",
         year: 2024,
         doi: "10.1016/cell.2024.01.001"
-      },
-      {
-        title: "Mechanical properties of living cells under stress",
-        journal: "PNAS",
-        year: 2023,
-        doi: "10.1073/pnas.2301234567"
       }
     ],
     images: [
-      { url: "/api/placeholder/800/600", caption: "TIRF microscopy setup" },
-      { url: "/api/placeholder/800/600", caption: "Single molecule traces" },
-      { url: "/api/placeholder/800/600", caption: "Cell imaging station" }
+      { url: "https://cohenweb.rc.fas.harvard.edu/Research/JNeuro_Cover.jpg", caption: "Voltage imaging in neurons" },
+      { url: "/api/placeholder/800/600", caption: "Microscopy setup" },
+      { url: "/api/placeholder/800/600", caption: "Lab workspace" }
     ],
     videos: [
-      { url: "/api/placeholder/video", title: "Single Molecule Techniques", duration: "12:34" }
+      { url: "/api/placeholder/video", title: "Voltage Imaging Techniques", duration: "12:34" }
     ],
     funding: [
       { agency: "NIH", program: "Biophysics Research", amount: "$3.2M", period: "2022-2027" }
     ]
+  },
+  manoharan: {
+    name: "Manoharan Group",
+    pi: "Vinothan Manoharan",
+    email: "manoharan@seas.harvard.edu",
+    phone: "+1 (617) 495-2876",
+    website: "manoharan.seas.harvard.edu",
+    location: "McKay 530",
+    established: 2012,
+    type: "Biophysics",
+    members: {
+      faculty: 1,
+      postdocs: 3,
+      graduate: 9,
+      undergraduate: 3
+    },
+    description: `Virus self-assembly and colloidal physics.`,
+    research: [
+      "Virus capsid assembly",
+      "Colloidal self-assembly",
+      "Optical trapping",
+      "Structural color",
+      "Soft matter physics"
+    ],
+    equipment: [
+      {
+        name: "Optical Microscopy",
+        description: "Advanced imaging for colloids and viral assemblies",
+        status: "operational"
+      }
+    ],
+    publications: [],
+    images: [
+      { url: "https://www.manoharan.seas.harvard.edu/sites/g/files/omnuum4256/files/styles/hwp_21_9__2880x1230/public/manoharan/files/ccmv_in_out-01-01.png?itok=yAJ00Zuq", caption: "Virus capsid structure" },
+      { url: "/api/placeholder/800/600", caption: "Lab equipment" }
+    ],
+    videos: [],
+    funding: []
+  },
+  cotler: {
+    name: "Cotler Group",
+    pi: "Jordan Cotler",
+    email: "cotler@physics.harvard.edu",
+    phone: "+1 (617) 495-3456",
+    website: "cotler.physics.harvard.edu",
+    location: "60 Oxford St. 412",
+    established: 2020,
+    type: "Quantum Computing",
+    members: {
+      faculty: 1,
+      postdocs: 2,
+      graduate: 9,
+      undergraduate: 3
+    },
+    description: `Developing new theoretical frameworks behind quantum gravity and computing.`,
+    research: [
+      "Quantum gravity",
+      "Quantum information theory",
+      "Holography",
+      "Black hole physics",
+      "Quantum algorithms"
+    ],
+    equipment: [],
+    publications: [],
+    images: [
+      { url: "https://www.quantamagazine.org/wp-content/uploads/2022/09/andrew-strominger-jordan-cotler-ADJUSTED.jpg", caption: "Research team" },
+      { url: "/api/placeholder/800/600", caption: "Theoretical work" }
+    ],
+    videos: [],
+    funding: []
+  },
+  mitrano: {
+    name: "Mitrano Group",
+    pi: "Matteo Mitrano",
+    email: "mitrano@physics.harvard.edu",
+    phone: "+1 (617) 495-4567",
+    website: "mitrano.physics.harvard.edu",
+    location: "Jefferson 164",
+    established: 2019,
+    type: "Solid State",
+    members: {
+      faculty: 1,
+      postdocs: 4,
+      graduate: 12,
+      undergraduate: 4
+    },
+    description: `Ultrafast spectroscopy of quantum materials.`,
+    research: [
+      "Time-resolved spectroscopy",
+      "Quantum materials",
+      "Superconductivity",
+      "Charge density waves",
+      "Ultrafast optics"
+    ],
+    equipment: [],
+    publications: [],
+    images: [
+      { url: "https://mitrano.physics.harvard.edu/sites/g/files/omnuum1256/files/styles/hwp_1_1__1440x1440_scale/public/mitranolab/files/2_0.png?itok=GCfYx981", caption: "Ultrafast laser system" },
+      { url: "/api/placeholder/800/600", caption: "Lab space" }
+    ],
+    videos: [],
+    funding: []
+  },
+  mundy: {
+    name: "Mundy Group",
+    pi: "Julia Mundy",
+    email: "mundy@physics.harvard.edu",
+    phone: "+1 (617) 495-5678",
+    website: "mundy.physics.harvard.edu",
+    location: "LISE 709",
+    established: 2018,
+    type: "Solid State",
+    members: {
+      faculty: 1,
+      postdocs: 3,
+      graduate: 10,
+      undergraduate: 3
+    },
+    description: `Molecular beam epitaxy and oxide heterostructures.`,
+    research: [
+      "Oxide thin films",
+      "Molecular beam epitaxy",
+      "Quantum materials",
+      "Heterostructures",
+      "Electronic properties"
+    ],
+    equipment: [],
+    publications: [],
+    images: [
+      { url: "http://mundy.physics.harvard.edu/images/MBE.png", caption: "Molecular beam epitaxy system" },
+      { url: "/api/placeholder/800/600", caption: "Sample preparation" }
+    ],
+    videos: [],
+    funding: []
   }
 };
 
 export default function LabDetailPage() {
   const params = useParams();
   const labId = params.id as string;
-  const lab = labsDetailData[labId] || labsDetailData["quantum"]; // Fallback to quantum lab
+  const lab = labsDetailData[labId] || labsDetailData["franklin"]; // Fallback to franklin lab
 
   const [currentImage, setCurrentImage] = useState(0);
   const [activeTab, setActiveTab] = useState("overview");
