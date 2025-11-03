@@ -13,7 +13,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { FlaskConical, Search, Users, Map, BookOpen, Brain } from "lucide-react";
+import { FlaskConical, Search, Users, Map, BookOpen } from "lucide-react";
 
 export function Navigation() {
   const pathname = usePathname();
@@ -22,7 +22,7 @@ export function Navigation() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Link href="/" className="mr-8 flex items-center space-x-2">
-          <FlaskConical className="h-6 w-6 text-blue-600" />
+          <FlaskConical className="h-6 w-6 text-primary" />
           <span className="font-bold text-xl">Physics Lab Hub</span>
         </Link>
 
@@ -77,16 +77,7 @@ export function Navigation() {
               <NavigationMenuLink asChild>
                 <Link href="/map" className={navigationMenuTriggerStyle()}>
                   <Map className="mr-2 h-4 w-4" />
-                  Lab Map
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/ai" className={navigationMenuTriggerStyle()}>
-                  <Brain className="mr-2 h-4 w-4" />
-                  AI Assistant
+                  Map
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -97,7 +88,6 @@ export function Navigation() {
           <Button variant="ghost" size="icon">
             <Search className="h-5 w-5" />
           </Button>
-          <Button>Sign In</Button>
         </div>
       </div>
     </header>
