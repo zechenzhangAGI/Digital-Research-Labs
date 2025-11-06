@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Harvard Physics Lab Hub",
@@ -13,12 +14,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <Navigation />
-        <main className="min-h-screen bg-gradient-to-b from-background to-black">
-          {children}
-        </main>
+        <ThemeProvider defaultTheme="dark" storageKey="physics-lab-theme">
+          <Navigation />
+          <main className="min-h-screen bg-gradient-to-b from-background to-muted">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

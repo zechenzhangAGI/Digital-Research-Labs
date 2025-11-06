@@ -13,6 +13,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { FlaskConical, Search, Users, Map, BookOpen } from "lucide-react";
 
 export function Navigation() {
@@ -80,10 +81,11 @@ export function Navigation() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="ml-auto flex items-center space-x-4">
+        <div className="ml-auto flex items-center space-x-2">
           <Button variant="ghost" size="icon">
             <Search className="h-5 w-5" />
           </Button>
+          <ThemeToggle />
         </div>
       </div>
     </header>
