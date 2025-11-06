@@ -1,35 +1,37 @@
 "use client";
 
-import { useState } from "react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { useState, useCallback } from "react";
+import { GoogleMap, useJsApiLoader, Polygon, InfoWindow } from "@react-google-maps/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
   Users,
   MapPin,
   FlaskConical,
-  Info,
   X,
-  ChevronUp,
   ChevronDown,
-  Image as ImageIcon,
-  Video,
-  FileText
+  Loader2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Harvard Physics Buildings and their labs
+// Harvard Physics Buildings and their labs with coordinates and building footprints
 const buildingsData: Record<string, any> = {
   "jefferson": {
     name: "Jefferson Laboratory",
     address: "17 Oxford Street",
     built: "1884",
     description: "First university building in America dedicated to physics research.",
+    color: "#3b82f6",
+    center: { lat: 42.37485, lng: -71.11705 },
+    // Approximate building footprint (polygon coordinates)
+    coordinates: [
+      { lat: 42.37495, lng: -71.11720 },
+      { lat: 42.37495, lng: -71.11690 },
+      { lat: 42.37475, lng: -71.11690 },
+      { lat: 42.37475, lng: -71.11720 },
+    ],
     labs: [
       {
         id: "mitrano",
@@ -48,6 +50,14 @@ const buildingsData: Record<string, any> = {
     address: "Cambridge Street",
     built: "1931",
     description: "Named after physicist Theodore Lyman, located between Jefferson and Cruft.",
+    color: "#8b5cf6",
+    center: { lat: 42.37515, lng: -71.11680 },
+    coordinates: [
+      { lat: 42.37525, lng: -71.11695 },
+      { lat: 42.37525, lng: -71.11665 },
+      { lat: 42.37505, lng: -71.11665 },
+      { lat: 42.37505, lng: -71.11695 },
+    ],
     labs: [
       {
         id: "franklin",
@@ -66,6 +76,14 @@ const buildingsData: Record<string, any> = {
     address: "12 Oxford Street",
     built: "1928",
     description: "Chemistry and chemical physics research facility.",
+    color: "#f59e0b",
+    center: { lat: 42.37548, lng: -71.11650 },
+    coordinates: [
+      { lat: 42.37558, lng: -71.11665 },
+      { lat: 42.37558, lng: -71.11635 },
+      { lat: 42.37538, lng: -71.11635 },
+      { lat: 42.37538, lng: -71.11665 },
+    ],
     labs: [
       {
         id: "cohen",
@@ -84,6 +102,14 @@ const buildingsData: Record<string, any> = {
     address: "9 Oxford Street",
     built: "2006",
     description: "Gordon McKay Laboratory of Applied Science for engineering and applied physics.",
+    color: "#10b981",
+    center: { lat: 42.37575, lng: -71.11630 },
+    coordinates: [
+      { lat: 42.37585, lng: -71.11645 },
+      { lat: 42.37585, lng: -71.11615 },
+      { lat: 42.37565, lng: -71.11615 },
+      { lat: 42.37565, lng: -71.11645 },
+    ],
     labs: [
       {
         id: "manoharan",
@@ -102,6 +128,14 @@ const buildingsData: Record<string, any> = {
     address: "60 Oxford Street",
     built: "1963",
     description: "Home to various physics and mathematics departments.",
+    color: "#ef4444",
+    center: { lat: 42.37645, lng: -71.11580 },
+    coordinates: [
+      { lat: 42.37655, lng: -71.11595 },
+      { lat: 42.37655, lng: -71.11565 },
+      { lat: 42.37635, lng: -71.11565 },
+      { lat: 42.37635, lng: -71.11595 },
+    ],
     labs: [
       {
         id: "cotler",
@@ -120,6 +154,14 @@ const buildingsData: Record<string, any> = {
     address: "29 Oxford Street",
     built: "2007",
     description: "Laboratory for Integrated Science and Engineering with nanoscale research facilities.",
+    color: "#ec4899",
+    center: { lat: 42.37465, lng: -71.11720 },
+    coordinates: [
+      { lat: 42.37475, lng: -71.11735 },
+      { lat: 42.37475, lng: -71.11705 },
+      { lat: 42.37455, lng: -71.11705 },
+      { lat: 42.37455, lng: -71.11735 },
+    ],
     labs: [
       {
         id: "mundy",
@@ -135,34 +177,90 @@ const buildingsData: Record<string, any> = {
   }
 };
 
+// Map container style
+const mapContainerStyle = {
+  width: '100%',
+  height: '600px'
+};
+
+// Harvard University center coordinates
+const center = {
+  lat: 42.3755,
+  lng: -71.1167
+};
+
+// Map options
+const mapOptions: google.maps.MapOptions = {
+  disableDefaultUI: false,
+  zoomControl: true,
+  mapTypeControl: true,
+  streetViewControl: false,
+  fullscreenControl: true,
+  mapTypeId: 'satellite',
+  tilt: 0,
+};
+
 export default function MapPage() {
   const [selectedBuilding, setSelectedBuilding] = useState<string | null>(null);
   const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null);
   const [showLegend, setShowLegend] = useState(true);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
 
-  const getBuildingColor = (buildingId: string, isHovered: boolean) => {
-    const baseColors: Record<string, string> = {
-      jefferson: "#3b82f6",
-      lyman: "#8b5cf6",
-      mallinckrodt: "#f59e0b",
-      mckay: "#10b981",
-      oxford: "#ef4444",
-      lise: "#ec4899"
-    };
+  // Load Google Maps API
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  });
 
-    if (isHovered) {
-      return "#fbbf24"; // Gold on hover
+  const onLoad = useCallback((map: google.maps.Map) => {
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(() => {
+    setMap(null);
+  }, []);
+
+  const handleBuildingClick = (buildingId: string) => {
+    setSelectedBuilding(buildingId);
+    if (map && buildingsData[buildingId]) {
+      map.panTo(buildingsData[buildingId].center);
+      map.setZoom(19);
     }
-
-    return baseColors[buildingId] || "#6b7280";
   };
+
+  if (loadError) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <p className="text-red-500 mb-4">Error loading Google Maps</p>
+            <p className="text-sm text-muted-foreground">
+              Please check your Google Maps API key configuration.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading map...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
         <h1 className="text-4xl font-bold mb-4">Harvard Physics Campus Map</h1>
         <p className="text-lg text-muted-foreground">
-          Explore Harvard's physics buildings and discover the research labs within each facility
+          Explore Harvard's physics buildings on an interactive satellite map
         </p>
       </div>
 
@@ -182,248 +280,35 @@ export default function MapPage() {
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="relative bg-neutral-50 dark:bg-neutral-900" style={{ height: "600px" }}>
-              <TransformWrapper
-                initialScale={1}
-                minScale={0.5}
-                maxScale={3}
-                centerOnInit
+            <div className="relative" style={{ height: "600px" }}>
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                center={center}
+                zoom={18}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+                options={mapOptions}
               >
-                {({ zoomIn, zoomOut, resetTransform }) => (
-                  <>
-                    {/* Zoom Controls */}
-                    <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        onClick={() => zoomIn()}
-                      >
-                        <ZoomIn className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        onClick={() => zoomOut()}
-                      >
-                        <ZoomOut className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        onClick={() => resetTransform()}
-                      >
-                        <Maximize2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-
-                    {/* Harvard Campus Map */}
-                    <TransformComponent>
-                      <svg
-                        width="1000"
-                        height="700"
-                        viewBox="0 0 1000 700"
-                        className="w-full h-full"
-                      >
-                        {/* Background - Campus Green */}
-                        <rect
-                          x="0"
-                          y="0"
-                          width="1000"
-                          height="700"
-                          fill="#f0fdf4"
-                        />
-
-                        {/* Streets */}
-                        <rect x="0" y="300" width="1000" height="80" fill="#d1d5db" />
-                        <text x="500" y="345" textAnchor="middle" className="fill-neutral-600 font-semibold">
-                          Oxford Street
-                        </text>
-
-                        <rect x="200" y="0" width="50" height="700" fill="#d1d5db" />
-                        <text x="225" y="50" textAnchor="middle" className="fill-neutral-600 font-semibold" transform="rotate(-90, 225, 50)">
-                          Cambridge Street
-                        </text>
-
-                        {/* Jefferson Laboratory */}
-                        <g
-                          className="cursor-pointer transition-all"
-                          onClick={() => setSelectedBuilding("jefferson")}
-                          onMouseEnter={() => setHoveredBuilding("jefferson")}
-                          onMouseLeave={() => setHoveredBuilding(null)}
-                        >
-                          <rect
-                            x="280"
-                            y="100"
-                            width="180"
-                            height="150"
-                            fill={getBuildingColor("jefferson", hoveredBuilding === "jefferson")}
-                            stroke="#1e40af"
-                            strokeWidth="3"
-                            opacity="0.8"
-                          />
-                          <text x="370" y="165" textAnchor="middle" className="fill-white font-bold text-base">
-                            Jefferson
-                          </text>
-                          <text x="370" y="185" textAnchor="middle" className="fill-white text-sm">
-                            Laboratory
-                          </text>
-                          <text x="370" y="200" textAnchor="middle" className="fill-white text-xs">
-                            (1884)
-                          </text>
-                        </g>
-
-                        {/* Lyman Laboratory */}
-                        <g
-                          className="cursor-pointer transition-all"
-                          onClick={() => setSelectedBuilding("lyman")}
-                          onMouseEnter={() => setHoveredBuilding("lyman")}
-                          onMouseLeave={() => setHoveredBuilding(null)}
-                        >
-                          <rect
-                            x="500"
-                            y="100"
-                            width="150"
-                            height="150"
-                            fill={getBuildingColor("lyman", hoveredBuilding === "lyman")}
-                            stroke="#6d28d9"
-                            strokeWidth="3"
-                            opacity="0.8"
-                          />
-                          <text x="575" y="165" textAnchor="middle" className="fill-white font-bold text-base">
-                            Lyman
-                          </text>
-                          <text x="575" y="185" textAnchor="middle" className="fill-white text-sm">
-                            Laboratory
-                          </text>
-                          <text x="575" y="200" textAnchor="middle" className="fill-white text-xs">
-                            (1931)
-                          </text>
-                        </g>
-
-                        {/* Mallinckrodt Laboratory */}
-                        <g
-                          className="cursor-pointer transition-all"
-                          onClick={() => setSelectedBuilding("mallinckrodt")}
-                          onMouseEnter={() => setHoveredBuilding("mallinckrodt")}
-                          onMouseLeave={() => setHoveredBuilding(null)}
-                        >
-                          <rect
-                            x="690"
-                            y="100"
-                            width="160"
-                            height="150"
-                            fill={getBuildingColor("mallinckrodt", hoveredBuilding === "mallinckrodt")}
-                            stroke="#d97706"
-                            strokeWidth="3"
-                            opacity="0.8"
-                          />
-                          <text x="770" y="160" textAnchor="middle" className="fill-white font-bold text-sm">
-                            Mallinckrodt
-                          </text>
-                          <text x="770" y="180" textAnchor="middle" className="fill-white text-sm">
-                            Laboratory
-                          </text>
-                          <text x="770" y="195" textAnchor="middle" className="fill-white text-xs">
-                            (1928)
-                          </text>
-                        </g>
-
-                        {/* McKay Laboratory */}
-                        <g
-                          className="cursor-pointer transition-all"
-                          onClick={() => setSelectedBuilding("mckay")}
-                          onMouseEnter={() => setHoveredBuilding("mckay")}
-                          onMouseLeave={() => setHoveredBuilding(null)}
-                        >
-                          <rect
-                            x="280"
-                            y="420"
-                            width="160"
-                            height="180"
-                            fill={getBuildingColor("mckay", hoveredBuilding === "mckay")}
-                            stroke="#059669"
-                            strokeWidth="3"
-                            opacity="0.8"
-                          />
-                          <text x="360" y="500" textAnchor="middle" className="fill-white font-bold text-base">
-                            McKay
-                          </text>
-                          <text x="360" y="520" textAnchor="middle" className="fill-white text-sm">
-                            Laboratory
-                          </text>
-                          <text x="360" y="535" textAnchor="middle" className="fill-white text-xs">
-                            (2006)
-                          </text>
-                        </g>
-
-                        {/* 60 Oxford Street */}
-                        <g
-                          className="cursor-pointer transition-all"
-                          onClick={() => setSelectedBuilding("oxford")}
-                          onMouseEnter={() => setHoveredBuilding("oxford")}
-                          onMouseLeave={() => setHoveredBuilding(null)}
-                        >
-                          <rect
-                            x="480"
-                            y="420"
-                            width="140"
-                            height="180"
-                            fill={getBuildingColor("oxford", hoveredBuilding === "oxford")}
-                            stroke="#dc2626"
-                            strokeWidth="3"
-                            opacity="0.8"
-                          />
-                          <text x="550" y="500" textAnchor="middle" className="fill-white font-bold text-base">
-                            60 Oxford
-                          </text>
-                          <text x="550" y="520" textAnchor="middle" className="fill-white text-sm">
-                            Street
-                          </text>
-                          <text x="550" y="535" textAnchor="middle" className="fill-white text-xs">
-                            (1963)
-                          </text>
-                        </g>
-
-                        {/* LISE Building */}
-                        <g
-                          className="cursor-pointer transition-all"
-                          onClick={() => setSelectedBuilding("lise")}
-                          onMouseEnter={() => setHoveredBuilding("lise")}
-                          onMouseLeave={() => setHoveredBuilding(null)}
-                        >
-                          <rect
-                            x="660"
-                            y="420"
-                            width="190"
-                            height="180"
-                            fill={getBuildingColor("lise", hoveredBuilding === "lise")}
-                            stroke="#db2777"
-                            strokeWidth="3"
-                            opacity="0.8"
-                          />
-                          <text x="755" y="490" textAnchor="middle" className="fill-white font-bold text-base">
-                            LISE
-                          </text>
-                          <text x="755" y="510" textAnchor="middle" className="fill-white text-xs">
-                            Laboratory for
-                          </text>
-                          <text x="755" y="525" textAnchor="middle" className="fill-white text-xs">
-                            Integrated Science
-                          </text>
-                          <text x="755" y="540" textAnchor="middle" className="fill-white text-xs">
-                            & Engineering (2007)
-                          </text>
-                        </g>
-
-                        {/* Legend Labels */}
-                        <text x="500" y="680" textAnchor="middle" className="fill-neutral-500 text-sm font-light italic">
-                          Click on any building to view the research labs inside
-                        </text>
-                      </svg>
-                    </TransformComponent>
-                  </>
-                )}
-              </TransformWrapper>
+                {/* Render building polygons */}
+                {Object.entries(buildingsData).map(([buildingId, building]) => (
+                  <Polygon
+                    key={buildingId}
+                    paths={building.coordinates}
+                    options={{
+                      fillColor: hoveredBuilding === buildingId ? "#fbbf24" : building.color,
+                      fillOpacity: 0.7,
+                      strokeColor: building.color,
+                      strokeOpacity: 1,
+                      strokeWeight: 3,
+                      clickable: true,
+                      zIndex: hoveredBuilding === buildingId ? 1000 : 1,
+                    }}
+                    onClick={() => handleBuildingClick(buildingId)}
+                    onMouseOver={() => setHoveredBuilding(buildingId)}
+                    onMouseOut={() => setHoveredBuilding(null)}
+                  />
+                ))}
+              </GoogleMap>
 
               {/* Legend */}
               <AnimatePresence>
@@ -432,25 +317,22 @@ export default function MapPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="absolute bottom-4 left-4 bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-lg"
+                    className="absolute bottom-4 left-4 bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-lg z-10"
                   >
                     <h3 className="font-semibold mb-2 text-sm">Physics Buildings</h3>
                     <div className="space-y-1">
-                      {Object.entries({
-                        "Jefferson Laboratory": "#3b82f6",
-                        "Lyman Laboratory": "#8b5cf6",
-                        "Mallinckrodt Lab": "#f59e0b",
-                        "McKay Laboratory": "#10b981",
-                        "60 Oxford Street": "#ef4444",
-                        "LISE Building": "#ec4899"
-                      }).map(([building, color]: [string, string]) => (
-                        <div key={building} className="flex items-center gap-2">
+                      {Object.entries(buildingsData).map(([buildingId, building]) => (
+                        <button
+                          key={buildingId}
+                          onClick={() => handleBuildingClick(buildingId)}
+                          className="flex items-center gap-2 w-full hover:bg-neutral-100 dark:hover:bg-neutral-700 p-1 rounded transition-colors"
+                        >
                           <div
                             className="w-4 h-4 rounded"
-                            style={{ backgroundColor: color }}
+                            style={{ backgroundColor: building.color }}
                           />
-                          <span className="text-xs">{building}</span>
-                        </div>
+                          <span className="text-xs">{building.name}</span>
+                        </button>
                       ))}
                     </div>
                   </motion.div>
