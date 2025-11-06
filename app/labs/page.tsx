@@ -100,7 +100,7 @@ const labs = [
     members: 16,
     description: "Something something molecular beam epitaxy.",
     researchArea: "Solid State",
-    image: "https://mundy.physics.harvard.edu/images/MBE.png",
+    image: "/mundy-mbe.png",
     sampleProjects: [
       "Dark matter detection experiments",
       "CMB polarization analysis",
