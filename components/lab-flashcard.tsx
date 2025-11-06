@@ -24,16 +24,25 @@ export function LabFlashCard({
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleClick = (e: React.MouseEvent) => {
-    if (!isFlipped) {
-      e.preventDefault();
-      setIsFlipped(true);
-    }
+  const handleFrontClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsFlipped(true);
+  };
+
+  const handleBackClick = (e: React.MouseEvent) => {
+    setIsFlipped(false);
+  };
+
+  const handleLinkClick = (e: React.MouseEvent) => {
+    // Stop propagation so clicking the link doesn't flip the card
+    e.stopPropagation();
   };
 
   return (
     <div
-      className="relative h-[380px]"
+      className={`relative h-[420px] transition-transform duration-300 ${
+        isHovered && !isFlipped ? 'scale-[1.02]' : ''
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -50,11 +59,13 @@ export function LabFlashCard({
       >
         {/* FRONT OF CARD */}
         <div
-          onClick={handleClick}
-          className={`absolute inset-0 overflow-hidden transition-all duration-300 cursor-pointer bg-card ${
-            isHovered && !isFlipped ? 'brightness-90' : ''
-          }`}
-          style={{ backfaceVisibility: 'hidden' }}
+          onClick={handleFrontClick}
+          className="absolute inset-0 overflow-hidden rounded-xl border-2 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-card"
+          style={{ 
+            backfaceVisibility: 'hidden',
+            WebkitFontSmoothing: 'antialiased',
+            transform: 'translateZ(0)',
+          }}
         >
           {/* Full Image Background */}
           <div className="relative h-full bg-muted/30 flex items-center justify-center overflow-hidden">
@@ -84,10 +95,12 @@ export function LabFlashCard({
 
         {/* BACK OF CARD */}
         <div
-          className="absolute inset-0 overflow-hidden bg-card p-8"
+          onClick={handleBackClick}
+          className="absolute inset-0 overflow-hidden rounded-xl border-2 shadow-lg bg-card p-8 cursor-pointer"
           style={{
             backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
+            transform: 'rotateY(180deg) translateZ(0)',
+            WebkitFontSmoothing: 'antialiased',
           }}
         >
           <div className="h-full flex flex-col">
@@ -141,7 +154,8 @@ export function LabFlashCard({
             {/* See More Link */}
             <Link
               href={`/labs/${id}`}
-              className="inline-flex items-center text-sm text-primary hover:text-primary/80 transition-colors font-medium mt-auto"
+              onClick={handleLinkClick}
+              className="inline-flex items-center text-sm text-primary hover:text-primary/80 transition-colors font-medium mt-auto hover:underline"
             >
               See More
               <ArrowRight className="ml-1 h-4 w-4" />
