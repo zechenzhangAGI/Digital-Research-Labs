@@ -26,7 +26,7 @@ export default function Home() {
             <Badge className="mb-4" variant="secondary">
               Harvard Physics Department
             </Badge>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 bg-linear-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
               Research Lab Hub
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -50,7 +50,7 @@ export default function Home() {
 
         {/* Background decoration */}
         <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-neutral-950">
-          <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+          <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
         </div>
       </section>
 
@@ -182,7 +182,7 @@ export default function Home() {
 
       {/* AI Insights Section */}
       <section className="container mx-auto px-4 py-12">
-        <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 border-blue-200 dark:border-blue-800">
+        <Card className="bg-linear-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 border-blue-200 dark:border-blue-800">
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
               <Brain className="h-8 w-8 text-blue-600" />

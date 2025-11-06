@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -14,12 +15,15 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { FlaskConical, Search, Users, Map, BookOpen } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-provider";
+import { SearchModal } from "@/components/search-modal";
 
 export function Navigation() {
   const pathname = usePathname();
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto px-4 flex h-16 items-center">
         <Link href="/" className="mr-8 flex items-center space-x-2">
           <FlaskConical className="h-6 w-6 text-primary" />
@@ -45,7 +49,7 @@ export function Navigation() {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         href="/equipment"
                       >
                         <BookOpen className="h-6 w-6" />
@@ -80,12 +84,19 @@ export function Navigation() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="ml-auto flex items-center space-x-4">
-          <Button variant="ghost" size="icon">
+        <div className="ml-auto flex items-center space-x-2">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            aria-label="Search"
+            onClick={() => setSearchOpen(true)}
+          >
             <Search className="h-5 w-5" />
           </Button>
+          <ThemeToggle />
         </div>
       </div>
+      <SearchModal open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 }

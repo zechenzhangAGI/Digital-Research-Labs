@@ -40,6 +40,8 @@ export function LabFlashCard({
         setIsFlipped(false);
       }}
       style={{ perspective: '1000px' }}
+      role="article"
+      aria-label={`${pi} Lab Card`}
     >
       <div
         className="relative w-full h-full transition-transform duration-500"
@@ -51,6 +53,15 @@ export function LabFlashCard({
         {/* FRONT OF CARD */}
         <div
           onClick={handleClick}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (!isFlipped) setIsFlipped(true);
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label={`Click to view details for ${pi}'s lab`}
           className={`absolute inset-0 overflow-hidden transition-all duration-300 cursor-pointer bg-card ${
             isHovered && !isFlipped ? 'brightness-90' : ''
           }`}
@@ -61,11 +72,11 @@ export function LabFlashCard({
             {image ? (
               <img
                 src={image}
-                alt={`${pi}'s lab`}
+                alt={`Research image from ${pi}'s lab`}
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
+              <div className="absolute inset-0 bg-linear-to-br from-muted/50 to-muted flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-muted-foreground text-sm">Science Image</div>
                   <div className="text-muted-foreground/50 text-xs">Placeholder</div>
@@ -74,7 +85,7 @@ export function LabFlashCard({
             )}
 
             {/* Dark Overlay with Name - Bottom Third */}
-            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 via-black/60 to-transparent flex items-end justify-end px-8 pb-6">
+            <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-black/80 via-black/60 to-transparent flex items-end justify-end px-8 pb-6">
               <h3 className="text-3xl font-light tracking-tight text-white text-right">
                 {pi}
               </h3>
@@ -98,7 +109,7 @@ export function LabFlashCard({
             </div>
 
             {/* Description */}
-            <div className="mb-5 flex-grow">
+            <div className="mb-5 grow">
               <p className="text-sm leading-relaxed text-foreground/80">
                 {description || "Research description placeholder - a brief overview of what this lab focuses on and their main research goals."}
               </p>
