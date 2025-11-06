@@ -29,12 +29,10 @@ export function Navigation() {
         <NavigationMenu className="mx-6">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/labs" className={navigationMenuTriggerStyle()}>
-                  <Users className="mr-2 h-4 w-4" />
-                  Labs
-                </Link>
-              </NavigationMenuLink>
+              <Link href="/labs" className={cn(navigationMenuTriggerStyle())}>
+                <Users className="mr-2 h-4 w-4" />
+                Labs
+              </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
@@ -74,12 +72,10 @@ export function Navigation() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/map" className={navigationMenuTriggerStyle()}>
-                  <Map className="mr-2 h-4 w-4" />
-                  Map
-                </Link>
-              </NavigationMenuLink>
+              <Link href="/map" className={cn(navigationMenuTriggerStyle())}>
+                <Map className="mr-2 h-4 w-4" />
+                Map
+              </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

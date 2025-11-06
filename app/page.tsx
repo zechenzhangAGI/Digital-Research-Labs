@@ -21,7 +21,7 @@ export default function Home() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="container relative z-10 py-24 lg:py-32">
+        <div className="container mx-auto px-4 relative z-10 py-24 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
             <Badge className="mb-4" variant="secondary">
               Harvard Physics Department
@@ -55,7 +55,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="container py-12">
+      <section className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <Card>
             <CardHeader className="pb-2">
@@ -85,7 +85,7 @@ export default function Home() {
       </section>
 
       {/* Featured Labs */}
-      <section className="container py-12">
+      <section className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8">Featured Research Labs</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card className="hover:shadow-lg transition-shadow">
@@ -181,7 +181,7 @@ export default function Home() {
       </section>
 
       {/* AI Insights Section */}
-      <section className="container py-12">
+      <section className="container mx-auto px-4 py-12">
         <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 border-blue-200 dark:border-blue-800">
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
@@ -260,7 +260,7 @@ export default function Home() {
       </section>
 
       {/* Quick Actions */}
-      <section className="container py-12 pb-24">
+      <section className="container mx-auto px-4 py-12 pb-24">
         <h2 className="text-3xl font-bold mb-8">Quick Actions</h2>
         <div className="grid md:grid-cols-3 gap-6">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer">
