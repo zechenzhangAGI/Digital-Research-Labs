@@ -141,7 +141,7 @@ export default function AIPage() {
   const [activeTab, setActiveTab] = useState("collaborations");
 
   return (
-    <div className="container py-8">
+    <div className="container mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">

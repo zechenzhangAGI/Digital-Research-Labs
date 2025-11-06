@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { FlaskConical, Search, Users, Map, BookOpen } from "lucide-react";
+import { FlaskConical, Search, Users, Map, BookOpen, Brain } from "lucide-react";
 
 export function Navigation() {
   const pathname = usePathname();
@@ -76,6 +76,13 @@ export function Navigation() {
               <Link href="/map" className={cn(navigationMenuTriggerStyle())}>
                 <Map className="mr-2 h-4 w-4" />
                 Map
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/ai" className={cn(navigationMenuTriggerStyle())}>
+                <Brain className="mr-2 h-4 w-4" />
+                AI Assistant
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
