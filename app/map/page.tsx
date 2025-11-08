@@ -1,150 +1,275 @@
 "use client";
 
-import { useState } from "react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { useState, useCallback } from "react";
+import { GoogleMap, useJsApiLoader, Polygon, InfoWindow } from "@react-google-maps/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
   Users,
   MapPin,
   FlaskConical,
-  Info,
   X,
-  ChevronUp,
   ChevronDown,
-  Image as ImageIcon,
-  Video,
-  FileText
+  Loader2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Lab data with coordinates on the floor plan
-const labsData: Record<string, any> = {
-  "301": {
-    id: "quantum",
-    name: "Quantum Computing Lab",
-    pi: "Prof. Sarah Chen",
-    room: "Jefferson 301",
-    floor: 3,
-    type: "Quantum",
-    members: 12,
-    description: "State-of-the-art quantum computing research facility with ion trap systems and quantum processors.",
-    equipment: ["Ion Trap System", "Dilution Refrigerator", "Quantum Control Electronics"],
-    images: ["/api/placeholder/600/400", "/api/placeholder/600/400"],
-    video: "/api/placeholder/video"
+// Harvard Physics Buildings and their labs with coordinates and building footprints
+const buildingsData: Record<string, any> = {
+  "jefferson": {
+    name: "Jefferson Laboratory",
+    address: "17 Oxford Street",
+    built: "1884",
+    description: "First university building in America dedicated to physics research.",
+    color: "#3b82f6",
+    center: { lat: 42.37485, lng: -71.11705 },
+    // Approximate building footprint (polygon coordinates)
+    coordinates: [
+      { lat: 42.37495, lng: -71.11720 },
+      { lat: 42.37495, lng: -71.11690 },
+      { lat: 42.37475, lng: -71.11690 },
+      { lat: 42.37475, lng: -71.11720 },
+    ],
+    labs: [
+      {
+        id: "mitrano",
+        name: "Mitrano Group",
+        pi: "Matteo Mitrano",
+        room: "Jefferson 164",
+        category: "Solid State",
+        members: 20,
+        description: "Solid state physics research with cutting-edge techniques.",
+        image: "https://mitrano.physics.harvard.edu/sites/g/files/omnuum1256/files/styles/hwp_1_1__1440x1440_scale/public/mitranolab/files/2_0.png?itok=GCfYx981"
+      }
+    ]
   },
-  "302": {
-    id: "optics",
-    name: "Ultrafast Optics Lab",
-    pi: "Prof. James Wilson",
-    room: "Jefferson 302",
-    floor: 3,
-    type: "Optics",
-    members: 8,
-    description: "Advanced laser systems for ultrafast spectroscopy and nonlinear optics research.",
-    equipment: ["Femtosecond Laser", "Optical Table", "Spectrometer"],
-    images: ["/api/placeholder/600/400"]
+  "lyman": {
+    name: "Lyman Laboratory",
+    address: "Cambridge Street",
+    built: "1931",
+    description: "Named after physicist Theodore Lyman, located between Jefferson and Cruft.",
+    color: "#8b5cf6",
+    center: { lat: 42.37515, lng: -71.11680 },
+    coordinates: [
+      { lat: 42.37525, lng: -71.11695 },
+      { lat: 42.37525, lng: -71.11665 },
+      { lat: 42.37505, lng: -71.11665 },
+      { lat: 42.37505, lng: -71.11695 },
+    ],
+    labs: [
+      {
+        id: "franklin",
+        name: "Franklin Lab",
+        pi: "Melissa Franklin",
+        room: "Lyman 237",
+        category: "Particle Physics",
+        members: 12,
+        description: "Searching for new particles using particle accelerators at CERN.",
+        image: "https://atlas.cern/sites/default/files/2025-09/ATLAS-OO-banner.jpg"
+      }
+    ]
   },
-  "303": {
-    id: "condensed",
-    name: "Condensed Matter Lab",
-    pi: "Prof. Elena Rodriguez",
-    room: "Jefferson 303",
-    floor: 3,
-    type: "Materials",
-    members: 15,
-    description: "Materials synthesis and characterization for superconductors and topological materials.",
-    equipment: ["Crystal Growth Furnace", "PPMS", "X-ray Diffractometer"],
-    images: ["/api/placeholder/600/400"]
+  "mallinckrodt": {
+    name: "Mallinckrodt Laboratory",
+    address: "12 Oxford Street",
+    built: "1928",
+    description: "Chemistry and chemical physics research facility.",
+    color: "#f59e0b",
+    center: { lat: 42.37548, lng: -71.11650 },
+    coordinates: [
+      { lat: 42.37558, lng: -71.11665 },
+      { lat: 42.37558, lng: -71.11635 },
+      { lat: 42.37538, lng: -71.11635 },
+      { lat: 42.37538, lng: -71.11665 },
+    ],
+    labs: [
+      {
+        id: "cohen",
+        name: "Cohen Lab",
+        pi: "Adam Cohen",
+        room: "Mallinckrodt 115",
+        category: "Biophysics",
+        members: 18,
+        description: "Developing optical techniques to visualize voltage dynamics in neural tissue.",
+        image: "https://cohenweb.rc.fas.harvard.edu/Research/JNeuro_Cover.jpg"
+      }
+    ]
   },
-  "304": {
-    id: "biophysics",
-    name: "Molecular Biophysics Lab",
-    pi: "Prof. Michael Zhang",
-    room: "Jefferson 304",
-    floor: 3,
-    type: "Biophysics",
-    members: 18,
-    description: "Single-molecule imaging and manipulation for biological systems.",
-    equipment: ["TIRF Microscope", "Optical Tweezers", "AFM"],
-    images: ["/api/placeholder/600/400", "/api/placeholder/600/400"]
+  "mckay": {
+    name: "McKay Laboratory",
+    address: "9 Oxford Street",
+    built: "2006",
+    description: "Gordon McKay Laboratory of Applied Science for engineering and applied physics.",
+    color: "#10b981",
+    center: { lat: 42.37575, lng: -71.11630 },
+    coordinates: [
+      { lat: 42.37585, lng: -71.11645 },
+      { lat: 42.37585, lng: -71.11615 },
+      { lat: 42.37565, lng: -71.11615 },
+      { lat: 42.37565, lng: -71.11645 },
+    ],
+    labs: [
+      {
+        id: "manoharan",
+        name: "Manoharan Group",
+        pi: "Vinothan Manoharan",
+        room: "McKay 530",
+        category: "Biophysics",
+        members: 15,
+        description: "Virus self-assembly research.",
+        image: "https://www.manoharan.seas.harvard.edu/sites/g/files/omnuum4256/files/styles/hwp_21_9__2880x1230/public/manoharan/files/ccmv_in_out-01-01.png?itok=yAJ00Zuq"
+      }
+    ]
   },
-  "305": {
-    id: "computational",
-    name: "Computational Physics",
-    pi: "Prof. Lisa Park",
-    room: "Jefferson 305",
-    floor: 3,
-    type: "Computational",
-    members: 20,
-    description: "High-performance computing for quantum simulations and machine learning.",
-    equipment: ["GPU Cluster", "Workstations"],
-    images: ["/api/placeholder/600/400"]
+  "oxford": {
+    name: "60 Oxford Street",
+    address: "60 Oxford Street",
+    built: "1963",
+    description: "Home to various physics and mathematics departments.",
+    color: "#ef4444",
+    center: { lat: 42.37645, lng: -71.11580 },
+    coordinates: [
+      { lat: 42.37655, lng: -71.11595 },
+      { lat: 42.37655, lng: -71.11565 },
+      { lat: 42.37635, lng: -71.11565 },
+      { lat: 42.37635, lng: -71.11595 },
+    ],
+    labs: [
+      {
+        id: "cotler",
+        name: "Cotler Group",
+        pi: "Jordan Cotler",
+        room: "60 Oxford St. 412",
+        category: "Quantum Computing",
+        members: 14,
+        description: "Developing new theoretical frameworks behind quantum gravity and computing.",
+        image: "https://www.quantamagazine.org/wp-content/uploads/2022/09/andrew-strominger-jordan-cotler-ADJUSTED.jpg"
+      }
+    ]
+  },
+  "lise": {
+    name: "LISE Building",
+    address: "29 Oxford Street",
+    built: "2007",
+    description: "Laboratory for Integrated Science and Engineering with nanoscale research facilities.",
+    color: "#ec4899",
+    center: { lat: 42.37465, lng: -71.11720 },
+    coordinates: [
+      { lat: 42.37475, lng: -71.11735 },
+      { lat: 42.37475, lng: -71.11705 },
+      { lat: 42.37455, lng: -71.11705 },
+      { lat: 42.37455, lng: -71.11735 },
+    ],
+    labs: [
+      {
+        id: "mundy",
+        name: "Mundy Group",
+        pi: "Julia Mundy",
+        room: "LISE 709",
+        category: "Solid State",
+        members: 16,
+        description: "Molecular beam epitaxy research.",
+        image: "/mundy-mbe.png"
+      }
+    ]
   }
 };
 
-export default function MapPage() {
-  const [selectedLab, setSelectedLab] = useState<string | null>(null);
-  const [hoveredLab, setHoveredLab] = useState<string | null>(null);
-  const [selectedFloor, setSelectedFloor] = useState(3);
-  const [showLegend, setShowLegend] = useState(true);
+// Map container style
+const mapContainerStyle = {
+  width: '100%',
+  height: '600px'
+};
 
-  const getLabColor = (type: string) => {
-    const colors: Record<string, string> = {
-      Quantum: "#3b82f6",
-      Optics: "#8b5cf6",
-      Materials: "#f59e0b",
-      Biophysics: "#10b981",
-      Computational: "#ef4444"
-    };
-    return colors[type] || "#6b7280";
+// Harvard University center coordinates
+const center = {
+  lat: 42.3755,
+  lng: -71.1167
+};
+
+// Map options
+const mapOptions: google.maps.MapOptions = {
+  disableDefaultUI: false,
+  zoomControl: true,
+  mapTypeControl: true,
+  streetViewControl: false,
+  fullscreenControl: true,
+  mapTypeId: 'satellite',
+  tilt: 0,
+};
+
+export default function MapPage() {
+  const [selectedBuilding, setSelectedBuilding] = useState<string | null>(null);
+  const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null);
+  const [showLegend, setShowLegend] = useState(true);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+
+  // Load Google Maps API
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  });
+
+  const onLoad = useCallback((map: google.maps.Map) => {
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(() => {
+    setMap(null);
+  }, []);
+
+  const handleBuildingClick = (buildingId: string) => {
+    setSelectedBuilding(buildingId);
+    if (map && buildingsData[buildingId]) {
+      map.panTo(buildingsData[buildingId].center);
+      map.setZoom(19);
+    }
   };
+
+  if (loadError) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <p className="text-red-500 mb-4">Error loading Google Maps</p>
+            <p className="text-sm text-muted-foreground">
+              Please check your Google Maps API key configuration.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading map...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-4xl font-bold mb-4">Interactive Lab Map</h1>
+        <h1 className="text-4xl font-bold mb-4">Harvard Physics Campus Map</h1>
         <p className="text-lg text-muted-foreground">
-          Navigate the Harvard Physics Department floor plans and explore lab locations
+          Explore Harvard's physics buildings on an interactive satellite map
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_300px] gap-6">
+      <div className="grid lg:grid-cols-[1fr_350px] gap-6">
         {/* Map Area */}
         <Card className="relative overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <CardTitle>Jefferson Laboratory - Floor {selectedFloor}</CardTitle>
-                <div className="flex gap-1">
-                  <Button
-                    variant={selectedFloor === 2 ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedFloor(2)}
-                  >
-                    Floor 2
-                  </Button>
-                  <Button
-                    variant={selectedFloor === 3 ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedFloor(3)}
-                  >
-                    Floor 3
-                  </Button>
-                  <Button
-                    variant={selectedFloor === 4 ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedFloor(4)}
-                  >
-                    Floor 4
-                  </Button>
-                </div>
-              </div>
+              <CardTitle>Harvard North Yard - Physics Area</CardTitle>
               <Button
                 variant="ghost"
                 size="sm"
@@ -155,341 +280,35 @@ export default function MapPage() {
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="relative bg-neutral-50 dark:bg-neutral-900" style={{ height: "600px" }}>
-              <TransformWrapper
-                initialScale={1}
-                minScale={0.5}
-                maxScale={3}
-                centerOnInit
+            <div className="relative" style={{ height: "600px" }}>
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                center={center}
+                zoom={18}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+                options={mapOptions}
               >
-                {({ zoomIn, zoomOut, resetTransform }) => (
-                  <>
-                    {/* Zoom Controls */}
-                    <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        onClick={() => zoomIn()}
-                      >
-                        <ZoomIn className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        onClick={() => zoomOut()}
-                      >
-                        <ZoomOut className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        onClick={() => resetTransform()}
-                      >
-                        <Maximize2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-
-                    {/* Floor Plan */}
-                    <TransformComponent>
-                      <svg
-                        width="800"
-                        height="600"
-                        viewBox="0 0 800 600"
-                        className="w-full h-full"
-                      >
-                        {/* Building Outline */}
-                        <rect
-                          x="50"
-                          y="50"
-                          width="700"
-                          height="500"
-                          fill="white"
-                          stroke="#e5e7eb"
-                          strokeWidth="2"
-                        />
-
-                        {/* Corridor */}
-                        <rect
-                          x="50"
-                          y="250"
-                          width="700"
-                          height="100"
-                          fill="#f3f4f6"
-                          stroke="#e5e7eb"
-                          strokeWidth="1"
-                        />
-                        <text
-                          x="400"
-                          y="305"
-                          textAnchor="middle"
-                          className="fill-neutral-500 text-sm"
-                        >
-                          Main Corridor
-                        </text>
-
-                        {selectedFloor === 3 && (
-                          <>
-                            {/* Lab Rooms - Floor 3 */}
-                            {/* Room 301 - Quantum Computing */}
-                            <g
-                              className="cursor-pointer"
-                              onClick={() => setSelectedLab("301")}
-                              onMouseEnter={() => setHoveredLab("301")}
-                              onMouseLeave={() => setHoveredLab(null)}
-                            >
-                              <rect
-                                x="50"
-                                y="50"
-                                width="200"
-                                height="200"
-                                fill={hoveredLab === "301" ? "#dbeafe" : "white"}
-                                stroke={getLabColor("Quantum")}
-                                strokeWidth="3"
-                              />
-                              <text
-                                x="150"
-                                y="140"
-                                textAnchor="middle"
-                                className="font-semibold"
-                              >
-                                Room 301
-                              </text>
-                              <text
-                                x="150"
-                                y="160"
-                                textAnchor="middle"
-                                className="text-sm fill-neutral-600"
-                              >
-                                Quantum Lab
-                              </text>
-                              <FlaskConical
-                                className="w-6 h-6"
-                                x="137"
-                                y="100"
-                                fill={getLabColor("Quantum")}
-                              />
-                            </g>
-
-                            {/* Room 302 - Optics */}
-                            <g
-                              className="cursor-pointer"
-                              onClick={() => setSelectedLab("302")}
-                              onMouseEnter={() => setHoveredLab("302")}
-                              onMouseLeave={() => setHoveredLab(null)}
-                            >
-                              <rect
-                                x="250"
-                                y="50"
-                                width="150"
-                                height="200"
-                                fill={hoveredLab === "302" ? "#ede9fe" : "white"}
-                                stroke={getLabColor("Optics")}
-                                strokeWidth="3"
-                              />
-                              <text
-                                x="325"
-                                y="140"
-                                textAnchor="middle"
-                                className="font-semibold"
-                              >
-                                Room 302
-                              </text>
-                              <text
-                                x="325"
-                                y="160"
-                                textAnchor="middle"
-                                className="text-sm fill-neutral-600"
-                              >
-                                Optics Lab
-                              </text>
-                            </g>
-
-                            {/* Room 303 - Condensed Matter */}
-                            <g
-                              className="cursor-pointer"
-                              onClick={() => setSelectedLab("303")}
-                              onMouseEnter={() => setHoveredLab("303")}
-                              onMouseLeave={() => setHoveredLab(null)}
-                            >
-                              <rect
-                                x="400"
-                                y="50"
-                                width="180"
-                                height="200"
-                                fill={hoveredLab === "303" ? "#fef3c7" : "white"}
-                                stroke={getLabColor("Materials")}
-                                strokeWidth="3"
-                              />
-                              <text
-                                x="490"
-                                y="140"
-                                textAnchor="middle"
-                                className="font-semibold"
-                              >
-                                Room 303
-                              </text>
-                              <text
-                                x="490"
-                                y="160"
-                                textAnchor="middle"
-                                className="text-sm fill-neutral-600"
-                              >
-                                Materials Lab
-                              </text>
-                            </g>
-
-                            {/* Room 304 - Biophysics */}
-                            <g
-                              className="cursor-pointer"
-                              onClick={() => setSelectedLab("304")}
-                              onMouseEnter={() => setHoveredLab("304")}
-                              onMouseLeave={() => setHoveredLab(null)}
-                            >
-                              <rect
-                                x="50"
-                                y="350"
-                                width="250"
-                                height="200"
-                                fill={hoveredLab === "304" ? "#d1fae5" : "white"}
-                                stroke={getLabColor("Biophysics")}
-                                strokeWidth="3"
-                              />
-                              <text
-                                x="175"
-                                y="440"
-                                textAnchor="middle"
-                                className="font-semibold"
-                              >
-                                Room 304
-                              </text>
-                              <text
-                                x="175"
-                                y="460"
-                                textAnchor="middle"
-                                className="text-sm fill-neutral-600"
-                              >
-                                Biophysics Lab
-                              </text>
-                            </g>
-
-                            {/* Room 305 - Computational */}
-                            <g
-                              className="cursor-pointer"
-                              onClick={() => setSelectedLab("305")}
-                              onMouseEnter={() => setHoveredLab("305")}
-                              onMouseLeave={() => setHoveredLab(null)}
-                            >
-                              <rect
-                                x="300"
-                                y="350"
-                                width="200"
-                                height="200"
-                                fill={hoveredLab === "305" ? "#fee2e2" : "white"}
-                                stroke={getLabColor("Computational")}
-                                strokeWidth="3"
-                              />
-                              <text
-                                x="400"
-                                y="440"
-                                textAnchor="middle"
-                                className="font-semibold"
-                              >
-                                Room 305
-                              </text>
-                              <text
-                                x="400"
-                                y="460"
-                                textAnchor="middle"
-                                className="text-sm fill-neutral-600"
-                              >
-                                Computational
-                              </text>
-                            </g>
-
-                            {/* Common Areas */}
-                            <rect
-                              x="580"
-                              y="50"
-                              width="170"
-                              height="200"
-                              fill="#f9fafb"
-                              stroke="#e5e7eb"
-                              strokeWidth="1"
-                            />
-                            <text
-                              x="665"
-                              y="150"
-                              textAnchor="middle"
-                              className="text-sm fill-neutral-500"
-                            >
-                              Conference Room
-                            </text>
-
-                            <rect
-                              x="500"
-                              y="350"
-                              width="250"
-                              height="200"
-                              fill="#f9fafb"
-                              stroke="#e5e7eb"
-                              strokeWidth="1"
-                            />
-                            <text
-                              x="625"
-                              y="450"
-                              textAnchor="middle"
-                              className="text-sm fill-neutral-500"
-                            >
-                              Student Office Space
-                            </text>
-
-                            {/* Elevators and Stairs */}
-                            <rect
-                              x="680"
-                              y="270"
-                              width="50"
-                              height="60"
-                              fill="#e5e7eb"
-                              stroke="#9ca3af"
-                              strokeWidth="1"
-                            />
-                            <text
-                              x="705"
-                              y="305"
-                              textAnchor="middle"
-                              className="text-xs fill-neutral-600"
-                            >
-                              Elev
-                            </text>
-                          </>
-                        )}
-
-                        {selectedFloor === 2 && (
-                          <text
-                            x="400"
-                            y="300"
-                            textAnchor="middle"
-                            className="text-xl fill-neutral-400"
-                          >
-                            Floor 2 - Administrative Offices
-                          </text>
-                        )}
-
-                        {selectedFloor === 4 && (
-                          <text
-                            x="400"
-                            y="300"
-                            textAnchor="middle"
-                            className="text-xl fill-neutral-400"
-                          >
-                            Floor 4 - Advanced Research Facilities
-                          </text>
-                        )}
-                      </svg>
-                    </TransformComponent>
-                  </>
-                )}
-              </TransformWrapper>
+                {/* Render building polygons */}
+                {Object.entries(buildingsData).map(([buildingId, building]) => (
+                  <Polygon
+                    key={buildingId}
+                    paths={building.coordinates}
+                    options={{
+                      fillColor: hoveredBuilding === buildingId ? "#fbbf24" : building.color,
+                      fillOpacity: 0.7,
+                      strokeColor: building.color,
+                      strokeOpacity: 1,
+                      strokeWeight: 3,
+                      clickable: true,
+                      zIndex: hoveredBuilding === buildingId ? 1000 : 1,
+                    }}
+                    onClick={() => handleBuildingClick(buildingId)}
+                    onMouseOver={() => setHoveredBuilding(buildingId)}
+                    onMouseOut={() => setHoveredBuilding(null)}
+                  />
+                ))}
+              </GoogleMap>
 
               {/* Legend */}
               <AnimatePresence>
@@ -498,24 +317,22 @@ export default function MapPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="absolute bottom-4 left-4 bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-lg"
+                    className="absolute bottom-4 left-4 bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-lg z-10"
                   >
-                    <h3 className="font-semibold mb-2 text-sm">Lab Types</h3>
+                    <h3 className="font-semibold mb-2 text-sm">Physics Buildings</h3>
                     <div className="space-y-1">
-                      {Object.entries({
-                        Quantum: "#3b82f6",
-                        Optics: "#8b5cf6",
-                        Materials: "#f59e0b",
-                        Biophysics: "#10b981",
-                        Computational: "#ef4444"
-                      }).map(([type, color]) => (
-                        <div key={type} className="flex items-center gap-2">
+                      {Object.entries(buildingsData).map(([buildingId, building]) => (
+                        <button
+                          key={buildingId}
+                          onClick={() => handleBuildingClick(buildingId)}
+                          className="flex items-center gap-2 w-full hover:bg-neutral-100 dark:hover:bg-neutral-700 p-1 rounded transition-colors"
+                        >
                           <div
                             className="w-4 h-4 rounded"
-                            style={{ backgroundColor: color }}
+                            style={{ backgroundColor: building.color }}
                           />
-                          <span className="text-xs">{type}</span>
-                        </div>
+                          <span className="text-xs">{building.name}</span>
+                        </button>
                       ))}
                     </div>
                   </motion.div>
@@ -525,34 +342,34 @@ export default function MapPage() {
           </CardContent>
         </Card>
 
-        {/* Lab Details Panel */}
+        {/* Building & Lab Details Panel */}
         <div className="space-y-4">
           {/* Quick Stats */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Floor Statistics</CardTitle>
+              <CardTitle className="text-lg">Campus Statistics</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Total Labs</span>
-                <span className="font-semibold">5</span>
+                <span className="text-muted-foreground">Total Buildings</span>
+                <span className="font-semibold">6</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Research Labs</span>
+                <span className="font-semibold">6</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Total Researchers</span>
-                <span className="font-semibold">73</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Lab Space</span>
-                <span className="font-semibold">12,000 sq ft</span>
+                <span className="font-semibold">95</span>
               </div>
             </CardContent>
           </Card>
 
-          {/* Selected Lab Details */}
+          {/* Selected Building Details */}
           <AnimatePresence mode="wait">
-            {selectedLab && labsData[selectedLab] && (
+            {selectedBuilding && buildingsData[selectedBuilding] && (
               <motion.div
-                key={selectedLab}
+                key={selectedBuilding}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -562,16 +379,16 @@ export default function MapPage() {
                     <div className="flex items-start justify-between">
                       <div>
                         <CardTitle className="text-lg">
-                          {labsData[selectedLab].name}
+                          {buildingsData[selectedBuilding].name}
                         </CardTitle>
                         <CardDescription>
-                          {labsData[selectedLab].room}
+                          {buildingsData[selectedBuilding].address}
                         </CardDescription>
                       </div>
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => setSelectedLab(null)}
+                        onClick={() => setSelectedBuilding(null)}
                       >
                         <X className="h-4 w-4" />
                       </Button>
@@ -580,83 +397,114 @@ export default function MapPage() {
                   <CardContent className="space-y-4">
                     <div>
                       <div className="flex items-center gap-2 mb-2">
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm font-semibold">
-                          {labsData[selectedLab].pi}
+                        <MapPin className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm">
+                          Built in {buildingsData[selectedBuilding].built}
                         </span>
                       </div>
-                      <Badge variant="secondary">
-                        {labsData[selectedLab].members} members
-                      </Badge>
+                      <p className="text-sm text-muted-foreground">
+                        {buildingsData[selectedBuilding].description}
+                      </p>
                     </div>
 
-                    <p className="text-sm text-muted-foreground">
-                      {labsData[selectedLab].description}
-                    </p>
-
                     <div>
-                      <h4 className="text-sm font-semibold mb-2">Key Equipment</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {labsData[selectedLab].equipment.map((item: string) => (
-                          <Badge key={item} variant="outline" className="text-xs">
-                            {item}
-                          </Badge>
+                      <h4 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                        <FlaskConical className="h-4 w-4" />
+                        Labs in this Building
+                      </h4>
+                      <div className="space-y-3">
+                        {buildingsData[selectedBuilding].labs.map((lab: any) => (
+                          <div
+                            key={lab.id}
+                            className="border rounded-lg p-3 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+                          >
+                            {lab.image && (
+                              <img
+                                src={lab.image}
+                                alt={lab.name}
+                                className="w-full h-24 object-cover rounded mb-2"
+                              />
+                            )}
+                            <div className="font-medium text-sm">{lab.name}</div>
+                            <div className="text-xs text-muted-foreground mb-1">
+                              PI: {lab.pi}
+                            </div>
+                            <div className="text-xs text-muted-foreground mb-2">
+                              {lab.room}
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Badge variant="secondary" className="text-xs">
+                                {lab.category}
+                              </Badge>
+                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                <Users className="h-3 w-3" />
+                                {lab.members}
+                              </div>
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-2">
+                              {lab.description}
+                            </p>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="w-full mt-2"
+                              onClick={() => window.location.href = `/labs/${lab.id}`}
+                            >
+                              View Lab Details
+                            </Button>
+                          </div>
                         ))}
                       </div>
                     </div>
-
-                    <div className="flex gap-2">
-                      <Button size="sm" className="flex-1">
-                        <ImageIcon className="mr-1 h-3 w-3" />
-                        Photos
-                      </Button>
-                      <Button size="sm" variant="outline" className="flex-1">
-                        <Video className="mr-1 h-3 w-3" />
-                        Tour
-                      </Button>
-                    </div>
-
-                    <Button className="w-full" size="sm">
-                      View Lab Page
-                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {!selectedLab && (
+          {!selectedBuilding && (
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Select a Lab</CardTitle>
+                <CardTitle className="text-lg">Select a Building</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Click on any lab room in the floor plan to view details, photos, and equipment information.
+                <p className="text-sm text-muted-foreground mb-4">
+                  Click on any building on the map to view its research labs and details.
                 </p>
+                <div className="space-y-2">
+                  <div className="text-xs font-semibold text-muted-foreground">Quick Tips:</div>
+                  <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                    <li>Zoom and pan the map for a better view</li>
+                    <li>Hover over buildings to highlight them</li>
+                    <li>Buildings are color-coded by location</li>
+                  </ul>
+                </div>
               </CardContent>
             </Card>
           )}
 
-          {/* Lab Directory */}
+          {/* Building Directory */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Lab Directory</CardTitle>
+              <CardTitle className="text-lg">Building Directory</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <ScrollArea className="h-[200px]">
+              <ScrollArea className="h-[250px]">
                 <div className="p-4 space-y-2">
-                  {Object.entries(labsData).map(([room, lab]: [string, any]) => (
+                  {Object.entries(buildingsData).map(([buildingId, building]: [string, any]) => (
                     <button
-                      key={room}
-                      onClick={() => setSelectedLab(room)}
-                      className="w-full text-left p-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                      key={buildingId}
+                      onClick={() => setSelectedBuilding(buildingId)}
+                      className="w-full text-left p-3 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors border"
                     >
                       <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-medium text-sm">{lab.name}</div>
+                        <div className="flex-1">
+                          <div className="font-medium text-sm">{building.name}</div>
                           <div className="text-xs text-muted-foreground">
-                            Room {room}
+                            {building.address}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {building.labs.length} lab{building.labs.length !== 1 ? 's' : ''}
                           </div>
                         </div>
                         <ChevronDown className="h-4 w-4 text-muted-foreground" />
