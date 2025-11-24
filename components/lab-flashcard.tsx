@@ -49,6 +49,8 @@ export function LabFlashCard({
         setIsFlipped(false);
       }}
       style={{ perspective: '1000px' }}
+      role="article"
+      aria-label={`Lab card for ${pi}`}
     >
       <div
         className="relative w-full h-full transition-transform duration-500"
@@ -111,7 +113,7 @@ export function LabFlashCard({
             </div>
 
             {/* Description */}
-            <div className="mb-5 flex-grow">
+            <div className="mb-5 grow">
               <p className="text-sm leading-relaxed text-foreground/80">
                 {description || "Research description placeholder - a brief overview of what this lab focuses on and their main research goals."}
               </p>

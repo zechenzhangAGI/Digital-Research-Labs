@@ -50,7 +50,7 @@ export default function Home() {
 
         {/* Background decoration */}
         <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-neutral-950">
-          <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+          <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
         </div>
       </section>
 
@@ -109,7 +109,7 @@ export default function Home() {
                   <span>12 members</span>
                 </div>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/labs/quantum">
+                  <Link href="/labs/quantum" aria-label="View Quantum Computing Lab details">
                     View Lab
                     <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
@@ -139,7 +139,7 @@ export default function Home() {
                   <span>18 members</span>
                 </div>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/labs/biophysics">
+                  <Link href="/labs/biophysics" aria-label="View Molecular Biophysics Lab details">
                     View Lab
                     <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
@@ -169,7 +169,7 @@ export default function Home() {
                   <span>15 members</span>
                 </div>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/labs/superconductivity">
+                  <Link href="/labs/superconductivity" aria-label="View Superconductivity Lab details">
                     View Lab
                     <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
