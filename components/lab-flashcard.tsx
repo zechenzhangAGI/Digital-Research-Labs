@@ -78,7 +78,7 @@ export function LabFlashCard({
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
+              <div className="absolute inset-0 bg-linear-to-br from-muted/50 to-muted flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-muted-foreground text-sm">Science Image</div>
                   <div className="text-muted-foreground/50 text-xs">Placeholder</div>
@@ -87,7 +87,7 @@ export function LabFlashCard({
             )}
 
             {/* Dark Overlay with Name - Bottom Third */}
-            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 via-black/60 to-transparent flex items-end justify-end px-8 pb-6">
+            <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-black/80 via-black/60 to-transparent flex items-end justify-end px-8 pb-6">
               <h3 className="text-3xl font-light tracking-tight text-white text-right">
                 {pi}
               </h3>

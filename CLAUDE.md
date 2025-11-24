@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Harvard Physics Lab Hub - A Next.js 15 platform for Harvard Physics Department's research infrastructure management, collaboration matching, and equipment booking.
+Harvard Physics Research Discovery Platform - A Next.js 15 platform helping undergraduate students discover and connect with physics research opportunities at Harvard.
 
 ## Development Commands
 
@@ -31,12 +31,11 @@ git push origin main  # Auto-deploys via GitHub integration
 ## Architecture & Key Components
 
 ### Page Structure (App Router)
-- **`/` (Homepage)**: Hero section, lab statistics, featured labs grid, AI insights panel
-- **`/labs`**: Searchable lab directory with filters by category, real-time search
-- **`/labs/[id]`**: Individual lab pages with image galleries, team info, publications, equipment lists
-- **`/equipment`**: Equipment database with availability status, booking interface, type filtering
-- **`/map`**: Interactive SVG floor plans with zoom/pan (react-zoom-pan-pinch), clickable lab rooms
-- **`/ai`**: AI collaboration matching, grant opportunities, research trends visualization
+- **`/` (Homepage)**: Hero section focused on research discovery, how to get involved steps, featured labs, AI research matcher
+- **`/labs`**: Searchable lab directory with research areas, real-time search
+- **`/labs/[id]`**: Individual lab pages with research descriptions, team info, sample projects for undergrads
+- **`/map`**: Interactive SVG floor plans with zoom/pan (react-zoom-pan-pinch), clickable lab rooms for exploring physical locations
+- **`/ai`**: AI-powered research matcher for undergraduates, research area explorer, success stories
 
 ### Data Flow Architecture
 - All pages use **client-side components** ("use client") for interactivity
@@ -55,7 +54,7 @@ The map page uses inline SVG with React event handlers for lab room interaction:
 ### UI Component Library
 Using shadcn/ui components with Radix UI primitives:
 - Components in `components/ui/` are auto-generated via `pnpm dlx shadcn@latest add [component]`
-- Custom navigation component wraps NavigationMenu with dropdown for Equipment submenu
+- Custom navigation component with simple menu structure
 - All components use Tailwind CSS v4 with CSS variables for theming
 
 ### Animation Strategy
@@ -91,10 +90,9 @@ Object.entries(obj).map(([key, value]: [string, any]) => ...)
 ## Mock Data Locations
 
 - **Lab profiles data**: `/app/labs/page.tsx` (labs array)
-- **Equipment data**: `/app/equipment/page.tsx` (equipment array)
 - **Lab details data**: `/app/labs/[id]/page.tsx` (labsDetailData object)
 - **Map floor plan data**: `/app/map/page.tsx` (labsData object)
-- **AI recommendations**: `/app/ai/page.tsx` (multiple mock arrays)
+- **AI research matcher data**: `/app/ai/page.tsx` (recommended labs, research areas, success stories)
 
 ## Future Integration Points
 

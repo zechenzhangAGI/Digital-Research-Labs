@@ -50,7 +50,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider defaultTheme="dark" storageKey="physics-lab-theme">
           <Navigation />
-          <main className="min-h-screen bg-gradient-to-b from-background to-muted">
+          <main className="min-h-screen bg-linear-to-b from-background to-muted">
             {children}
           </main>
         </ThemeProvider>

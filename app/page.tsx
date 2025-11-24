@@ -5,14 +5,13 @@ import {
   Users,
   FlaskConical,
   BookOpen,
-  Activity,
   ArrowRight,
   Microscope,
   Atom,
   Zap,
   Brain,
-  Globe,
-  Award
+  Lightbulb,
+  GraduationCap
 } from "lucide-react";
 import Link from "next/link";
 
@@ -26,22 +25,22 @@ export default function Home() {
             <Badge className="mb-4" variant="secondary">
               Harvard Physics Department
             </Badge>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              Research Lab Hub
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 bg-linear-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+              Discover Research Opportunities
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Accelerating scientific discovery through AI-powered collaboration and resource optimization across Harvard's physics research infrastructure
+              Explore cutting-edge physics research labs at Harvard and find opportunities to get involved as an undergraduate researcher
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
                 <Link href="/labs">
-                  Explore Labs
+                  Browse Research Labs
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/equipment">
-                  Book Equipment
+                <Link href="/map">
+                  Explore Lab Map
                 </Link>
               </Button>
             </div>
@@ -56,37 +55,91 @@ export default function Home() {
 
       {/* Stats Section */}
       <section className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-4xl font-bold text-blue-600">47</CardTitle>
-              <CardDescription className="text-base">Active Research Labs</CardDescription>
+              <CardTitle className="text-4xl font-bold text-blue-600">40+</CardTitle>
+              <CardDescription className="text-base">Research Labs</CardDescription>
             </CardHeader>
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-4xl font-bold text-green-600">250+</CardTitle>
-              <CardDescription className="text-base">Equipment Units</CardDescription>
+              <CardTitle className="text-4xl font-bold text-purple-600">200+</CardTitle>
+              <CardDescription className="text-base">Graduate Researchers</CardDescription>
             </CardHeader>
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-4xl font-bold text-purple-600">1,200</CardTitle>
-              <CardDescription className="text-base">Active Researchers</CardDescription>
+              <CardTitle className="text-4xl font-bold text-green-600">100+</CardTitle>
+              <CardDescription className="text-base">Undergraduate Researchers</CardDescription>
             </CardHeader>
           </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-4xl font-bold text-orange-600">89%</CardTitle>
-              <CardDescription className="text-base">Equipment Utilization</CardDescription>
+        </div>
+      </section>
+
+      {/* How to Get Involved Section */}
+      <section className="container mx-auto px-4 py-12">
+        <h2 className="text-3xl font-bold mb-4 text-center">How to Get Involved</h2>
+        <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
+          Whether you're interested in quantum physics, biophysics, or astrophysics, there's a place for you in our research community
+        </p>
+        <div className="grid md:grid-cols-3 gap-6">
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="flex flex-col items-center text-center">
+                <div className="h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center mb-4">
+                  <FlaskConical className="h-8 w-8 text-blue-600" />
+                </div>
+                <CardTitle className="mb-2">1. Explore Labs</CardTitle>
+              </div>
             </CardHeader>
+            <CardContent className="text-center">
+              <p className="text-sm text-muted-foreground">
+                Browse our research labs to learn about ongoing projects and discover what interests you
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="flex flex-col items-center text-center">
+                <div className="h-16 w-16 rounded-full bg-purple-100 dark:bg-purple-950 flex items-center justify-center mb-4">
+                  <Brain className="h-8 w-8 text-purple-600" />
+                </div>
+                <CardTitle className="mb-2">2. Find Your Match</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="text-center">
+              <p className="text-sm text-muted-foreground">
+                Use our AI assistant to match your interests and skills with research opportunities
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="flex flex-col items-center text-center">
+                <div className="h-16 w-16 rounded-full bg-green-100 dark:bg-green-950 flex items-center justify-center mb-4">
+                  <GraduationCap className="h-8 w-8 text-green-600" />
+                </div>
+                <CardTitle className="mb-2">3. Reach Out</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="text-center">
+              <p className="text-sm text-muted-foreground">
+                Contact the Principal Investigator or lab members to express your interest and inquire about openings
+              </p>
+            </CardContent>
           </Card>
         </div>
       </section>
 
       {/* Featured Labs */}
       <section className="container mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8">Featured Research Labs</h2>
+        <h2 className="text-3xl font-bold mb-2">Featured Research Labs</h2>
+        <p className="text-muted-foreground mb-8">
+          Explore some of the exciting research happening in the Physics Department
+        </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader>
@@ -94,14 +147,14 @@ export default function Home() {
                 <Atom className="h-8 w-8 text-blue-600" />
                 <Badge variant="default">Quantum</Badge>
               </div>
-              <CardTitle>Quantum Computing Lab</CardTitle>
+              <CardTitle>Franklin Lab</CardTitle>
               <CardDescription>
-                Prof. Sarah Chen • Room 301 Jefferson
+                Prof. Melissa Franklin • Lyman 237
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Developing next-generation quantum processors and algorithms for quantum supremacy experiments
+                Searching for new particles using particle accelerators at CERN
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -109,7 +162,7 @@ export default function Home() {
                   <span>12 members</span>
                 </div>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/labs/quantum" aria-label="View Quantum Computing Lab details">
+                  <Link href="/labs/franklin">
                     View Lab
                     <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
@@ -124,14 +177,14 @@ export default function Home() {
                 <Microscope className="h-8 w-8 text-green-600" />
                 <Badge variant="default">Biophysics</Badge>
               </div>
-              <CardTitle>Molecular Biophysics Lab</CardTitle>
+              <CardTitle>Cohen Lab</CardTitle>
               <CardDescription>
-                Prof. Michael Zhang • Room 415 Lyman
+                Prof. Adam Cohen • Mallinckrodt 115
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Investigating protein folding dynamics and cellular mechanics using cutting-edge optical techniques
+                Developing optical techniques to visualize voltage dynamics in neural tissue
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -139,7 +192,7 @@ export default function Home() {
                   <span>18 members</span>
                 </div>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/labs/biophysics" aria-label="View Molecular Biophysics Lab details">
+                  <Link href="/labs/cohen">
                     View Lab
                     <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
@@ -152,24 +205,24 @@ export default function Home() {
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <Zap className="h-8 w-8 text-yellow-600" />
-                <Badge variant="default">Condensed Matter</Badge>
+                <Badge variant="default">Solid State</Badge>
               </div>
-              <CardTitle>Superconductivity Lab</CardTitle>
+              <CardTitle>Mitrano Group</CardTitle>
               <CardDescription>
-                Prof. Elena Rodriguez • Room 203 Pierce
+                Prof. Matteo Mitrano • Jefferson 164
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Exploring high-temperature superconductors and topological materials for quantum applications
+                Investigating quantum materials and their properties using advanced spectroscopy
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Users className="h-4 w-4" />
-                  <span>15 members</span>
+                  <span>20 members</span>
                 </div>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/labs/superconductivity" aria-label="View Superconductivity Lab details">
+                  <Link href="/labs/mitrano">
                     View Lab
                     <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
@@ -178,79 +231,55 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
+        <div className="mt-8 text-center">
+          <Button size="lg" asChild>
+            <Link href="/labs">
+              View All Research Labs
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
       </section>
 
-      {/* AI Insights Section */}
+      {/* AI Research Matching */}
       <section className="container mx-auto px-4 py-12">
-        <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 border-blue-200 dark:border-blue-800">
+        <Card className="bg-linear-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 border-blue-200 dark:border-blue-800">
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
               <Brain className="h-8 w-8 text-blue-600" />
-              <CardTitle className="text-2xl">AI-Powered Insights</CardTitle>
+              <CardTitle className="text-2xl">AI Research Assistant</CardTitle>
             </div>
             <CardDescription className="text-base">
-              Latest collaboration opportunities and equipment recommendations
+              Get personalized recommendations to find the perfect research match for your interests and skills
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold mb-3 flex items-center gap-2">
-                  <Globe className="h-5 w-5 text-blue-600" />
-                  Collaboration Opportunities
+                  <Lightbulb className="h-5 w-5 text-blue-600" />
+                  Match Your Interests
                 </h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Badge variant="outline" className="mt-0.5">New</Badge>
-                    <div>
-                      <p className="text-sm font-medium">Quantum-Bio Interface Study</p>
-                      <p className="text-xs text-muted-foreground">
-                        3 labs have complementary expertise in quantum sensing for biological systems
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Badge variant="outline" className="mt-0.5">Match</Badge>
-                    <div>
-                      <p className="text-sm font-medium">Shared Cryogenic Equipment</p>
-                      <p className="text-xs text-muted-foreground">
-                        5 labs could benefit from pooling resources for new dilution refrigerator
-                      </p>
-                    </div>
-                  </li>
-                </ul>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Tell our AI assistant about your coursework, skills, and research interests. 
+                  Get personalized recommendations for labs that align with your academic goals.
+                </p>
               </div>
               <div>
                 <h3 className="font-semibold mb-3 flex items-center gap-2">
-                  <Award className="h-5 w-5 text-green-600" />
-                  Grant Opportunities
+                  <Users className="h-5 w-5 text-green-600" />
+                  Connect with Researchers
                 </h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Badge variant="outline" className="mt-0.5 border-green-600 text-green-600">NSF</Badge>
-                    <div>
-                      <p className="text-sm font-medium">Quantum Information Science Program</p>
-                      <p className="text-xs text-muted-foreground">
-                        Deadline: March 15 • 4 labs match criteria
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Badge variant="outline" className="mt-0.5 border-blue-600 text-blue-600">DOE</Badge>
-                    <div>
-                      <p className="text-sm font-medium">Energy Frontier Research Centers</p>
-                      <p className="text-xs text-muted-foreground">
-                        Deadline: April 1 • 6 labs have relevant expertise
-                      </p>
-                    </div>
-                  </li>
-                </ul>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Discover labs actively looking for undergraduate researchers and learn what 
+                  skills they're seeking. Find opportunities that match your experience level.
+                </p>
               </div>
             </div>
             <div className="mt-6">
               <Button asChild>
                 <Link href="/ai">
-                  Explore AI Assistant
+                  Try AI Research Matcher
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -259,37 +288,43 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* Quick Actions */}
+      {/* Quick Links */}
       <section className="container mx-auto px-4 py-12 pb-24">
-        <h2 className="text-3xl font-bold mb-8">Quick Actions</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <FlaskConical className="h-8 w-8 text-purple-600 mb-2" />
-              <CardTitle>Find a Lab</CardTitle>
-              <CardDescription>
-                Search by research area, PI, or equipment
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <BookOpen className="h-8 w-8 text-orange-600 mb-2" />
-              <CardTitle>Book Equipment</CardTitle>
-              <CardDescription>
-                Reserve specialized instruments and facilities
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <Activity className="h-8 w-8 text-green-600 mb-2" />
-              <CardTitle>View Analytics</CardTitle>
-              <CardDescription>
-                Track usage patterns and collaboration metrics
-              </CardDescription>
-            </CardHeader>
-          </Card>
+        <h2 className="text-3xl font-bold mb-8 text-center">Quick Links</h2>
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <Link href="/labs">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+              <CardHeader className="text-center">
+                <FlaskConical className="h-12 w-12 text-blue-600 mb-3 mx-auto" />
+                <CardTitle>Browse All Labs</CardTitle>
+                <CardDescription>
+                  Explore our complete directory of research groups
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+          <Link href="/map">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+              <CardHeader className="text-center">
+                <BookOpen className="h-12 w-12 text-purple-600 mb-3 mx-auto" />
+                <CardTitle>Lab Map</CardTitle>
+                <CardDescription>
+                  Navigate physics buildings and find lab locations
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+          <Link href="/ai">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+              <CardHeader className="text-center">
+                <Brain className="h-12 w-12 text-green-600 mb-3 mx-auto" />
+                <CardTitle>AI Assistant</CardTitle>
+                <CardDescription>
+                  Get personalized research recommendations
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
         </div>
       </section>
     </div>

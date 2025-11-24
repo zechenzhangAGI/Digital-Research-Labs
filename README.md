@@ -1,6 +1,6 @@
-# Harvard Physics Lab Hub 🔬
+# Harvard Physics Research Discovery Platform 🔬
 
-A comprehensive web platform serving as the central hub for Harvard Physics Department's research infrastructure, designed to facilitate collaboration, resource management, and knowledge discovery across all physics research labs.
+A web platform helping undergraduate students at Harvard discover physics research opportunities, explore labs, and connect with faculty conducting cutting-edge research.
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square&logo=typescript)
@@ -9,16 +9,16 @@ A comprehensive web platform serving as the central hub for Harvard Physics Depa
 
 ## 🚀 Overview
 
-The Physics Lab Hub transforms how Harvard physicists interact with research facilities, equipment, and each other by creating a unified digital ecosystem that breaks down silos between labs and accelerates scientific discovery through AI-powered insights.
+The platform helps undergraduate students explore the diverse research happening in Harvard's Physics Department, discover opportunities that match their interests and skills, and take the first steps toward joining a research lab.
 
 ### Key Features
 
-- **🗺️ Interactive Lab Maps** - Navigate physical lab spaces with interactive floor plans
-- **🔬 Equipment Database** - Browse and book specialized research equipment
-- **🤝 AI-Powered Collaboration** - Intelligent matching for research partnerships
-- **📊 Real-time Analytics** - Track usage patterns and resource utilization
-- **📚 Knowledge Repository** - Centralized documentation and protocols
-- **💰 Grant Matching** - AI recommendations for funding opportunities
+- **🔬 Research Lab Directory** - Browse 40+ active physics research groups
+- **🗺️ Interactive Lab Maps** - Navigate physical lab spaces and find lab locations
+- **🤖 AI Research Matcher** - Get personalized lab recommendations based on your interests and skills
+- **📚 Research Areas Explorer** - Learn about different fields in physics research
+- **🎓 Success Stories** - Read about undergraduates thriving in research positions
+- **💡 Simple & Intuitive** - Clean design focused on discovery and connection
 
 ## 🛠️ Tech Stack
 
@@ -38,16 +38,14 @@ The Physics Lab Hub transforms how Harvard physicists interact with research fac
 ```
 ├── app/                    # Next.js app router pages
 │   ├── layout.tsx         # Root layout with navigation
-│   ├── page.tsx           # Homepage
+│   ├── page.tsx           # Homepage with research discovery focus
 │   ├── labs/              # Lab listings and details
 │   │   ├── page.tsx       # Lab directory
 │   │   └── [id]/          # Individual lab pages
 │   │       └── page.tsx
-│   ├── equipment/         # Equipment database
-│   │   └── page.tsx
 │   ├── map/               # Interactive lab maps
 │   │   └── page.tsx
-│   └── ai/                # AI assistant
+│   └── ai/                # AI research matcher
 │       └── page.tsx
 ├── components/            # Reusable components
 │   ├── navigation.tsx     # Main navigation
@@ -93,58 +91,46 @@ pnpm start
 
 ## 📱 Features in Detail
 
+### Research Lab Directory
+- **40+ research labs** across all physics subfields
+- **Search and filter** by research area, PI, or keywords
+- **Lab profiles** with descriptions, team info, and sample projects
+- **Student-friendly** information about getting involved
+
+### AI Research Matcher
+- **Personalized recommendations** based on your interests and coursework
+- **Research area explorer** to learn about different fields
+- **Success stories** from current undergraduate researchers
+- **Match scores** showing alignment with each lab
+
 ### Interactive Lab Maps
 - **Multi-floor navigation** with zoom/pan controls
 - **Click-to-explore** lab rooms with instant details
 - **Color-coded** by research type
-- **Real-time occupancy** indicators (planned)
-
-### Equipment Management
-- **Searchable database** of all department equipment
-- **Real-time availability** status
-- **Online booking** system
-- **Documentation** and training resources
-
-### AI-Powered Features
-- **Collaboration matching** based on research overlap
-- **Grant opportunity** recommendations
-- **Research trend** analysis
-- **Equipment sharing** optimization
-
-### Lab Profiles
-- **Comprehensive information** including team, research, publications
-- **Media galleries** with photos and virtual tours
-- **Equipment listings** specific to each lab
-- **Contact information** and collaboration requests
+- **Find lab locations** in physics buildings
 
 ## 🎯 Roadmap
 
-### Phase 1: Foundation ✅
-- [x] Basic lab profiles with mock data
-- [x] Equipment listing and search
-- [x] Homepage with statistics
+### Phase 1: Core Platform ✅
+- [x] Lab directory with search and filtering
 - [x] Interactive floor plans
-- [x] AI recommendations display
+- [x] AI research matcher interface
+- [x] Clean, student-focused design
+- [x] Mobile-responsive layout
 
-### Phase 2: Authentication & Data (Next)
-- [ ] Harvard SSO integration
-- [ ] PostgreSQL database with Prisma
-- [ ] Real lab data migration
-- [ ] User profiles and permissions
-- [ ] Advanced booking system
+### Phase 2: Enhanced Features (Next)
+- [ ] Real lab data integration
+- [ ] Improved AI matching algorithm
+- [ ] Student submission system for profiles
+- [ ] Lab availability calendars
+- [ ] Faculty profile pages
 
-### Phase 3: Advanced Features
-- [ ] 3D lab visualizations
-- [ ] Real-time equipment IoT integration
-- [ ] Advanced AI collaboration engine
-- [ ] Publication analysis
-- [ ] Mobile app
-
-### Phase 4: Integration
-- [ ] Calendar system integration
-- [ ] Grant management tools
-- [ ] Financial tracking
-- [ ] External API connections
+### Phase 3: Community Features
+- [ ] Student research blog/forum
+- [ ] Event calendar for lab tours and talks
+- [ ] Research symposium information
+- [ ] Peer mentorship connections
+- [ ] Research resources library
 
 ## 🤝 Contributing
 
@@ -158,19 +144,18 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## 📊 Success Metrics
 
-- **80%** of labs actively maintaining profiles within 6 months
-- **30%** increase in shared equipment usage
-- **25%** increase in inter-lab publications
-- **50%** reduction in time to find and book equipment
-- **>4.5/5** user satisfaction rating
+- **80%** of undergraduate physics students aware of platform
+- **50+** students using the platform to find research positions annually
+- **30+** labs with updated, student-friendly profiles
+- **>4.5/5** student satisfaction rating
+- **20+** successful student-lab matches per year
 
 ## 🔒 Security
 
-- Harvard SSO integration for authentication
-- Role-based access control (RBAC)
-- Encrypted data transmission
-- Regular security audits
-- FERPA compliance for student data
+- Secure data transmission
+- Privacy-focused design
+- No sensitive student information collected
+- Compliant with university data policies
 
 ## 📝 License
 
@@ -178,10 +163,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Harvard Physics Department for project vision
-- [Vercel](https://vercel.com) for hosting and AI SDK
+- Harvard Physics Department for supporting undergraduate research
+- [Vercel](https://vercel.com) for hosting
 - [shadcn](https://twitter.com/shadcn) for the UI component library
-- All contributors and lab members
+- All faculty and students contributing to research accessibility
 
 ## 📧 Contact
 

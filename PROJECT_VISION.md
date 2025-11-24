@@ -1,61 +1,52 @@
-# Harvard Physics Digital Research Labs Platform
+# Harvard Physics Research Discovery Platform
 
 ## Project Vision
 
-A comprehensive web platform serving as the central hub for Harvard Physics Department's research infrastructure, designed to facilitate collaboration, resource management, and knowledge discovery across all physics research labs.
+A web platform that helps undergraduate students discover physics research opportunities at Harvard, explore what different labs are working on, and find their path to getting involved in cutting-edge research.
 
 ## Core Purpose
 
-Transform how Harvard physicists interact with research facilities, equipment, and each other by creating a unified digital ecosystem that breaks down silos between labs and accelerates scientific discovery through AI-powered insights.
+Make physics research accessible and approachable for undergraduate students by providing clear information about labs, personalized recommendations, and guidance on how to join research projects.
 
 ## Key User Needs
 
-### Researchers & PIs
-- **Lab Discovery**: Find and connect with other labs working on complementary research
-- **Equipment Access**: Book expensive shared equipment across departments
-- **Collaboration Matching**: AI-powered recommendations for potential collaborators based on research overlap
-- **Resource Optimization**: See what equipment is available and underutilized
+### Undergraduate Students
+- **Research Discovery**: Learn what research is happening across the Physics Department
+- **Interest Matching**: Find labs that align with their coursework and interests
+- **Getting Started**: Understand how to approach faculty and join research projects
+- **Inspiration**: See success stories from other undergraduates in research
+- **Location Finding**: Navigate buildings to find lab locations for meetings
 
-### Graduate Students
-- **Lab Rotation Planning**: Explore different labs, their research focus, and current projects
-- **Skill Matching**: Find labs that need their specific technical skills
-- **Equipment Training**: Access documentation and booking for equipment they need
-
-### Department Administration
-- **Space Planning**: Visualize physical lab layouts and plan renovations
-- **Resource Allocation**: Track equipment usage and identify sharing opportunities
-- **Grant Applications**: Showcase department capabilities for funding proposals
+### Faculty & Lab Members
+- **Student Outreach**: Make their research visible to interested undergraduates
+- **Showcase Work**: Highlight exciting projects and recent discoveries
+- **Recruit Talent**: Connect with motivated students looking for opportunities
 
 ## Core Features
 
-### 1. Research Lab Profiles
-- **Comprehensive Information**: Research areas, publications, team members, active grants
-- **Visual Lab Maps**: Interactive floor plans showing equipment placement
-- **Real-time Status**: Live occupancy, active experiments, equipment availability
+### 1. Research Lab Directory
+- **Student-Friendly Descriptions**: Clear explanations of research areas and projects
+- **Lab Profiles**: PI information, team size, research focus, sample projects
+- **Getting Involved**: Information about openings and how to reach out
+- **Visual Content**: Images and graphics showcasing research
 
-### 2. Equipment Database
-- **Detailed Specifications**: Technical capabilities, operating procedures, safety requirements
-- **Booking System**: Reserve time slots, track usage, manage access permissions
-- **Documentation Hub**: User manuals, training videos, troubleshooting guides
-- **Maintenance Tracking**: Service history, calibration schedules
+### 2. AI Research Matcher
+- **Personalized Recommendations**: Match students with labs based on interests and skills
+- **Research Area Explorer**: Learn about different physics subfields
+- **Success Stories**: Real examples of undergraduates in research
+- **Smart Matching**: Consider coursework, time commitment, and experience level
 
-### 3. AI-Powered Collaboration Engine
-- **Research Matching**: Identify labs with complementary expertise
-- **Equipment Sharing**: Suggest underutilized equipment that could benefit other labs
-- **Grant Opportunities**: Match research capabilities with funding opportunities
-- **Publication Analysis**: Track research trends and suggest collaboration opportunities
+### 3. Interactive Lab Map
+- **Building Navigation**: Find lab locations across physics buildings
+- **Floor Plans**: Visual layouts of Jefferson, Lyman, and LISE
+- **Lab Information**: Quick details when clicking on rooms
+- **Color-Coded Areas**: Distinguish research types visually
 
-### 4. Interactive Lab Map
-- **3D Visualization**: Navigate physical spaces virtually
-- **Equipment Location**: Find specific instruments across the department
-- **Safety Information**: Emergency procedures, chemical storage, evacuation routes
-- **Space Planning**: Visualize potential lab reconfigurations
-
-### 5. Knowledge Repository
-- **Publications Database**: Searchable archive of department research output
-- **Protocols Library**: Shared experimental procedures and best practices
-- **Data Sharing**: Secure platform for sharing research data between labs
-- **Training Materials**: Centralized resource for equipment training and safety
+### 4. Simple & Clean Interface
+- **Easy Navigation**: Three main sections (Labs, Map, AI Matcher)
+- **Search & Filter**: Find labs by research area or PI name
+- **Mobile Friendly**: Works well on phones for on-the-go browsing
+- **Fast Loading**: Optimized for quick information access
 
 ## Technical Architecture
 
@@ -66,89 +57,86 @@ Transform how Harvard physicists interact with research facilities, equipment, a
 - **Data Fetching**: TanStack Query for caching and synchronization
 
 ### Backend (Planned)
-- **API**: GraphQL with Apollo Server
-- **Database**: PostgreSQL with Prisma ORM
-- **Authentication**: NextAuth with Harvard SSO integration
-- **File Storage**: AWS S3 for documents and images
-- **Real-time**: WebSockets for live status updates
+- **API**: REST API for lab data management
+- **Database**: Simple data storage for lab information
+- **Content Management**: Easy updates for lab profiles
 
 ### AI Integration
-- **Provider**: Vercel AI SDK with multiple LLM providers
+- **Provider**: Vercel AI SDK for natural language matching
 - **Features**:
-  - Natural language search across all content
-  - Automated research paper summarization
-  - Collaboration recommendations
-  - Grant opportunity matching
+  - Natural language interest matching
+  - Lab recommendation based on coursework
+  - Research area explanations
+  - Success story highlighting
 
 ## Design Principles
 
 ### Visual Design
-- **Clean & Professional**: Minimalist interface focusing on content
-- **Harvard Brand**: Blue and crimson accents, maintaining institutional identity
-- **Dark Mode Support**: Essential for researchers working late hours
-- **Responsive**: Optimized for desktop, tablet, and mobile
+- **Clean & Simple**: Minimalist interface focused on discovery
+- **Student-Friendly**: Clear language, no jargon unless explained
+- **Harvard Brand**: Blue and crimson accents, institutional identity
+- **Dark Mode Support**: Comfortable viewing at any time
+- **Responsive**: Works perfectly on phones for browsing anywhere
 
 ### User Experience
-- **Information Hierarchy**: Most important information immediately visible
-- **Progressive Disclosure**: Detailed information available on demand
-- **Search-First**: Powerful search as the primary navigation method
+- **Easy Navigation**: Three main sections - Labs, Map, AI Matcher
+- **Quick Discovery**: Find relevant labs in under 1 minute
+- **Clear Actions**: Obvious next steps for getting involved
 - **Accessibility**: WCAG 2.1 AA compliance
+- **Mobile-First**: Designed for on-the-go exploration
 
 ### Performance
-- **Fast Loading**: Sub-second initial page loads
-- **Optimistic Updates**: Immediate UI feedback for all actions
-- **Offline Support**: Basic functionality available without internet
-- **SEO Optimized**: Public pages indexed for academic search engines
+- **Fast Loading**: Instant page loads
+- **Smooth Interactions**: No lag in search or navigation
+- **SEO Optimized**: Easy to find via Google searches
 
 ## Implementation Phases
 
-### Phase 1: Foundation (Current)
-- Basic lab profiles with mock data
-- Equipment listing and basic search
-- Homepage with key statistics
-- Simple AI recommendations display
+### Phase 1: Core Platform (Current)
+- Lab directory with search and filtering
+- Interactive floor plans
+- AI research matcher interface
+- Clean, student-focused design
+- Mobile-responsive layout
 
-### Phase 2: Authentication & Data
-- Harvard SSO integration
-- Real database with actual lab data
-- User profiles and permissions
-- Basic booking system
+### Phase 2: Enhanced Features
+- Real lab data integration
+- Improved AI matching algorithm
+- Student submission system for profiles
+- Lab availability calendars
+- Faculty profile pages
 
-### Phase 3: Advanced Features
-- Interactive 3D lab maps
-- Real-time equipment status
-- AI collaboration engine
-- Publication analysis
-
-### Phase 4: Integration
-- Calendar system integration
-- Grant management tools
-- Financial tracking
-- External API connections
+### Phase 3: Community Features
+- Student research blog/forum
+- Event calendar for lab tours and talks
+- Research symposium information
+- Peer mentorship connections
+- Research resources library
 
 ## Success Metrics
 
-- **Adoption**: 80% of labs actively maintaining profiles within 6 months
-- **Equipment Utilization**: 30% increase in shared equipment usage
-- **Collaboration**: 25% increase in inter-lab publications
-- **Time Savings**: 50% reduction in time to find and book equipment
-- **User Satisfaction**: >4.5/5 rating from researchers
+- **Awareness**: 80% of undergraduate physics students know about platform
+- **Usage**: 50+ students using platform to find research positions annually
+- **Lab Participation**: 30+ labs with updated profiles
+- **Satisfaction**: >4.5/5 rating from students
+- **Outcomes**: 20+ successful student-lab matches per year
 
-## Competitive Advantages
+## Unique Value Proposition
 
-Unlike generic lab management systems:
-1. **Harvard-Specific**: Tailored to department's unique needs and culture
-2. **AI-First**: Proactive recommendations vs. passive database
-3. **Holistic View**: Combines physical, digital, and human resources
-4. **Research-Focused**: Built by researchers for researchers
-5. **Open Platform**: APIs for integration with other Harvard systems
+Unlike generic research directories:
+1. **Student-Focused**: Designed specifically for undergraduates discovering research
+2. **AI-Powered**: Smart matching based on interests and coursework
+3. **Visual Discovery**: Interactive maps and engaging layouts
+4. **Success Stories**: Real examples from current undergraduate researchers
+5. **Simple & Clean**: Easy to use, no overwhelming complexity
 
 ## Future Vision
 
-This platform will become the "Google Maps + LinkedIn + Airbnb" for Harvard Physics - where you can:
-- Navigate physical and intellectual spaces
-- Connect with the right collaborators
-- Share expensive resources efficiently
-- Accelerate scientific discovery through AI-powered insights
+This platform will become the "go-to resource" for any Harvard undergraduate interested in physics research - where you can:
+- Discover what research is happening across campus
+- Find labs that match your interests and skills
+- Learn from other undergraduates' experiences
+- Take the first steps toward joining a research project
+- Build connections with faculty and graduate students
 
-The ultimate goal is to reduce friction in the research process, enabling physicists to focus on science rather than logistics, and fostering unexpected collaborations that lead to breakthrough discoveries.
+The ultimate goal is to make research accessible and approachable, helping more undergraduates get involved in cutting-edge physics and fostering the next generation of scientists.

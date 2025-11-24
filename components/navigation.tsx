@@ -5,16 +5,14 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { FlaskConical, Search, Users, Map, BookOpen, Brain } from "lucide-react";
+import { FlaskConical, Users, Map, Brain } from "lucide-react";
 
 export function Navigation() {
   const pathname = usePathname();
@@ -24,7 +22,7 @@ export function Navigation() {
       <div className="container mx-auto px-4 flex h-16 items-center">
         <Link href="/" className="mr-8 flex items-center space-x-2">
           <FlaskConical className="h-6 w-6 text-primary" />
-          <span className="font-bold text-xl">Physics Lab Hub</span>
+          <span className="font-bold text-xl">Physics Research</span>
         </Link>
 
         <NavigationMenu className="mx-6">
@@ -32,65 +30,27 @@ export function Navigation() {
             <NavigationMenuItem>
               <Link href="/labs" className={cn(navigationMenuTriggerStyle())}>
                 <Users className="mr-2 h-4 w-4" />
-                Labs
+                Research Labs
               </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                <BookOpen className="mr-2 h-4 w-4" />
-                Equipment
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/equipment">
-                        <BookOpen className="h-6 w-6" />
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          Equipment Database
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Browse and book specialized research equipment across all labs
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <ListItem href="/equipment/booking" title="Book Equipment">
-                    Reserve time slots for shared equipment
-                  </ListItem>
-                  <ListItem href="/equipment/training" title="Training Resources">
-                    Access documentation and training materials
-                  </ListItem>
-                  <ListItem href="/equipment/maintenance" title="Maintenance">
-                    View service history and schedules
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <Link href="/map" className={cn(navigationMenuTriggerStyle())}>
                 <Map className="mr-2 h-4 w-4" />
-                Map
+                Lab Map
               </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <Link href="/ai" className={cn(navigationMenuTriggerStyle())}>
                 <Brain className="mr-2 h-4 w-4" />
-                AI Assistant
+                Research Matcher
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
         <div className="ml-auto flex items-center space-x-2">
-          <Button variant="ghost" size="icon" aria-label="Search">
-            <Search className="h-5 w-5" />
-          </Button>
           <ThemeToggle />
         </div>
       </div>
