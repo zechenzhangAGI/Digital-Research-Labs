@@ -272,7 +272,7 @@ const labsDetailData: Record<string, any> = {
     equipment: [],
     publications: [],
     images: [
-      { url: "http://mundy.physics.harvard.edu/images/MBE.png", caption: "Molecular beam epitaxy system" },
+      { url: "/mundy-mbe.png", caption: "Molecular beam epitaxy system" },
       { url: "/api/placeholder/800/600", caption: "Sample preparation" }
     ],
     videos: [],
@@ -297,7 +297,7 @@ export default function LabDetailPage() {
   };
 
   return (
-    <div className="container py-8">
+    <div className="container mx-auto px-4 py-8">
       {/* Back Navigation */}
       <Button variant="ghost" asChild className="mb-6">
         <Link href="/labs">
