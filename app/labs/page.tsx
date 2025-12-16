@@ -12,6 +12,8 @@ import {
 import { Search } from "lucide-react";
 import { LabFlashCard } from "@/components/lab-flashcard";
 
+
+//Used LAB room if available, if not professor room #
 const labs = [
   {
     id: "franklin",
@@ -19,10 +21,10 @@ const labs = [
     pi: "Melissa Franklin",
     location: "Lyman 237",
     category: "Particle Physics",
-    members: 12,
+    undergrads: 12,
     description: "Searching for new particles using particle accelerators at CERN.",
     researchArea: "Particle Physics",
-    image: "https://atlas.cern/sites/default/files/2025-09/ATLAS-OO-banner.jpg",
+    image: "/lab_images/franklin-atlas.jpg/",
     sampleProjects: [
       "Melissa will give us a project to go here"
     ]
@@ -33,14 +35,14 @@ const labs = [
     pi: "Adam Cohen",
     location: "Mallinckrodt 115",
     category: "Biophysics",
-    members: 18,
-    description: "Developing optical techniques to visualize voltage dynamics in neural tissue.",
-    researchArea: "Biophysics",
-    image: "https://cohenweb.rc.fas.harvard.edu/Research/JNeuro_Cover.jpg",
+    undergrads: 3,
+    description: "The Cohen Lab develops and applies new tools to study biology. We push the limits of physics and chemistry to make measurements in previously inaccessible regimes.",
+    researchArea: "Neurophotonics & Biophysics",
+    image: "/lab_images/cohen-magazine.jpg",
     sampleProjects: [
-      "Single-molecule protein folding studies",
-      "Cellular force measurements",
-      "DNA-protein interaction mapping"
+      "Developing improved optical stimulation of neurons with pulsed ultrafast lasers.",
+      "Modeling ALS with human stem cell-derived neurons.",
+      "Designing better algorithms to extract electrical activity from voltage imaging data."
     ]
   },
   {
@@ -49,14 +51,13 @@ const labs = [
     pi: "Vinothan Manoharan",
     location: "McKay 530",
     category: "Biophysics",
-    members: 15,
-    description: "Virus self-assembly.",
-    researchArea: "Biophysics",
-    image: "https://www.manoharan.seas.harvard.edu/sites/g/files/omnuum4256/files/styles/hwp_21_9__2880x1230/public/manoharan/files/ccmv_in_out-01-01.png?itok=yAJ00Zuq",
+    undergrads: 3,
+    description: "We do experiments to understand how complex systems such as interacting nanoparticles or proteins spontaneously order themselves — a process called self-assembly or self-organization.",
+    researchArea: "Soft Matter & Biophysics",
+    image: "/lab_images/manoharan-virus.png",
     sampleProjects: [
-      "Novel superconductor synthesis",
-      "Topological insulator characterization",
-      "Quantum critical point mapping"
+      "Constructing and refining capillary tweezers that manipulate particles via capillary forces.",
+      "Long-term bench experiments that uncover the physics behind tweezers-inspired microdevices."
     ]
   },
   {
@@ -65,12 +66,11 @@ const labs = [
     pi: "Jordan Cotler",
     location: "60 Oxford St. 412",
     category: "Quantum Computing",
-    members: 14,
-    description: "Developing new theoretical frameworks behind quantum gravity and computing.",
+    undergrads: 14,
+    description: "Cotler’s current research interests include developing quantum algorithms to analyze quantum many-body and quantum gravitational systems and more.",
     researchArea: "Photonics & Quantum Optics",
-    image: "https://www.quantamagazine.org/wp-content/uploads/2022/09/andrew-strominger-jordan-cotler-ADJUSTED.jpg",
+    image: "/lab_images/cotler-blackboard.jpg",
     sampleProjects: [
-      "Idk if he has any"
     ]
   },
   {
@@ -79,14 +79,14 @@ const labs = [
     pi: "Matteo Mitrano",
     location: "Jefferson 164",
     category: "Solid State",
-    members: 20,
-    description: "This will be a great description of Mitrano's Lab",
-    researchArea: "Physics",
-    image: "https://mitrano.physics.harvard.edu/sites/g/files/omnuum1256/files/styles/hwp_1_1__1440x1440_scale/public/mitranolab/files/2_0.png?itok=GCfYx981",
+    undergrads: 3,
+    description: "Our research focuses on the investigation and the control of collective electronic behavior in quantum materials at ultrafast timescales.",
+    researchArea: "Ultrafast Quantum Materials",
+    image: "/lab_images/mitrano-lattice.png",
     sampleProjects: [
-      "ML-driven materials discovery",
-      "Quantum system simulations",
-      "High-performance algorithm development"
+      "Simulate dynamics of many-body excitons in NiPS₃ under THz illumination for quantum control studies.",
+      "Analyze time-resolved X-ray absorption data from the Pohang XFEL to tune cuprate interactions with light.",
+      "Build a non-collinear optical parametric amplifier delivering tunable 9 fs pulses."
     ]
   },
   {
@@ -95,191 +95,254 @@ const labs = [
     pi: "Julia Mundy",
     location: "LISE 709",
     category: "Solid State",
-    members: 16,
-    description: "Something something molecular beam epitaxy.",
-    researchArea: "Solid State",
-    image: "/mundy-mbe.png",
+    undergrads: 4,
+    description: "Work in the Mundy group will design, synthesize and probe such emergent phenomena in complex oxide thin films.",
+    researchArea: "Oxide Heterostructures",
+    image: "lab_images/mundy-mbe.png",
     sampleProjects: [
-      "Dark matter detection experiments",
-      "CMB polarization analysis",
-      "Galaxy formation simulations"
+      "Create lithium-intercalated indium tin oxide thin films via solution-phase n-BuLi chemistry to achieve superconductivity while keeping 73% optical transparency and nanometer roughness.",
     ]
   },
+
+  //STARTING HERE WITH IN-DEPTH VERIFICATION OF ALL INFORMATION
+
   {
     id: "kim",
     name: "Kim Lab",
     pi: "Philip Kim",
-    location: "Location TBD",
+    location: "LISE 4th Floor",
     category: "Condensed Matter",
-    members: 2,
-    description: "Description coming soon.",
+    undergrads: 2,
+    description: "Our group’s research focuses on the mesoscopic investigation of transport phenomena, particularly, electric, thermal and thermoelectrical properties of low dimensional nanoscale materials.",
     researchArea: "Condensed Matter Physics",
-    sampleProjects: []
+    image: "lab_images/kim-circuit.png",
+    sampleProjects: [
+    ]
   },
   {
     id: "weitz",
     name: "Weitz Lab",
     pi: "David Weitz",
-    location: "Location TBD",
+    location: "McKay 5th Floor",
     category: "Soft Matter",
-    members: 4,
-    description: "Description coming soon.",
+    undergrads: 5,
+    description: "We study the physics of soft condensed matter, materials which are easily deformable by external stresses, electric or magnetic fields, or even by thermal fluctuations",
     researchArea: "Soft Matter Physics",
-    sampleProjects: []
+    image: "lab_images/weitz-bubbles.jpg",
+    sampleProjects: [
+      "Creating new classes of drop-based materials and probing their properties.",
+      "Imaging live cells and studying their mechanics."
+    ]
   },
   {
     id: "yin",
     name: "Yin Lab",
     pi: "Xi Yin",
-    location: "Location TBD",
+    location: "Jefferson 570",
     category: "High Energy Theory",
-    members: 0,
-    description: "Description coming soon.",
+    undergrads: 0,
+    description: "I am a theoretical physicist interested in quantum field theory, string theory, and mathematical physics.",
     researchArea: "Theoretical High Energy Physics",
-    sampleProjects: []
+    image: "lab_images/yin-wizards.jpg",
+    sampleProjects: [
+      "Implement matrix quantum mechanics bootstrap code on quantum-information solvers.",
+      "Study renormalization group flow of supersymmetric chiral nonlinear sigma models."
+    ]
   },
   {
     id: "knirck",
     name: "Knirck Lab",
     pi: "Stefan Knirck",
-    location: "Location TBD",
+    location: "18 Hammond Street",
     category: "Particle Physics",
-    members: 4,
-    description: "Description coming soon.",
+    undergrads: 5,
+    description: "Our group builds novel experiments to directly detect axion dark matter in the µeV - meV mass range.",
     researchArea: "Particle Astrophysics",
-    sampleProjects: []
+    image: "lab_images/knirck-cone.jpg",
+    sampleProjects: [
+      "Search for exotic models inside experimental data sets.",
+      "Simulate axion detectors, commission cryostats, and measure antenna patterns."
+    ]
   },
   {
     id: "khalaf",
     name: "Khalaf Lab",
     pi: "Eslam Khalaf",
-    location: "Location TBD",
+    location: "17 Oxford Street",
     category: "Condensed Matter Theory",
-    members: 1,
-    description: "Description coming soon.",
+    undergrads: 1,
+    description: "Khalaf's work addresses questions in the physics of disorder, topological insulators and semimetals, mechanisms for superconductivity in multi-layer graphene heterostructures, and new phenomena in quasicrystals and moiré systems.",
     researchArea: "Condensed Matter Theory",
-    sampleProjects: []
+    image: "lab_images/khalaf-skyrmions.jpg",
+    sampleProjects: [
+      "Exact diagonalization to compute dispersion of anyons on the sphere.",
+      "Numerical diagonalization studies of trion states in semiconductor heterostructures."
+    ]
   },
   {
     id: "stubbs",
     name: "Stubbs Lab",
     pi: "Christopher Stubbs",
-    location: "Location TBD",
+    location: "Lyman 335",
     category: "Astrophysics",
-    members: 2,
-    description: "Description coming soon.",
+    undergrads: 2,
+    description: "Recent projects have primarily used the tools and techniques of observational astronomy, providing the opportunity to measure the properties of the dark sector where signal is non-zero.",
     researchArea: "Observational Astrophysics",
-    sampleProjects: []
+    image: "/lab_images/stubbs-telescope.png",
+    sampleProjects: [
+      "Build optical instrumentation to monitor image degradation in the Rubin Observatory.",
+      "Design precision calibration hardware that injects monochromatic photons into telescopes."
+    ]
   },
   {
     id: "huth",
     name: "Huth Lab",
     pi: "John Huth",
-    location: "Location TBD",
+    location: "Lyman 236",
     category: "Particle Physics",
-    members: 2,
-    description: "Description coming soon.",
+    undergrads: 2,
+    description: "Huth's present work centers on the exploration of the Higgs boson, particularly the decay of the Higgs into a b b-bar pair, which is a challenging final state.",
     researchArea: "Experimental Particle Physics",
-    sampleProjects: []
+    image: "lab_images/huth-atlas.jpg",
+    sampleProjects: [
+      "Finding detector efficiencies as a function of beam intensity.",
+      "Fitting and digitizing ancient tables of latitude and longitude."
+    ]
   },
   {
     id: "ro",
     name: "Ro Lab",
     pi: "Sunghan Ro",
-    location: "Location TBD",
+    location: "Lyman 322",
     category: "Statistical Physics",
-    members: 1,
-    description: "Description coming soon.",
+    undergrads: 1,
+    description: "Recently, Ro has focused on studying collective phenomena in active matter, which consists of units driven out of equilibrium at the individual level.",
     researchArea: "Statistical Physics",
-    sampleProjects: []
+    image: "/lab_images/ro-graph.png",
+    sampleProjects: [
+      "Coarsening in phase separation governed by moment-conserving diffusion.",
+      "Boundary-driven scale-free profiles in annihilating two-particle systems."
+    ]
   },
   {
     id: "desai",
     name: "Desai Lab",
     pi: "Michael Desai",
-    location: "Location TBD",
+    location: "Northwest 457.20",
     category: "Biophysics",
-    members: 3,
-    description: "Description coming soon.",
+    undergrads: 3,
+    description: "We use theory and experiments to study evolutionary dynamics and population genetics, particularly when selection is pervasive.",
     researchArea: "Evolutionary Biophysics",
-    sampleProjects: []
+    image: "/lab_images/desai-bubbles.png",
+    sampleProjects: [
+      "Sequence genomes from evolving yeast lines and analyze mutations to track dynamics.",
+      "Model site-frequency spectra under different purifying-selection scenarios."
+    ]
   },
   {
     id: "samuel",
     name: "Samuel Lab",
     pi: "Aravi Samuel",
-    location: "Location TBD",
+    location: "Northwest 258",
     category: "Biophysics",
-    members: 4,
-    description: "Description coming soon.",
+    undergrads: 4,
+    description: "To make progress, we use accessible biophysical models of organism behavior that can be studied from sensory input to motor output.",
     researchArea: "Neurophysics",
-    sampleProjects: []
+    image: "/lab_images/samuel-brain-science.jpg",
+    sampleProjects: [
+      "Whole-brain imaging of nematodes performing chemotaxis and thermotaxis.",
+      "Data pipelines and coding that connect behavioral assays to neural signals."
+    ]
   },
   {
     id: "morii",
     name: "Morii Lab",
     pi: "Masahiro Morii",
-    location: "Location TBD",
+    location: "Lyman 230",
     category: "Particle Physics",
-    members: 2,
-    description: "Description coming soon.",
+    undergrads: 2,
+    description: "Prof. Morii and his team of postdocs and students have searched for supersymmetry, for dark matter, and for rare processes involving top quarks.",
     researchArea: "Experimental Particle Physics",
-    sampleProjects: []
+    image: "lab_images/morii-atlas.jpg",
+    sampleProjects: [
+      "Contribute to silicon tracking detector upgrades for ATLAS at CERN.",
+      "Assist PhD students with LHC data analysis when hardware work is paused."
+    ]
   },
   {
     id: "park",
     name: "Park Lab",
     pi: "Hongkun Park",
-    location: "Location TBD",
+    location: "Conant 048",
     category: "Quantum Materials",
-    members: 2,
-    description: "Description coming soon.",
+    undergrads: 2,
+    description: "The group focuses on fundamental studies of nanoscale electrical, optical, and plasmonic devices that operate based upon quantum mechanical principles.",
     researchArea: "Quantum Materials & Sensing",
-    sampleProjects: []
+    image: "/lab_images/park-computer.webp",
+    sampleProjects: [
+      "Build and test quantum devices made of atomically thin materials.",
+      "Develop quantum sensing experiments leveraging layered materials."
+    ]
   },
   {
     id: "heller",
     name: "Heller Lab",
     pi: "Eric Heller",
-    location: "Location TBD",
+    location: "Mallinckrodt M-107",
     category: "Quantum Physics",
-    members: 2,
-    description: "Description coming soon.",
+    undergrads: 6,
+    description: "We are interested in a broad range of subjects that depend on time-dependant wave mechanics in one form or another.",
     researchArea: "Quantum Physics",
-    sampleProjects: []
+    image: "/lab_images/heller-flow.jpg",
+    sampleProjects: [
+      "Show how Anderson localization turns into Planckian diffusion as media evolves.",
+      "Study quantum dots as acoustical chambers.",
+      "Explore collaborative quantum projects inspired by numerical discoveries."
+    ]
   },
   {
     id: "sachdev",
     name: "Sachdev Lab",
     pi: "Subir Sachdev",
-    location: "Location TBD",
+    location: "Lyman 343",
     category: "Condensed Matter Theory",
-    members: 1,
-    description: "Description coming soon.",
+    undergrads: 1,
+    description: "Subir Sachdev's research describes the consequences of quantum entanglement on the macroscopic properties of natural systems.",
     researchArea: "Condensed Matter Theory",
-    sampleProjects: []
+    image: "/lab_images/sachdev-hole.jpg",
+    sampleProjects: [
+      "Spin-wave theory of fermions on the Lieb lattice."
+    ]
   },
   {
     id: "jafferis",
     name: "Jafferis Lab",
     pi: "Daniel Jafferis",
-    location: "Location TBD",
+    location: "Jefferson 371",
     category: "Quantum Gravity",
-    members: 1,
-    description: "Description coming soon.",
+    undergrads: 1,
+    description: "The research of Daniel Jafferis involves string theory, supersymmetric quantum field theory, and quantum gravity.",
     researchArea: "Quantum Gravity",
-    sampleProjects: []
+    image: "/lab_images/jafferis-mogging.webp",
+    sampleProjects: [
+      "Explore bags of gold and the overcounting of black hole entropy."
+    ]
   },
   {
     id: "mazur",
     name: "Mazur Lab",
     pi: "Eric Mazur",
-    location: "Location TBD",
+    location: "Pierce 233",
     category: "Optics",
-    members: 5,
-    description: "Description coming soon.",
+    undergrads: 5,
+    description: "We study the dynamics of molecules, chemical reactions, and condensed matter on very short timescales -- down to femtoseconds (millionths of billionths of a second).",
     researchArea: "Optics & Photonics",
-    sampleProjects: []
+    image: "lab_images/mazur-screwdrivers.png",
+    sampleProjects: [
+      "Develop a microfluidic platform to engineer CAR-T cells with lasers.",
+      "Simulate new nanophotonic metamaterials for nonlinear optics.",
+      "Fabricate and characterize nonlinear waveguides."
+    ]
   }
 ];
 
@@ -306,7 +369,7 @@ export default function LabsPage() {
     })
     .sort((a, b) => {
       if (sortBy === "name") return getLastName(a.pi).localeCompare(getLastName(b.pi));
-      if (sortBy === "members") return b.members - a.members;
+      if (sortBy === "undergrads") return b.undergrads - a.undergrads;
       return 0;
     });
 
@@ -339,7 +402,7 @@ export default function LabsPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="name">Sort by Name</SelectItem>
-                <SelectItem value="members">Sort by Team Size</SelectItem>
+                <SelectItem value="undergrads">Sort by # of Undergrads</SelectItem>
               </SelectContent>
             </Select>
           </div>
