@@ -12,8 +12,6 @@ import {
 import { Search } from "lucide-react";
 import { LabFlashCard } from "@/components/lab-flashcard";
 
-// Mock data for labs
-// To add a new lab, simply add a new object to this array with the required fields
 const labs = [
   {
     id: "franklin",
@@ -106,10 +104,190 @@ const labs = [
       "CMB polarization analysis",
       "Galaxy formation simulations"
     ]
+  },
+  {
+    id: "kim",
+    name: "Kim Lab",
+    pi: "Philip Kim",
+    location: "Location TBD",
+    category: "Condensed Matter",
+    members: 2,
+    description: "Description coming soon.",
+    researchArea: "Condensed Matter Physics",
+    sampleProjects: []
+  },
+  {
+    id: "weitz",
+    name: "Weitz Lab",
+    pi: "David Weitz",
+    location: "Location TBD",
+    category: "Soft Matter",
+    members: 4,
+    description: "Description coming soon.",
+    researchArea: "Soft Matter Physics",
+    sampleProjects: []
+  },
+  {
+    id: "yin",
+    name: "Yin Lab",
+    pi: "Xi Yin",
+    location: "Location TBD",
+    category: "High Energy Theory",
+    members: 0,
+    description: "Description coming soon.",
+    researchArea: "Theoretical High Energy Physics",
+    sampleProjects: []
+  },
+  {
+    id: "knirck",
+    name: "Knirck Lab",
+    pi: "Stefan Knirck",
+    location: "Location TBD",
+    category: "Particle Physics",
+    members: 4,
+    description: "Description coming soon.",
+    researchArea: "Particle Astrophysics",
+    sampleProjects: []
+  },
+  {
+    id: "khalaf",
+    name: "Khalaf Lab",
+    pi: "Eslam Khalaf",
+    location: "Location TBD",
+    category: "Condensed Matter Theory",
+    members: 1,
+    description: "Description coming soon.",
+    researchArea: "Condensed Matter Theory",
+    sampleProjects: []
+  },
+  {
+    id: "stubbs",
+    name: "Stubbs Lab",
+    pi: "Christopher Stubbs",
+    location: "Location TBD",
+    category: "Astrophysics",
+    members: 2,
+    description: "Description coming soon.",
+    researchArea: "Observational Astrophysics",
+    sampleProjects: []
+  },
+  {
+    id: "huth",
+    name: "Huth Lab",
+    pi: "John Huth",
+    location: "Location TBD",
+    category: "Particle Physics",
+    members: 2,
+    description: "Description coming soon.",
+    researchArea: "Experimental Particle Physics",
+    sampleProjects: []
+  },
+  {
+    id: "ro",
+    name: "Ro Lab",
+    pi: "Sunghan Ro",
+    location: "Location TBD",
+    category: "Statistical Physics",
+    members: 1,
+    description: "Description coming soon.",
+    researchArea: "Statistical Physics",
+    sampleProjects: []
+  },
+  {
+    id: "desai",
+    name: "Desai Lab",
+    pi: "Michael Desai",
+    location: "Location TBD",
+    category: "Biophysics",
+    members: 3,
+    description: "Description coming soon.",
+    researchArea: "Evolutionary Biophysics",
+    sampleProjects: []
+  },
+  {
+    id: "samuel",
+    name: "Samuel Lab",
+    pi: "Aravi Samuel",
+    location: "Location TBD",
+    category: "Biophysics",
+    members: 4,
+    description: "Description coming soon.",
+    researchArea: "Neurophysics",
+    sampleProjects: []
+  },
+  {
+    id: "morii",
+    name: "Morii Lab",
+    pi: "Masahiro Morii",
+    location: "Location TBD",
+    category: "Particle Physics",
+    members: 2,
+    description: "Description coming soon.",
+    researchArea: "Experimental Particle Physics",
+    sampleProjects: []
+  },
+  {
+    id: "park",
+    name: "Park Lab",
+    pi: "Hongkun Park",
+    location: "Location TBD",
+    category: "Quantum Materials",
+    members: 2,
+    description: "Description coming soon.",
+    researchArea: "Quantum Materials & Sensing",
+    sampleProjects: []
+  },
+  {
+    id: "heller",
+    name: "Heller Lab",
+    pi: "Eric Heller",
+    location: "Location TBD",
+    category: "Quantum Physics",
+    members: 2,
+    description: "Description coming soon.",
+    researchArea: "Quantum Physics",
+    sampleProjects: []
+  },
+  {
+    id: "sachdev",
+    name: "Sachdev Lab",
+    pi: "Subir Sachdev",
+    location: "Location TBD",
+    category: "Condensed Matter Theory",
+    members: 1,
+    description: "Description coming soon.",
+    researchArea: "Condensed Matter Theory",
+    sampleProjects: []
+  },
+  {
+    id: "jafferis",
+    name: "Jafferis Lab",
+    pi: "Daniel Jafferis",
+    location: "Location TBD",
+    category: "Quantum Gravity",
+    members: 1,
+    description: "Description coming soon.",
+    researchArea: "Quantum Gravity",
+    sampleProjects: []
+  },
+  {
+    id: "mazur",
+    name: "Mazur Lab",
+    pi: "Eric Mazur",
+    location: "Location TBD",
+    category: "Optics",
+    members: 5,
+    description: "Description coming soon.",
+    researchArea: "Optics & Photonics",
+    sampleProjects: []
   }
 ];
 
-const categories = ["All", "Quantum", "Biophysics", "Condensed Matter", "Optics", "Computational", "Astrophysics"];
+const getLastName = (pi: string) => {
+  const trimmed = pi.trim();
+  const parts = trimmed.split(/\s+/);
+  return parts[parts.length - 1].toLowerCase();
+};
 
 export default function LabsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -127,7 +305,7 @@ export default function LabsPage() {
       return matchesSearch;
     })
     .sort((a, b) => {
-      if (sortBy === "name") return a.pi.localeCompare(b.pi);
+      if (sortBy === "name") return getLastName(a.pi).localeCompare(getLastName(b.pi));
       if (sortBy === "members") return b.members - a.members;
       return 0;
     });

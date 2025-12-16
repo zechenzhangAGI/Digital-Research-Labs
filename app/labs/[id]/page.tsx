@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,16 +19,17 @@ import {
   ChevronLeft,
   ChevronRight,
   Play,
-  Maximize2,
-  Download,
-  ExternalLink,
-  BookOpen,
-  Award,
-  Microscope,
-  FileText
+  BookOpen
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+const createPlaceholderImages = () => [
+  { url: "/api/placeholder/800/600", caption: "Lab image placeholder" },
+  { url: "/api/placeholder/800/600", caption: "Research activity placeholder" }
+];
+
+const createPlaceholderVideos = () => [
+  { url: "/api/placeholder/video", title: "Lab Overview", duration: "4:00" }
+];
 
 // Comprehensive lab data
 const labsDetailData: Record<string, any> = {
@@ -277,6 +278,382 @@ const labsDetailData: Record<string, any> = {
     ],
     videos: [],
     funding: []
+  },
+  weitz: {
+    name: "Weitz Lab",
+    pi: "David Weitz",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2018,
+    type: "Soft Matter & Biophysics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 4
+    },
+    description: "",
+    research: [
+      "Making new classes of drop-based materials and studying their properties.",
+      "Imaging live cells and studying their mechanics."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  kim: {
+    name: "Kim Lab",
+    pi: "Philip Kim",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Condensed Matter Physics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 2
+    },
+    description: "",
+    research: [
+      "Benchwork on condensed matter experiments exploring low-dimensional materials.",
+      "Long-term (>1 year) commitments building and measuring quantum devices."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  yin: {
+    name: "Yin Lab",
+    pi: "Xi Yin",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "High Energy Theory",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 0
+    },
+    description: "",
+    research: [
+      "Matrix quantum mechanics bootstrap code implemented on quantum information conic solvers.",
+      "Renormalization group flow of supersymmetric chiral nonlinear sigma models.",
+      "Quantum field theory and coding collaborations for short undergraduate visits."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  knirck: {
+    name: "Knirck Lab",
+    pi: "Stefan Knirck",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Particle Astrophysics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 4
+    },
+    description: "",
+    research: [
+      "Search for exotic models hidden in experimental dark-matter data.",
+      "Simulation of axion detectors and cryostat commissioning efforts.",
+      "Antenna pattern measurements plus detector and receiver development."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  khalaf: {
+    name: "Khalaf Lab",
+    pi: "Eslam Khalaf",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Condensed Matter Theory",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 1
+    },
+    description: "",
+    research: [
+      "Using exact diagonalization to compute dispersion of anyons on the sphere.",
+      "Numerical diagonalization projects on trion states in semiconductor heterostructures."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  stubbs: {
+    name: "Stubbs Lab",
+    pi: "Christopher Stubbs",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Astrophysics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 2
+    },
+    description: "",
+    research: [
+      "Optical instrumentation to monitor image degradation in the Rubin Observatory.",
+      "Precision calibration apparatus that injects monochromatic photons into telescopes."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  huth: {
+    name: "Huth Lab",
+    pi: "John Huth",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Particle Physics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 2
+    },
+    description: "",
+    research: [
+      "Finding detector efficiencies as a function of beam intensity.",
+      "Fitting and analyzing ancient tables of latitude and longitude."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  ro: {
+    name: "Ro Lab",
+    pi: "Sunghan Ro",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Statistical Physics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 1
+    },
+    description: "",
+    research: [
+      "Coarsening in phase separation governed by moment-conserving diffusion.",
+      "Boundary-driven scale-free profiles in annihilating two-particle systems.",
+      "Projects scheduled early because the group remains intentionally small."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  desai: {
+    name: "Desai Lab",
+    pi: "Michael Desai",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Evolutionary Biophysics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 3
+    },
+    description: "",
+    research: [
+      "Sequencing genomes in evolving yeast lines and tracking evolutionary dynamics.",
+      "Theory projects on site frequency spectra under purifying selection."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  samuel: {
+    name: "Samuel Lab",
+    pi: "Aravi Samuel",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Neurophysics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 4
+    },
+    description: "",
+    research: [
+      "Whole-brain imaging of nematodes performing chemotaxis and thermotaxis.",
+      "Data analysis and experiments that use physics as a tool for neuroscience."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  morii: {
+    name: "Morii Lab",
+    pi: "Masahiro Morii",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Particle Physics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 2
+    },
+    description: "",
+    research: [
+      "Upgrades of the silicon tracking detector for the ATLAS experiment at CERN.",
+      "Data analysis support during the upcoming LHC hardware upgrade period.",
+      "Project scope depends heavily on the accelerator schedule."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  park: {
+    name: "Park Lab",
+    pi: "Hongkun Park",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Quantum Materials",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 2
+    },
+    description: "",
+    research: [
+      "Quantum devices built from atomically thin materials.",
+      "Quantum sensing experiments leveraging layered materials."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  heller: {
+    name: "Heller Lab",
+    pi: "Eric Heller",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Quantum Physics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 2
+    },
+    description: "",
+    research: [
+      "Discovering how Anderson localization becomes Planckian diffusion as media evolves.",
+      "Quantum dots used as acoustical chambers and related numerical studies.",
+      "Collaborations inspired by numerical discoveries, including projects with Norman Yao.",
+      "Modest coding projects that support exploratory quantum simulations."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  sachdev: {
+    name: "Sachdev Lab",
+    pi: "Subir Sachdev",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Condensed Matter Theory",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 1
+    },
+    description: "",
+    research: [
+      "Spin-wave theory of fermions on the Lieb lattice.",
+      "Many-body quantum mechanics and statistical mechanics explorations."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  jafferis: {
+    name: "Jafferis Lab",
+    pi: "Daniel Jafferis",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Quantum Gravity",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 1
+    },
+    description: "",
+    research: [
+      "Bags of gold and the overcounting of black hole entropy.",
+      "Selective theoretical projects in curved spacetimes and path integrals."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
+  },
+  mazur: {
+    name: "Mazur Lab",
+    pi: "Eric Mazur",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    established: 2015,
+    type: "Optics & Photonics",
+    members: {
+      faculty: 1,
+      postdocs: 0,
+      graduate: 0,
+      undergraduate: 5
+    },
+    description: "",
+    research: [
+      "Developing microfluidic platforms to engineer CAR-T cells using lasers.",
+      "Theory and simulations for new nanophotonic metamaterials in nonlinear optics.",
+      "Fabrication and characterization of nonlinear waveguides.",
+      "A mentorship-focused culture that supports long-term growth and opportunities."
+    ],
+    images: createPlaceholderImages(),
+    videos: createPlaceholderVideos()
   }
 };
 
@@ -398,11 +775,9 @@ export default function LabDetailPage() {
 
           {/* Content Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="research">Research</TabsTrigger>
-              <TabsTrigger value="equipment">Equipment</TabsTrigger>
-              <TabsTrigger value="publications">Publications</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-4">
@@ -460,61 +835,6 @@ export default function LabDetailPage() {
                       <p className="text-sm text-muted-foreground mt-1">
                         Active research area with multiple ongoing projects and collaborations.
                       </p>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="equipment" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Laboratory Equipment</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {lab.equipment.map((item: any, idx: number) => (
-                    <div key={idx} className="p-4 border rounded-lg">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h4 className="font-semibold">{item.name}</h4>
-                          <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
-                        </div>
-                        <Badge variant={item.status === "operational" ? "default" : "secondary"}>
-                          {item.status}
-                        </Badge>
-                      </div>
-                      <div className="flex gap-2 mt-3">
-                        <Button size="sm" variant="outline">
-                          <Calendar className="mr-1 h-3 w-3" />
-                          Book Time
-                        </Button>
-                        <Button size="sm" variant="outline">
-                          <FileText className="mr-1 h-3 w-3" />
-                          View Docs
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="publications" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Publications</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {lab.publications.map((pub: any, idx: number) => (
-                    <div key={idx} className="p-4 border rounded-lg">
-                      <h4 className="font-medium mb-1">{pub.title}</h4>
-                      <div className="text-sm text-muted-foreground mb-2">
-                        {pub.journal} • {pub.year}
-                      </div>
-                      <Button size="sm" variant="outline">
-                        <ExternalLink className="mr-1 h-3 w-3" />
-                        View Paper
-                      </Button>
                     </div>
                   ))}
                 </CardContent>
@@ -588,27 +908,6 @@ export default function LabDetailPage() {
                   </span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Funding */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Active Funding</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {lab.funding.map((grant: any, idx: number) => (
-                <div key={idx} className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="text-xs">
-                      {grant.agency}
-                    </Badge>
-                    <span className="text-sm font-semibold">{grant.amount}</span>
-                  </div>
-                  <div className="text-xs text-muted-foreground">{grant.program}</div>
-                  <div className="text-xs text-muted-foreground">{grant.period}</div>
-                </div>
-              ))}
             </CardContent>
           </Card>
 
