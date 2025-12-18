@@ -9,8 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { LabFlashCard } from "@/components/lab-flashcard";
+import { Button } from "@/components/ui/button";
 
 
 //Used LAB room if available, if not professor room #
@@ -375,48 +376,49 @@ export default function LabsPage() {
 
   return (
     <div>
-      {/* Header Section with Container */}
-      <div className="container mx-auto px-4 py-12 pb-8">
-        <div className="mb-10">
-          <h1 className="text-5xl font-light tracking-tight mb-4">Research Labs</h1>
-          <p className="text-lg text-muted-foreground font-light">
-            Explore the Harvard Physics Department's research groups
+      {/* Header Section */}
+      <div className="border-b bg-muted/30">
+        <div className="container mx-auto px-4 py-10">
+          <h1 className="text-3xl font-semibold mb-2">Research Labs</h1>
+          <p className="text-muted-foreground">
+            Explore {labs.length} research groups in the Harvard Physics Department
           </p>
         </div>
+      </div>
 
-        {/* Search and Filters */}
-        <div className="bg-card rounded-xl border-2 p-4 shadow-md mb-6">
-          <div className="flex flex-col lg:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      {/* Search and Filters */}
+      <div className="sticky top-14 z-40 bg-background/80 backdrop-blur-md border-b">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search labs, PIs, or research areas..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-11"
+                className="pl-9 h-9"
               />
             </div>
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="lg:w-[200px]">
+              <SelectTrigger className="w-[160px] h-9">
+                <SlidersHorizontal className="h-4 w-4 mr-2 text-muted-foreground" />
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="name">Sort by Name</SelectItem>
-                <SelectItem value="undergrads">Sort by # of Undergrads</SelectItem>
+                <SelectItem value="name">By Name</SelectItem>
+                <SelectItem value="undergrads">By Undergrads</SelectItem>
               </SelectContent>
             </Select>
+            <span className="text-sm text-muted-foreground hidden sm:inline">
+              {filteredLabs.length} results
+            </span>
           </div>
         </div>
-
-        {/* Results Count */}
-        <p className="text-sm text-muted-foreground mb-8">
-          Showing {filteredLabs.length} of {labs.length} labs
-        </p>
       </div>
 
-      {/* Labs Grid - With Small Margins */}
-      <div className="container mx-auto px-4 pb-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+      {/* Labs Grid */}
+      <div className="container mx-auto px-4 py-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredLabs.map((lab) => (
             <LabFlashCard
               key={lab.id}

@@ -9,10 +9,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Users,
   MapPin,
-  FlaskConical,
   X,
-  ChevronDown,
-  Loader2
+  ChevronRight,
+  Loader2,
+  Building2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -256,30 +256,35 @@ export default function MapPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-4xl font-bold mb-4">Harvard Physics Campus Map</h1>
-        <p className="text-lg text-muted-foreground">
-          Explore Harvard's physics buildings on an interactive satellite map
-        </p>
+    <div>
+      {/* Header */}
+      <div className="border-b bg-muted/30">
+        <div className="container mx-auto px-4 py-10">
+          <h1 className="text-3xl font-semibold mb-2">Campus Map</h1>
+          <p className="text-muted-foreground">
+            Explore physics buildings and lab locations at Harvard
+          </p>
+        </div>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_350px] gap-6">
-        {/* Map Area */}
-        <Card className="relative overflow-hidden">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <CardTitle>Harvard North Yard - Physics Area</CardTitle>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowLegend(!showLegend)}
-              >
-                {showLegend ? "Hide" : "Show"} Legend
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="p-0">
+      <div className="container mx-auto px-4 py-6">
+        <div className="grid lg:grid-cols-[1fr_320px] gap-6">
+          {/* Map Area */}
+          <Card className="relative overflow-hidden">
+            <CardHeader className="py-3 px-4 border-b">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base font-medium">North Yard</CardTitle>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowLegend(!showLegend)}
+                  className="text-xs h-7"
+                >
+                  {showLegend ? "Hide" : "Show"} Legend
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-0">
             <div className="relative" style={{ height: "600px" }}>
               <GoogleMap
                 mapContainerStyle={mapContainerStyle}
@@ -345,25 +350,20 @@ export default function MapPage() {
         {/* Building & Lab Details Panel */}
         <div className="space-y-4">
           {/* Quick Stats */}
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Campus Statistics</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Total Buildings</span>
-                <span className="font-semibold">6</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Research Labs</span>
-                <span className="font-semibold">6</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Total Researchers</span>
-                <span className="font-semibold">95</span>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="text-center p-3 rounded-lg bg-muted/50">
+              <p className="text-xl font-semibold">6</p>
+              <p className="text-xs text-muted-foreground">Buildings</p>
+            </div>
+            <div className="text-center p-3 rounded-lg bg-muted/50">
+              <p className="text-xl font-semibold">6</p>
+              <p className="text-xs text-muted-foreground">Labs</p>
+            </div>
+            <div className="text-center p-3 rounded-lg bg-muted/50">
+              <p className="text-xl font-semibold">95</p>
+              <p className="text-xs text-muted-foreground">Researchers</p>
+            </div>
+          </div>
 
           {/* Selected Building Details */}
           <AnimatePresence mode="wait">
@@ -408,8 +408,7 @@ export default function MapPage() {
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                        <FlaskConical className="h-4 w-4" />
+                      <h4 className="text-sm font-medium mb-3">
                         Labs in this Building
                       </h4>
                       <div className="space-y-3">
@@ -464,57 +463,54 @@ export default function MapPage() {
 
           {!selectedBuilding && (
             <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Select a Building</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Click on any building on the map to view its research labs and details.
-                </p>
-                <div className="space-y-2">
-                  <div className="text-xs font-semibold text-muted-foreground">Quick Tips:</div>
-                  <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
-                    <li>Zoom and pan the map for a better view</li>
-                    <li>Hover over buildings to highlight them</li>
-                    <li>Buildings are color-coded by location</li>
-                  </ul>
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Building2 className="h-4 w-4 text-primary" />
+                  </div>
+                  <p className="font-medium">Select a Building</p>
                 </div>
+                <p className="text-sm text-muted-foreground">
+                  Click on any highlighted building to view its research labs and details.
+                </p>
               </CardContent>
             </Card>
           )}
 
           {/* Building Directory */}
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Building Directory</CardTitle>
+            <CardHeader className="py-3 px-4 border-b">
+              <CardTitle className="text-sm font-medium">Buildings</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <ScrollArea className="h-[250px]">
-                <div className="p-4 space-y-2">
+              <ScrollArea className="h-[280px]">
+                <div className="p-2">
                   {Object.entries(buildingsData).map(([buildingId, building]: [string, any]) => (
                     <button
                       key={buildingId}
-                      onClick={() => setSelectedBuilding(buildingId)}
-                      className="w-full text-left p-3 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors border"
+                      onClick={() => handleBuildingClick(buildingId)}
+                      className="w-full text-left p-3 rounded-lg hover:bg-muted transition-colors flex items-center justify-between group"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="font-medium text-sm">{building.name}</div>
-                          <div className="text-xs text-muted-foreground">
-                            {building.address}
-                          </div>
-                          <div className="text-xs text-muted-foreground mt-1">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="h-3 w-3 rounded-full"
+                          style={{ backgroundColor: building.color }}
+                        />
+                        <div>
+                          <p className="text-sm font-medium">{building.name}</p>
+                          <p className="text-xs text-muted-foreground">
                             {building.labs.length} lab{building.labs.length !== 1 ? 's' : ''}
-                          </div>
+                          </p>
                         </div>
-                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
                       </div>
+                      <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                     </button>
                   ))}
                 </div>
               </ScrollArea>
             </CardContent>
           </Card>
+        </div>
         </div>
       </div>
     </div>
