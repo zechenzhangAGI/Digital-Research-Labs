@@ -649,6 +649,20 @@ export default function MapPage() {
                             </p>
                           </div>
 
+                          {/* Jefferson Floor Plans Button */}
+                          {selectedBuilding === "jefferson" && (
+                            <Button
+                              variant="default"
+                              className="w-full"
+                              asChild
+                            >
+                              <Link href="/jefferson">
+                                <Building2 className="h-4 w-4 mr-2" />
+                                View Jefferson Floor Plans
+                              </Link>
+                            </Button>
+                          )}
+
                           <div>
                             <h4 className="text-sm font-medium mb-3">
                               Labs in this Building ({buildingsData[selectedBuilding].labs.length})

@@ -68,8 +68,11 @@ export default function RootLayout({
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li><Link href="/resources" className="hover:text-foreground transition-colors">Getting Started</Link></li>
                     <li><Link href="/labs" className="hover:text-foreground transition-colors">Research Labs</Link></li>
-                    <li><Link href="/map" className="hover:text-foreground transition-colors">Lab Map</Link></li>
-                    <li><Link href="/ai" className="hover:text-foreground transition-colors">AI Matcher</Link></li>
+                    <li><Link href="/videos" className="hover:text-foreground transition-colors">Lab Videos</Link></li>
+                    <li><Link href="/map" className="hover:text-foreground transition-colors">Campus Map</Link></li>
+                    <li><Link href="/jefferson" className="hover:text-foreground transition-colors">Jefferson Floor Plans</Link></li>
+                    <li><Link href="/ai" className="hover:text-foreground transition-colors">AI Lab Matcher</Link></li>
+                    <li><Link href="/about" className="hover:text-foreground transition-colors">About</Link></li>
                   </ul>
                 </div>
                 <div>
