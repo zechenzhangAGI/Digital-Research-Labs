@@ -15,11 +15,12 @@ export function Navigation() {
     { href: "/map", label: "Map" },
     { href: "/jefferson", label: "Jefferson Lab" },
     { href: "/ai", label: "AI Matcher" },
+    { href: "/about", label: "About" },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
-      <div className="container mx-auto px-4 flex h-14 items-center">
+      <div className="container mx-auto px-4 flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-8">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-semibold text-sm">H</span>
