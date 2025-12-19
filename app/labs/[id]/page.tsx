@@ -30,6 +30,12 @@ import {
 import { motion } from "framer-motion";
 
 // Survey data from professors
+interface LabVideo {
+  url: string;
+  title: string;
+  description?: string;
+}
+
 interface LabSurveyData {
   name: string;
   pi: string;
@@ -53,6 +59,8 @@ interface LabSurveyData {
   afterGroup?: string;
   groupMeetings?: string;
   qrCodeWilling?: string;
+  // Videos
+  videos?: LabVideo[];
 }
 
 const labsDetailData: Record<string, LabSurveyData> = {
@@ -78,7 +86,11 @@ const labsDetailData: Record<string, LabSurveyData> = {
     prerequisites: "Most students who join our group start in Physics 15A. We also like to see that students have prioritized solid state physics in their coursework — we often wouldn't select a student for the group who had completed the pre-reqs for Physics 195A but elected not to take it. Some chemistry background is extremely helpful.",
     minimumCommitment: "Yes, must include a summer. Often the summer is the first time in the group.",
     groupMeetings: "Group meetings are once a week in the semester. Undergrads are always welcome but we are not always able to accommodate their scheduling constraints.",
-    qrCodeWilling: "No"
+    qrCodeWilling: "No",
+    videos: [
+      { url: "https://youtu.be/pvB5-xdQKG4", title: "Lab Overview", description: "Quick introduction to quantum materials research" },
+      { url: "https://youtu.be/coKMeww2lSk", title: "Lab Tour", description: "Full tour of our MBE systems and oxide thin film research" }
+    ]
   },
   mitrano: {
     name: "Mitrano Group",
@@ -501,7 +513,10 @@ const labsDetailData: Record<string, LabSurveyData> = {
     minimumCommitment: "My goal with each undergrad is that they will spend several years working in the group. After 1 semester we evaluate whether it is a good fit.",
     afterGroup: "Most undergrads have gone on to grad school; a few to med school.",
     groupMeetings: "Yes, once a week, 90 minutes.",
-    qrCodeWilling: "Yes"
+    qrCodeWilling: "Yes",
+    videos: [
+      { url: "https://youtu.be/LerqVgB9Co8", title: "Cohen Lab Tour", description: "Explore biophysics and neurophotonics research" }
+    ]
   },
   mazur: {
     name: "Mazur Lab",
@@ -552,7 +567,10 @@ const labsDetailData: Record<string, LabSurveyData> = {
     minimumCommitment: "At least 1 semester and a summer",
     afterGroup: "Usually grad school in physics",
     groupMeetings: "Yes, once a week",
-    qrCodeWilling: "Would like more information"
+    qrCodeWilling: "Would like more information",
+    videos: [
+      { url: "https://youtu.be/6Qp8xEMrQ-M", title: "Manoharan Lab Tour", description: "Discover soft matter and self-assembly research" }
+    ]
   },
   cotler: {
     name: "Cotler Group",
@@ -859,7 +877,50 @@ export default function LabDetailPage() {
                   <p className="text-muted-foreground leading-relaxed">{lab.description}</p>
                 </CardContent>
               </Card>
-                  </motion.div>
+            </motion.div>
+
+            {/* Lab Videos Section */}
+            {lab.videos && lab.videos.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+              >
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                      </svg>
+                      Lab Video{lab.videos.length > 1 ? 's' : ''}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className={`grid gap-4 ${lab.videos.length > 1 ? 'md:grid-cols-2' : ''}`}>
+                      {lab.videos.map((video, idx) => (
+                        <div key={idx} className="space-y-2">
+                          {lab.videos!.length > 1 && (
+                            <h4 className="font-medium text-sm">{video.title}</h4>
+                          )}
+                          <div className="aspect-video rounded-lg overflow-hidden bg-muted">
+                            <iframe
+                              src={`https://www.youtube.com/embed/${video.url.split('/').pop()}`}
+                              title={video.title}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="w-full h-full"
+                            />
+                          </div>
+                          {video.description && (
+                            <p className="text-xs text-muted-foreground">{video.description}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
 
             {/* Survey Data Sections */}
             {lab.hasSurveyData ? (
