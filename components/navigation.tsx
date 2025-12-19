@@ -15,6 +15,7 @@ export function Navigation() {
     { href: "/map", label: "Map" },
     { href: "/jefferson", label: "Jefferson Lab" },
     { href: "/ai", label: "AI Matcher" },
+    { href: "/about", label: "About" },
   ];
 
   return (
