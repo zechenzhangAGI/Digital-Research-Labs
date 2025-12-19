@@ -12,6 +12,7 @@ export function Navigation() {
     { href: "/resources", label: "Getting Started" },
     { href: "/labs", label: "Labs" },
     { href: "/map", label: "Map" },
+    { href: "/jefferson", label: "Jefferson Lab" },
     { href: "/ai", label: "AI Matcher" },
   ];
 

@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Users,
   MapPin,
@@ -14,11 +13,8 @@ import {
   ChevronRight,
   Loader2,
   Building2,
-  Map,
-  Layers
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { JeffersonFloorPlan } from "@/components/jefferson-floor-plan";
 import Link from "next/link";
 
 // Harvard Physics Buildings with coordinates
@@ -429,7 +425,6 @@ export default function MapPage() {
   const [selectedBuilding, setSelectedBuilding] = useState<string | null>(null);
   const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null);
   const [showLegend, setShowLegend] = useState(true);
-  const [activeView, setActiveView] = useState<"campus" | "jefferson">("jefferson");
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
   // Load Google Maps API
@@ -488,20 +483,6 @@ export default function MapPage() {
       </div>
 
       <div className="container mx-auto px-4 py-6">
-        {/* View Toggle */}
-        <Tabs value={activeView} onValueChange={(v) => setActiveView(v as "campus" | "jefferson")} className="mb-6">
-          <TabsList className="h-10">
-            <TabsTrigger value="jefferson" className="text-sm gap-2">
-              <Layers className="h-4 w-4" />
-              Jefferson Floor Plan
-            </TabsTrigger>
-            <TabsTrigger value="campus" className="text-sm gap-2">
-              <Map className="h-4 w-4" />
-              Campus Map
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="campus" className="mt-6">
             <div className="grid lg:grid-cols-[1fr_320px] gap-6">
               {/* Map Area */}
               <Card className="relative overflow-hidden">
@@ -781,45 +762,6 @@ export default function MapPage() {
                 </Card>
               </div>
             </div>
-          </TabsContent>
-
-          <TabsContent value="jefferson" className="mt-6">
-            <JeffersonFloorPlan />
-            
-            {/* Additional info about Jefferson */}
-            <Card className="mt-6">
-              <CardContent className="p-6">
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div>
-                    <h3 className="font-semibold mb-2">About Jefferson Laboratory</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Built in 1884, Jefferson Laboratory was the first university building in America 
-                      dedicated entirely to physics research. It houses the main Physics Department 
-                      offices and several active research groups.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Getting There</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Located at 17 Oxford Street, accessible from behind the Science Center. These maps
-                      should be used as a reference. Its creators are not responsible for any errors or
-                      discrepancies between the depiction and reality.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Research Areas</h3>
-                    <div className="flex flex-wrap gap-1.5">
-                      <Badge variant="secondary" className="text-xs">Ultrafast Optics</Badge>
-                      <Badge variant="secondary" className="text-xs">Quantum Materials</Badge>
-                      <Badge variant="secondary" className="text-xs">High Energy Theory</Badge>
-                      <Badge variant="secondary" className="text-xs">Quantum Gravity</Badge>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
       </div>
     </div>
   );
