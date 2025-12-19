@@ -11,6 +11,7 @@ export function Navigation() {
   const navItems = [
     { href: "/resources", label: "Getting Started" },
     { href: "/labs", label: "Labs" },
+    { href: "/network", label: "Network" },
     { href: "/videos", label: "Videos" },
     { href: "/map", label: "Map" },
     { href: "/jefferson", label: "Jefferson Lab" },
