@@ -51,6 +51,7 @@ interface FloorData {
   floor: number;
   name: string;
   rooms: Room[];
+  buildingOutline: { x: number; y: number }[];
 }
 
 // Jefferson Lab Floor Data
@@ -61,31 +62,43 @@ const floorData: FloorData[] = [
     name: "First Floor",
     rooms: [
       // Bottom Left - Mitrano and Yao Labs
-      { id: "163-168", number: "163-168", name: "Mitrano Lab", type: "lab", x: 1, y: 58, width: 25, height: 10, pi: "Matteo Mitrano", labId: "mitrano", researchArea: "Ultrafast Quantum Materials" },
-      { id: "storage-conn", number: "←", name: "To Storage Rooms", type: "common", x: 1, y: 69, width: 10, height: 6 },
-      { id: "160-162", number: "160-162", name: "Yao Lab", type: "lab", x: 1, y: 76, width: 23, height: 14, pi: "Norman Yao", researchArea: "Quantum Dynamics" },
+      { id: "163-168", number: "163-168", name: "Mitrano Lab", type: "lab", x: 1, y: 62, width: 30, height: 8, pi: "Matteo Mitrano", labId: "mitrano", researchArea: "Ultrafast Quantum Materials" },
+      { id: "storage-conn", number: "←", name: "To Storage Rooms", type: "common", x: 1, y: 73, width: 9, height: 6 },
+      { id: "160-162", number: "160-162", name: "Yao Lab", type: "lab", x: 1, y: 82, width: 28, height: 8, pi: "Norman Yao", researchArea: "Quantum Dynamics" },
       
       // Bottom Center - Lukin, Prentiss, Knirck Labs
-      { id: "158", number: "158", name: "Lukin Lab", type: "lab", x: 28, y: 52, width: 20, height: 10, pi: "Mikhail Lukin", researchArea: "Quantum Optics" },
-      { id: "146", number: "146", name: "Prentiss Lab", type: "lab", x: 49, y: 52, width: 12, height: 10, pi: "Mara Prentiss", researchArea: "Biophysics" },
-      { id: "156", number: "156", name: "Knirck Lab", type: "lab", x: 28, y: 78, width: 22, height: 12, pi: "Stefan Knirck", labId: "knirck", researchArea: "Dark Matter Detection" },
-      { id: "150a", number: "150a", name: "Prentiss Lab", type: "lab", x: 51, y: 78, width: 10, height: 12, pi: "Mara Prentiss", researchArea: "Biophysics" },
+      { id: "158", number: "158", name: "Lukin Lab", type: "lab", x: 34, y: 60, width: 18, height: 8, pi: "Mikhail Lukin", researchArea: "Quantum Optics" },
+      { id: "146", number: "146", name: "Prentiss Lab", type: "lab", x: 53, y: 60, width: 10, height: 8, pi: "Mara Prentiss", researchArea: "Biophysics" },
+      { id: "156", number: "156", name: "Knirck Lab", type: "lab", x: 34, y: 78, width: 20, height: 12, pi: "Stefan Knirck", labId: "knirck", researchArea: "Dark Matter Detection" },
+      { id: "150a", number: "150a", name: "Prentiss Lab", type: "lab", x: 55, y: 78, width: 8, height: 12, pi: "Mara Prentiss", researchArea: "Biophysics" },
       
       // Bottom Right - Greiner Lab 137
-      { id: "137", number: "137", name: "Greiner Lab", type: "lab", x: 62, y: 78, width: 25, height: 10, pi: "Markus Greiner", researchArea: "Quantum Gas Microscopy" },
+      { id: "137", number: "137", name: "Greiner Lab", type: "lab", x: 64, y: 78, width: 24, height: 12, pi: "Markus Greiner", researchArea: "Quantum Gas Microscopy" },
       
       // Right Wing - Vertical column (top to bottom)
-      { id: "122", number: "122", name: "Silvera Lab", type: "lab", x: 79, y: 2, width: 10, height: 9, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
-      { id: "hau-conn", number: "→", name: "To Hau Lab", type: "common", x: 79, y: 13.5, width: 10, height: 6 },
+      { id: "122", number: "122", name: "Silvera Lab", type: "lab", x: 80, y: 2, width: 13, height: 9, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
+      { id: "hau-conn", number: "→", name: "To Hau Lab", type: "common", x: 84, y: 12, width: 9, height: 6 },
       
-      { id: "123", number: "123", name: "Doyle Lab", type: "lab", x: 62, y: 2, width: 8, height: 22, pi: "John Doyle", researchArea: "Cold Molecules" },
-      { id: "127", number: "127", name: "Silvera Lab", type: "lab", x: 79, y: 22, width: 8, height: 9, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
+      { id: "123", number: "123", name: "Doyle Lab", type: "lab", x: 63, y: 2, width: 8, height: 22, pi: "John Doyle", researchArea: "Cold Molecules" },
+      { id: "127", number: "127", name: "Silvera Lab", type: "lab", x: 80, y: 22, width: 8, height: 9, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
       
-      { id: "128", number: "128", name: "Greiner Lab", type: "lab", x: 62, y: 25, width: 8, height: 10, pi: "Markus Greiner", researchArea: "Quantum Gas Microscopy" },
-      { id: "130", number: "130", name: "Silvera Lab", type: "lab", x: 79, y: 32, width: 8, height: 11, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
+      { id: "128", number: "128", name: "Greiner Lab", type: "lab", x: 63, y: 25, width: 8, height: 15, pi: "Markus Greiner", researchArea: "Quantum Gas Microscopy" },
+      { id: "130", number: "130", name: "Silvera Lab", type: "lab", x: 80, y: 32, width: 8, height: 11, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
       
-      { id: "131", number: "131", name: "Greiner Lab", type: "lab", x: 62, y: 36, width: 8, height: 14, pi: "Markus Greiner", researchArea: "Quantum Gas Microscopy" },
-      { id: "132", number: "132", name: "Silvera Lab", type: "lab", x: 79, y: 44, width: 8, height: 33, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
+      { id: "131", number: "131", name: "Greiner Lab", type: "lab", x: 63, y: 41, width: 8, height: 15, pi: "Markus Greiner", researchArea: "Quantum Gas Microscopy" },
+      { id: "132", number: "132", name: "Silvera Lab", type: "lab", x: 80, y: 44, width: 8, height: 33, pi: "Isaac Silvera", researchArea: "High Pressure Physics" },
+    ],
+    buildingOutline: [
+      { x: 1, y: 62 },
+      { x: 1, y: 90 },
+      { x: 88, y: 90 },
+      { x: 88, y: 20 },
+      { x: 93, y: 20 },
+      { x: 93, y: 2 },
+      { x: 63, y: 2 },
+      { x: 63, y: 60 },
+      { x: 34, y: 60 },
+      { x: 34, y: 62 },
     ],
   },
   {
@@ -138,6 +151,22 @@ const floorData: FloorData[] = [
       { id: "234", number: "234", name: "Deslauriers", type: "profOffice", x: 63, y: 46, width: 8, height: 8 },
       { id: "235", number: "235", name: "Huth", type: "profOffice", x: 80, y: 51, width: 8, height: 8, pi: "John Huth", labId: "huth" },
     ],
+    buildingOutline: [
+      { x: 1, y: 62 },
+      { x: 1, y: 90 },
+      { x: 14.5, y: 90 },
+      { x: 14.5, y: 86 },
+      { x: 27.5, y: 86 },
+      { x: 27.5, y: 90 },
+      { x: 88, y: 90 },
+      { x: 88, y: 20 },
+      { x: 93, y: 20 },
+      { x: 93, y: 2 },
+      { x: 63, y: 2 },
+      { x: 63, y: 60 },
+      { x: 34, y: 60 },
+      { x: 34, y: 62 },
+    ],
   },
   {
     floor: 3,
@@ -175,7 +204,7 @@ const floorData: FloorData[] = [
       
       // Right Wing - Offices going down
       { id: "326", number: "326", name: "Doyle", type: "profOffice", x: 63, y: 16, width: 8, height: 6, pi: "John Doyle" },
-      { id: "328", number: "328", name: "Khalaf", type: "profOffice", x: 80, y: 19, width: 8, height: 8, pi: "Eslam Khalaf", labId: "khalaf", researchArea: "Condensed Matter Theory" },
+      { id: "328", number: "328", name: "Khalaf", type: "profOffice", x: 80, y: 20, width: 8, height: 8, pi: "Eslam Khalaf", labId: "khalaf", researchArea: "Condensed Matter Theory" },
       
       { id: "330", number: "330", name: "Lyman 330", type: "lectureHall", x: 63, y: 23, width: 8, height: 14 },
       { id: "331", number: "331", name: "Vishwanath", type: "profOffice", x: 80, y: 30, width: 8, height: 6, pi: "Ashvin Vishwanath" },
@@ -189,6 +218,24 @@ const floorData: FloorData[] = [
       { id: "336", number: "336", name: "Graduate", type: "gradOffice", x: 80, y: 51, width: 8, height: 6 },
       { id: "337", number: "337", name: "Graduate", type: "gradOffice", x: 80, y: 58, width: 8, height: 8 },
       { id: "338", number: "338", name: "Jaffe", type: "profOffice", x: 80, y: 67, width: 8, height: 8, pi: "Robert Jaffe" },
+    ],
+    buildingOutline: [
+      { x: 1, y: 62 },
+      { x: 1, y: 90 },
+      { x: 14.5, y: 90 },
+      { x: 14.5, y: 86 },
+      { x: 27.5, y: 86 },
+      { x: 27.5, y: 90 },
+      { x: 62.5, y: 90 },
+      { x: 62.5, y: 86 },
+      { x: 88, y: 86 },
+      { x: 88, y: 20 },
+      { x: 93, y: 20 },
+      { x: 93, y: 2 },
+      { x: 63, y: 2 },
+      { x: 63, y: 60 },
+      { x: 34, y: 60 },
+      { x: 34, y: 62 },
     ],
   },
   {
@@ -220,7 +267,7 @@ const floorData: FloorData[] = [
       { id: "419", number: "419", name: "Graduate", type: "gradOffice", x: 63, y: 2, width: 6, height: 9 },
       { id: "415", number: "415", name: "Graduate", type: "gradOffice", x: 70, y: 2, width: 9, height: 6 },
       { id: "414", number: "414", name: "Graduate", type: "gradOffice", x: 80, y: 2, width: 9, height: 6 },
-      { id: "cruft-conn4", number: "→", name: "To Cruft", type: "common", x: 80, y: 11, width: 9, height: 6 },
+      { id: "cruft-conn4", number: "→", name: "To Cruft", type: "common", x: 84, y: 11, width: 9, height: 6 },
       
       // Right Wing - Offices going down
       { id: "421", number: "421", name: "Graduate", type: "gradOffice", x: 63, y: 12, width: 8, height: 6 },
@@ -239,6 +286,24 @@ const floorData: FloorData[] = [
       { id: "440", number: "440", name: "Graduate", type: "gradOffice", x: 86, y: 56, width: 2, height: 12 },
       { id: "442", number: "442", name: "Graduate", type: "gradOffice", x: 80, y: 60, width: 6, height: 8 },
       { id: "443", number: "443", name: "Graduate", type: "gradOffice", x: 86, y: 69, width: 2, height: 8 },
+    ],
+    buildingOutline: [
+      { x: 1, y: 62 },
+      { x: 1, y: 90 },
+      { x: 14.5, y: 90 },
+      { x: 14.5, y: 86 },
+      { x: 27.5, y: 86 },
+      { x: 27.5, y: 90 },
+      { x: 62.5, y: 90 },
+      { x: 62.5, y: 88 },
+      { x: 88, y: 88 },
+      { x: 88, y: 20 },
+      { x: 93, y: 20 },
+      { x: 93, y: 2 },
+      { x: 63, y: 2 },
+      { x: 63, y: 60 },
+      { x: 34, y: 60 },
+      { x: 34, y: 62 },
     ],
   },
 ];
@@ -472,6 +537,19 @@ export function JeffersonFloorPlan() {
                 className="relative mx-auto bg-card rounded-xl border-2 border-border/50 overflow-hidden shadow-xl"
                 style={{ width: "100%", maxWidth: "950px", height: "560px" }}
               >
+                {/* Building shape underlay - uses coordinate-based polygon from floor data */}
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                >
+                  <polygon
+                    points={floor.buildingOutline.map(p => `${p.x},${p.y}`).join(' ')}
+                    className="fill-slate-200/80 dark:fill-slate-700/50 stroke-slate-400 dark:stroke-slate-500"
+                    strokeWidth="0.5"
+                  />
+                </svg>
+                
                 {/* Rooms */}
                 {floor.rooms.map((room, index) => (
                   <motion.button

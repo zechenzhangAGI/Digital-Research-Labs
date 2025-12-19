@@ -91,12 +91,12 @@ const buildingsData: Record<string, {
     description: "Named after physicist Theodore Lyman, connected to Jefferson Lab. Houses particle physics and astrophysics groups.",
     color: "#8b5cf6",
     // Lyman is connected to Jefferson, slightly to the east
-    center: { lat: 42.377336, lng: -71.117296 },
+    center: { lat: 42.37756, lng: -71.11715 },
     coordinates: [
-      { lat: 42.377201, lng: -71.117381 },
-      { lat: 42.377392, lng: -71.117446 },
-      { lat: 42.377441, lng: -71.117210 },
-      { lat: 42.377253, lng: -71.117142 },
+      { lat: 42.37732, lng: -71.11716 },
+      { lat: 42.37774, lng: -71.11732 },
+      { lat: 42.37778, lng: -71.11713 },
+      { lat: 42.37736, lng: -71.11696 },
     ],
     labs: [
       {
@@ -206,9 +206,9 @@ const buildingsData: Record<string, {
     // McKay/SEAS is on Oxford St
     center: { lat: 42.37755, lng: -71.11666 },
     coordinates: [
-      { lat: 42.377589, lng: -71.116834 },
-      { lat: 42.37764, lng: -71.11653 },
-      { lat: 42.37745, lng: -71.11646 },
+      { lat: 42.37763, lng: -71.11685 },
+      { lat: 42.37769, lng: -71.11653 },
+      { lat: 42.37743, lng: -71.11646 },
       { lat: 42.37737, lng: -71.11675 },
     ],
     labs: [

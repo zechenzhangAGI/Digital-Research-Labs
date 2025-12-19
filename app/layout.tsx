@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -65,10 +66,10 @@ export default function RootLayout({
                 <div>
                   <h3 className="font-semibold mb-3">Quick Links</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li><a href="/resources" className="hover:text-foreground transition-colors">Getting Started</a></li>
-                    <li><a href="/labs" className="hover:text-foreground transition-colors">Research Labs</a></li>
-                    <li><a href="/map" className="hover:text-foreground transition-colors">Lab Map</a></li>
-                    <li><a href="/ai" className="hover:text-foreground transition-colors">AI Matcher</a></li>
+                    <li><Link href="/resources" className="hover:text-foreground transition-colors">Getting Started</Link></li>
+                    <li><Link href="/labs" className="hover:text-foreground transition-colors">Research Labs</Link></li>
+                    <li><Link href="/map" className="hover:text-foreground transition-colors">Lab Map</Link></li>
+                    <li><Link href="/ai" className="hover:text-foreground transition-colors">AI Matcher</Link></li>
                   </ul>
                 </div>
                 <div>

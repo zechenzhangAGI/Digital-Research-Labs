@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,6 +28,70 @@ import {
   Check
 } from "lucide-react";
 import { motion } from "framer-motion";
+
+// Helper function to linkify URLs in text
+// Handles URLs that may end with punctuation like periods, commas, etc.
+function LinkifyText({ text, className = "" }: { text: string; className?: string }) {
+  // Regex to match URLs - handles various URL patterns including those ending with / or followed by punctuation
+  // This regex captures the URL and any trailing punctuation separately
+  const urlRegex = /(https?:\/\/[^\s<\[\]()]+(?:\([^\s<\[\]()]*\))?[^\s<\[\]()]*?)([.,;:!?\)]*(?:\s|$))/g;
+  
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+  
+  const textToProcess = text;
+  
+  while ((match = urlRegex.exec(textToProcess)) !== null) {
+    // Add text before the URL
+    if (match.index > lastIndex) {
+      parts.push(textToProcess.slice(lastIndex, match.index));
+    }
+    
+    // Clean up the URL - remove trailing punctuation that's not part of the URL
+    let url = match[1];
+    let trailingPunctuation = match[2] || '';
+    
+    // If the URL ends with common trailing punctuation, move it to trailing
+    const trailingMatch = url.match(/([.,;:!?]+)$/);
+    if (trailingMatch) {
+      trailingPunctuation = trailingMatch[1] + trailingPunctuation;
+      url = url.slice(0, -trailingMatch[1].length);
+    }
+    
+    parts.push(
+      <a
+        key={match.index}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary hover:underline break-all"
+      >
+        {url}
+      </a>
+    );
+    
+    // Add trailing punctuation as regular text (but not the trailing space/end)
+    const punctOnly = trailingPunctuation.replace(/\s+$/, '');
+    if (punctOnly) {
+      parts.push(punctOnly);
+    }
+    
+    lastIndex = match.index + match[0].length - (match[2].match(/\s+$/)?.[0]?.length || 0);
+  }
+  
+  // Add any remaining text
+  if (lastIndex < textToProcess.length) {
+    parts.push(textToProcess.slice(lastIndex));
+  }
+  
+  // If no URLs found, just return the text
+  if (parts.length === 0) {
+    return <span className={className}>{text}</span>;
+  }
+  
+  return <span className={className}>{parts}</span>;
+}
 
 // Survey data from professors
 interface LabVideo {
@@ -940,8 +1004,10 @@ export default function LabDetailPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground leading-relaxed">{lab.researchType}</p>
-            </CardContent>
+                        <p className="text-muted-foreground leading-relaxed">
+                          <LinkifyText text={lab.researchType} />
+                        </p>
+                      </CardContent>
           </Card>
                   </motion.div>
                 )}
@@ -965,9 +1031,9 @@ export default function LabDetailPage() {
                           {lab.sampleProjects.map((project, idx) => (
                             <li key={idx} className="flex items-start gap-3">
                               <div className="mt-1.5 h-2 w-2 rounded-full bg-primary shrink-0" />
-                              <span className="text-muted-foreground">{project}</span>
+                              <LinkifyText text={project} className="text-muted-foreground" />
                             </li>
-                    ))}
+                          ))}
                   </ul>
                 </CardContent>
               </Card>
@@ -989,8 +1055,10 @@ export default function LabDetailPage() {
                         </CardTitle>
                   </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground leading-relaxed">{lab.prerequisites}</p>
-                  </CardContent>
+                        <p className="text-muted-foreground leading-relaxed">
+                          <LinkifyText text={lab.prerequisites} />
+                        </p>
+                      </CardContent>
                 </Card>
                   </motion.div>
                 )}
@@ -1011,21 +1079,7 @@ export default function LabDetailPage() {
                       </CardHeader>
                       <CardContent>
                         <div className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                          {lab.additionalInfo.split(/(https?:\/\/[^\s]+)/g).map((part, idx) => 
-                            part.match(/^https?:\/\//) ? (
-                              <a 
-                                key={idx} 
-                                href={part} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:underline break-all"
-                              >
-                                {part}
-                              </a>
-                            ) : (
-                              <span key={idx}>{part}</span>
-                            )
-                          )}
+                          <LinkifyText text={lab.additionalInfo} />
                         </div>
                       </CardContent>
                     </Card>
@@ -1047,7 +1101,9 @@ export default function LabDetailPage() {
                         </CardTitle>
                 </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground leading-relaxed">{lab.afterGroup}</p>
+                        <p className="text-muted-foreground leading-relaxed">
+                          <LinkifyText text={lab.afterGroup} />
+                        </p>
                       </CardContent>
                     </Card>
                   </motion.div>
