@@ -760,7 +760,7 @@ export default function LabDetailPage() {
                       <button
                         key={idx}
                         onClick={() => setCurrentImage(idx)}
-                        className={`flex-shrink-0 w-20 h-14 rounded overflow-hidden border-2 transition-all ${
+                        className={`shrink-0 w-20 h-14 rounded overflow-hidden border-2 transition-all ${
                           idx === currentImage ? "border-white" : "border-transparent opacity-60 hover:opacity-100"
                         }`}
                       >

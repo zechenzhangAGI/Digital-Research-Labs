@@ -115,7 +115,7 @@ export default function AIPage() {
                     placeholder="I'm interested in quantum computing and have taken Physics 143a..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 min-h-[80px] pt-2"
+                    className="pl-9 min-h-20 pt-2"
                   />
                 </div>
                 <Button className="w-full">

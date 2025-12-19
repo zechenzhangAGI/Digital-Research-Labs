@@ -192,7 +192,7 @@ export default function Home() {
 
       {/* AI Research Matching CTA */}
       <section className="container mx-auto px-4 py-16 lg:py-20">
-        <Card className="max-w-3xl mx-auto border-primary/20 bg-primary/[0.02]">
+        <Card className="max-w-3xl mx-auto border-primary/20 bg-primary/2">
           <CardContent className="p-8 sm:p-10 text-center">
             <h2 className="text-2xl font-semibold mb-3">Find Your Perfect Match</h2>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
@@ -211,7 +211,7 @@ export default function Home() {
       {/* Quick Links */}
       <section className="border-t bg-muted/30">
         <div className="container mx-auto px-4 py-16">
-          <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div className="grid sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
             <Link href="/labs" className="group">
               <Card className="h-full hover:shadow-md transition-shadow">
                 <CardContent className="p-6 text-center">
@@ -232,10 +232,20 @@ export default function Home() {
                 </CardContent>
               </Card>
             </Link>
+            <Link href="/resources" className="group">
+              <Card className="h-full hover:shadow-md transition-shadow">
+                <CardContent className="p-6 text-center">
+                  <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">Getting Started</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Research guide for undergrads
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
             <Link href="/ai" className="group">
               <Card className="h-full hover:shadow-md transition-shadow">
                 <CardContent className="p-6 text-center">
-                  <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">AI Assistant</h3>
+                  <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">AI Matcher</h3>
                   <p className="text-sm text-muted-foreground">
                     Get recommendations
                   </p>

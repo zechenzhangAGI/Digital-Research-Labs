@@ -25,7 +25,7 @@ const labs = [
     undergrads: 12,
     description: "Searching for new particles using particle accelerators at CERN.",
     researchArea: "Particle Physics",
-    image: "/lab_images/franklin-atlas.jpg/",
+    image: "/lab_images/franklin-atlas.jpg",
     sampleProjects: [
       "Melissa will give us a project to go here"
     ]
@@ -99,7 +99,7 @@ const labs = [
     undergrads: 4,
     description: "Work in the Mundy group will design, synthesize and probe such emergent phenomena in complex oxide thin films.",
     researchArea: "Oxide Heterostructures",
-    image: "lab_images/mundy-mbe.png",
+    image: "/lab_images/mundy-mbe.png",
     sampleProjects: [
       "Create lithium-intercalated indium tin oxide thin films via solution-phase n-BuLi chemistry to achieve superconductivity while keeping 73% optical transparency and nanometer roughness.",
     ]
@@ -116,7 +116,7 @@ const labs = [
     undergrads: 2,
     description: "Our group’s research focuses on the mesoscopic investigation of transport phenomena, particularly, electric, thermal and thermoelectrical properties of low dimensional nanoscale materials.",
     researchArea: "Condensed Matter Physics",
-    image: "lab_images/kim-circuit.png",
+    image: "/lab_images/kim-circuit.png",
     sampleProjects: [
     ]
   },
@@ -129,7 +129,7 @@ const labs = [
     undergrads: 5,
     description: "We study the physics of soft condensed matter, materials which are easily deformable by external stresses, electric or magnetic fields, or even by thermal fluctuations",
     researchArea: "Soft Matter Physics",
-    image: "lab_images/weitz-bubbles.jpg",
+    image: "/lab_images/weitz-bubbles.jpg",
     sampleProjects: [
       "Creating new classes of drop-based materials and probing their properties.",
       "Imaging live cells and studying their mechanics."
@@ -144,7 +144,7 @@ const labs = [
     undergrads: 0,
     description: "I am a theoretical physicist interested in quantum field theory, string theory, and mathematical physics.",
     researchArea: "Theoretical High Energy Physics",
-    image: "lab_images/yin-wizards.jpg",
+    image: "/lab_images/yin-wizards.jpg",
     sampleProjects: [
       "Implement matrix quantum mechanics bootstrap code on quantum-information solvers.",
       "Study renormalization group flow of supersymmetric chiral nonlinear sigma models."
@@ -204,7 +204,7 @@ const labs = [
     undergrads: 2,
     description: "Huth's present work centers on the exploration of the Higgs boson, particularly the decay of the Higgs into a b b-bar pair, which is a challenging final state.",
     researchArea: "Experimental Particle Physics",
-    image: "lab_images/huth-atlas.jpg",
+    image: "/lab_images/huth-atlas.jpg",
     sampleProjects: [
       "Finding detector efficiencies as a function of beam intensity.",
       "Fitting and digitizing ancient tables of latitude and longitude."
@@ -264,7 +264,7 @@ const labs = [
     undergrads: 2,
     description: "Prof. Morii and his team of postdocs and students have searched for supersymmetry, for dark matter, and for rare processes involving top quarks.",
     researchArea: "Experimental Particle Physics",
-    image: "lab_images/morii-atlas.jpg",
+    image: "/lab_images/morii-atlas.jpg",
     sampleProjects: [
       "Contribute to silicon tracking detector upgrades for ATLAS at CERN.",
       "Assist PhD students with LHC data analysis when hardware work is paused."
@@ -338,7 +338,7 @@ const labs = [
     undergrads: 5,
     description: "We study the dynamics of molecules, chemical reactions, and condensed matter on very short timescales -- down to femtoseconds (millionths of billionths of a second).",
     researchArea: "Optics & Photonics",
-    image: "lab_images/mazur-screwdrivers.png",
+    image: "/lab_images/mazur-screwdrivers.png",
     sampleProjects: [
       "Develop a microfluidic platform to engineer CAR-T cells with lasers.",
       "Simulate new nanophotonic metamaterials for nonlinear optics.",
@@ -400,7 +400,7 @@ export default function LabsPage() {
               />
             </div>
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[160px] h-9">
+              <SelectTrigger className="w-40 h-9">
                 <SlidersHorizontal className="h-4 w-4 mr-2 text-muted-foreground" />
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>

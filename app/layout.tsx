@@ -65,9 +65,10 @@ export default function RootLayout({
                 <div>
                   <h3 className="font-semibold mb-3">Quick Links</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li><a href="/resources" className="hover:text-foreground transition-colors">Getting Started</a></li>
                     <li><a href="/labs" className="hover:text-foreground transition-colors">Research Labs</a></li>
                     <li><a href="/map" className="hover:text-foreground transition-colors">Lab Map</a></li>
-                    <li><a href="/ai" className="hover:text-foreground transition-colors">Research Matcher</a></li>
+                    <li><a href="/ai" className="hover:text-foreground transition-colors">AI Matcher</a></li>
                   </ul>
                 </div>
                 <div>
