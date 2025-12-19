@@ -606,9 +606,24 @@ export default function NetworkPage() {
   const highlightNodesRef = useRef<Set<string>>(new Set());
   const highlightLinksRef = useRef<Set<string>>(new Set());
   const highlightedFieldRef = useRef<string | null>(null);
+  const isDarkModeRef = useRef<boolean>(true);
   
   // Keep ref in sync with state
   highlightedFieldRef.current = highlightedField;
+  
+  // Detect theme changes
+  useEffect(() => {
+    const checkTheme = () => {
+      isDarkModeRef.current = document.documentElement.classList.contains('dark');
+    };
+    checkTheme();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
+  }, []);
   
   const fieldCounts = getFieldCounts();
 
@@ -735,8 +750,16 @@ export default function NetworkPage() {
   // No dependencies on hover state - reads from refs to avoid re-renders
   const paintNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
     const label = node.name.split(" ").pop(); // Last name only
-    // Smaller font size - less intrusive
     const baseFontSize = Math.min(9, Math.max(7, 8 / globalScale));
+    const isDark = isDarkModeRef.current;
+    
+    // Theme-aware colors
+    const textColor = isDark ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.85)";
+    const textColorDimmed = isDark ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.25)";
+    const textColorHighlighted = isDark ? "#ffffff" : "#000000";
+    const labelBgColor = isDark ? "rgba(15, 23, 42, 0.8)" : "rgba(255, 255, 255, 0.9)";
+    const borderColorDefault = isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)";
+    
     // Read from refs instead of state to avoid callback changes
     const isHighlighted = highlightNodesRef.current.has(node.id);
     const isHovered = hoveredNodeRef.current === node.id;
@@ -768,7 +791,7 @@ export default function NetworkPage() {
     if (isDimmed || isFieldDimmed) {
       ctx.fillStyle = "rgba(120, 120, 120, 0.4)";
     } else if (isHovered) {
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = isDark ? "#ffffff" : "#1a1a1a";
     } else if (isFieldHighlighted) {
       ctx.fillStyle = fieldColors[nodeField] || node.color;
     } else if (isHighlighted) {
@@ -781,7 +804,7 @@ export default function NetworkPage() {
     // Draw border
     const borderColor = isFieldHighlighted 
       ? fieldColors[nodeField] || node.color
-      : isHovered ? node.color : isHighlighted ? "rgba(168, 85, 247, 0.6)" : "rgba(255,255,255,0.2)";
+      : isHovered ? node.color : isHighlighted ? "rgba(168, 85, 247, 0.6)" : borderColorDefault;
     ctx.strokeStyle = borderColor;
     ctx.lineWidth = isHovered || isFieldHighlighted ? 2 : 1;
     ctx.stroke();
@@ -799,9 +822,9 @@ export default function NetworkPage() {
     
     const shouldDim = isDimmed || isFieldDimmed;
     
-    // Draw subtle dark background behind label (only when not dimmed)
+    // Draw subtle background behind label (only when not dimmed)
     if (!shouldDim) {
-      ctx.fillStyle = "rgba(15, 23, 42, 0.7)";
+      ctx.fillStyle = labelBgColor;
       ctx.beginPath();
       ctx.roundRect(
         node.x - textWidth / 2 - padding,
@@ -815,28 +838,24 @@ export default function NetworkPage() {
     
     // Draw text
     if (shouldDim) {
-      ctx.fillStyle = "rgba(255,255,255,0.25)";
-    } else if (isHovered) {
-      ctx.fillStyle = "#ffffff";
-    } else if (isFieldHighlighted) {
-      ctx.fillStyle = "#ffffff";
-    } else if (isHighlighted) {
-      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.fillStyle = textColorDimmed;
+    } else if (isHovered || isFieldHighlighted || isHighlighted) {
+      ctx.fillStyle = textColorHighlighted;
     } else {
-      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      ctx.fillStyle = textColor;
     }
     ctx.fillText(label, node.x, labelY);
   }, []); // No dependencies - reads from refs
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/50">
       {/* Header */}
-      <div className="border-b border-white/10 bg-black/20 backdrop-blur-sm">
+      <div className="border-b bg-muted/30 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-2xl font-semibold text-white mb-1">Lab Network</h1>
-              <p className="text-white/60 text-sm">
+              <h1 className="text-2xl font-semibold text-foreground mb-1">Lab Network</h1>
+              <p className="text-muted-foreground text-sm">
                 Explore connections between {labs.length} research groups
               </p>
             </div>
@@ -845,7 +864,6 @@ export default function NetworkPage() {
                 variant="outline"
                 size="sm"
                 onClick={resetView}
-                className="bg-white/5 border-white/20 text-white hover:bg-white/10"
               >
                 <RotateCcw className="h-4 w-4 mr-2" />
                 Reset View
@@ -861,8 +879,8 @@ export default function NetworkPage() {
           {/* Sidebar - Filters */}
           <div className="w-64 flex-shrink-0 space-y-4">
             {/* Connection Types */}
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h3 className="text-white/80 text-sm font-medium mb-3 flex items-center gap-2">
+            <div className="bg-card rounded-xl p-4 border shadow-sm">
+              <h3 className="text-foreground/80 text-sm font-medium mb-3 flex items-center gap-2">
                 <Info className="h-4 w-4" />
                 Connection Types
               </h3>
@@ -873,17 +891,17 @@ export default function NetworkPage() {
                     onClick={() => toggleFilter(key)}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
                       activeFilters.has(key)
-                        ? "bg-white/10 border border-white/20"
-                        : "bg-transparent border border-transparent hover:bg-white/5"
+                        ? "bg-accent border border-border"
+                        : "bg-transparent border border-transparent hover:bg-muted"
                     }`}
                   >
                     <div
                       className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{
-                        backgroundColor: activeFilters.has(key) ? connectionColors[key] : "#4b5563",
+                        backgroundColor: activeFilters.has(key) ? connectionColors[key] : "var(--muted-foreground)",
                       }}
                     />
-                    <span className={`text-sm ${activeFilters.has(key) ? "text-white" : "text-white/50"}`}>
+                    <span className={`text-sm ${activeFilters.has(key) ? "text-foreground" : "text-muted-foreground"}`}>
                       {label}
                     </span>
                   </button>
@@ -892,8 +910,8 @@ export default function NetworkPage() {
             </div>
 
             {/* Research Fields - Interactive Legend */}
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h3 className="text-white/80 text-sm font-medium mb-3">Research Fields</h3>
+            <div className="bg-card rounded-xl p-4 border shadow-sm">
+              <h3 className="text-foreground/80 text-sm font-medium mb-3">Research Fields</h3>
               <div className="space-y-1">
                 {Object.entries(fieldCounts)
                   .sort((a, b) => b[1] - a[1]) // Sort by count descending
@@ -903,20 +921,20 @@ export default function NetworkPage() {
                       onClick={() => setHighlightedField(highlightedField === field ? null : field)}
                       className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg transition-all text-left ${
                         highlightedField === field
-                          ? "bg-white/15 ring-1 ring-white/30"
-                          : "hover:bg-white/10"
+                          ? "bg-accent ring-1 ring-border"
+                          : "hover:bg-muted"
                       }`}
                     >
                       <div
                         className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                         style={{ backgroundColor: fieldColors[field] || "#888" }}
                       />
-                      <span className="text-xs text-white/80 flex-1 truncate">{field}</span>
-                      <span className="text-xs text-white/40">{count}</span>
+                      <span className="text-xs text-foreground/80 flex-1 truncate">{field}</span>
+                      <span className="text-xs text-muted-foreground">{count}</span>
                     </button>
                     {/* Tooltip on hover */}
-                    <div className="absolute left-full ml-2 top-0 z-50 w-48 p-2 bg-slate-800 rounded-lg border border-white/20 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all pointer-events-none">
-                      <p className="text-xs text-white/70 leading-relaxed">
+                    <div className="absolute left-full ml-2 top-0 z-50 w-48 p-2 bg-popover rounded-lg border shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all pointer-events-none">
+                      <p className="text-xs text-popover-foreground/70 leading-relaxed">
                         {fieldDescriptions[field] || "Research area in physics"}
                       </p>
                     </div>
@@ -926,7 +944,7 @@ export default function NetworkPage() {
               {highlightedField && (
                 <button
                   onClick={() => setHighlightedField(null)}
-                  className="mt-2 w-full text-xs text-white/50 hover:text-white/70 transition-colors"
+                  className="mt-2 w-full text-xs text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Clear highlight
                 </button>
@@ -934,14 +952,14 @@ export default function NetworkPage() {
             </div>
 
             {/* Node Legend */}
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h3 className="text-white/80 text-sm font-medium mb-3">Nodes</h3>
+            <div className="bg-card rounded-xl p-4 border shadow-sm">
+              <h3 className="text-foreground/80 text-sm font-medium mb-3">Nodes</h3>
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs text-white/60">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <div className="w-3 h-3 rounded-full bg-purple-500" />
                   <span>Verified Lab</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/60">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <div className="w-3 h-3 rounded-full bg-gray-500" />
                   <span>Unverified Lab</span>
                 </div>
@@ -949,31 +967,31 @@ export default function NetworkPage() {
             </div>
 
             {/* Stats */}
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h3 className="text-white/80 text-sm font-medium mb-3">Stats</h3>
+            <div className="bg-card rounded-xl p-4 border shadow-sm">
+              <h3 className="text-foreground/80 text-sm font-medium mb-3">Stats</h3>
               <div className="space-y-1 text-sm">
-                <div className="flex justify-between text-white/60">
+                <div className="flex justify-between text-muted-foreground">
                   <span>Labs</span>
-                  <span className="text-white">{graphData.nodes.length}</span>
+                  <span className="text-foreground">{graphData.nodes.length}</span>
                 </div>
-                <div className="flex justify-between text-white/60">
+                <div className="flex justify-between text-muted-foreground">
                   <span>Connections</span>
-                  <span className="text-white">{graphData.links.length}</span>
+                  <span className="text-foreground">{graphData.links.length}</span>
                 </div>
               </div>
             </div>
 
             {/* Instructions */}
-            <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-xl p-4 border border-purple-500/20">
-              <h3 className="text-white/80 text-sm font-medium mb-2 flex items-center gap-2">
+            <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-4 border border-primary/20">
+              <h3 className="text-foreground/80 text-sm font-medium mb-2 flex items-center gap-2">
                 <Grab className="h-4 w-4" />
                 How to Use
               </h3>
-              <ul className="text-xs text-white/50 space-y-1">
-                <li>• <strong className="text-white/70">Hover</strong> to highlight connections</li>
-                <li>• <strong className="text-white/70">Click</strong> a node to view details</li>
-                <li>• <strong className="text-white/70">Drag nodes</strong> to rearrange</li>
-                <li>• <strong className="text-white/70">Scroll</strong> to zoom, drag to pan</li>
+              <ul className="text-xs text-muted-foreground space-y-1">
+                <li>• <strong className="text-foreground/70">Hover</strong> to highlight connections</li>
+                <li>• <strong className="text-foreground/70">Click</strong> a node to view details</li>
+                <li>• <strong className="text-foreground/70">Drag nodes</strong> to rearrange</li>
+                <li>• <strong className="text-foreground/70">Scroll</strong> to zoom, drag to pan</li>
               </ul>
             </div>
           </div>
@@ -981,8 +999,8 @@ export default function NetworkPage() {
           {/* Graph Container */}
           <div
             ref={containerRef}
-            className="flex-1 bg-black/30 rounded-xl border border-white/10 overflow-hidden relative"
-            style={{ minHeight: "500px" }}
+            className="flex-1 rounded-xl border overflow-hidden relative"
+            style={{ minHeight: "500px", backgroundColor: "var(--graph-bg)" }}
           >
             <ForceGraph2D
               ref={fgRef}
@@ -1034,11 +1052,11 @@ export default function NetworkPage() {
 
             {/* Hovered node tooltip */}
             {tooltipNode && !selectedLab && (
-              <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
-                <p className="text-white text-sm font-medium">
+              <div className="absolute top-4 left-4 bg-popover/95 backdrop-blur-sm rounded-lg px-3 py-2 border shadow-lg">
+                <p className="text-popover-foreground text-sm font-medium">
                   {labs.find((l) => l.id === tooltipNode)?.pi}
                 </p>
-                <p className="text-white/60 text-xs">
+                <p className="text-muted-foreground text-xs">
                   {labs.find((l) => l.id === tooltipNode)?.researchArea}
                 </p>
               </div>
@@ -1085,12 +1103,12 @@ export default function NetworkPage() {
                     setSelectedLab(null);
                     setSelectedNodePos(null);
                   }}
-                  className="absolute -top-2 -right-2 z-20 p-1.5 rounded-full bg-slate-800 border border-white/20 text-white/60 hover:text-white hover:bg-slate-700 transition-colors shadow-lg"
+                  className="absolute -top-2 -right-2 z-20 p-1.5 rounded-full bg-card border text-muted-foreground hover:text-foreground hover:bg-accent transition-colors shadow-lg"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
                 
-                <div className="bg-slate-900/95 backdrop-blur-md rounded-xl border border-white/20 shadow-2xl overflow-hidden">
+                <div className="bg-card/95 backdrop-blur-md rounded-xl border shadow-2xl overflow-hidden">
                   {/* Card content */}
                   <div className="p-5">
                     {/* Header with field color and verified badge */}
@@ -1101,34 +1119,34 @@ export default function NetworkPage() {
                       />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-white font-medium text-base leading-tight">{selectedLab.pi}</h3>
+                          <h3 className="text-foreground font-medium text-base leading-tight">{selectedLab.pi}</h3>
                           {selectedLab.verified ? (
-                            <span className="text-[10px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                            <span className="text-[10px] bg-green-500/20 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded-full whitespace-nowrap">
                               ✓ Verified
                             </span>
                           ) : (
-                            <span className="text-[10px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                            <span className="text-[10px] bg-amber-500/20 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded-full whitespace-nowrap">
                               Unverified
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-purple-400 mt-1">{selectedLab.researchArea}</p>
+                        <p className="text-xs text-primary mt-1">{selectedLab.researchArea}</p>
                       </div>
                     </div>
                     
                     {/* Description */}
-                    <p className="text-xs text-white/70 leading-relaxed mb-4 line-clamp-3">
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-4 line-clamp-3">
                       {selectedLab.description}
                     </p>
                     
                     {/* Sample Projects - for verified labs */}
                     {selectedLab.verified && selectedLab.sampleProjects && selectedLab.sampleProjects.length > 0 && (
                       <div className="mb-4">
-                        <p className="text-[10px] uppercase tracking-wider text-white/40 mb-2">Sample Projects</p>
+                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground/60 mb-2">Sample Projects</p>
                         <ul className="space-y-1.5">
                           {selectedLab.sampleProjects.slice(0, 2).map((project, idx) => (
-                            <li key={idx} className="text-[11px] text-white/60 flex items-start leading-relaxed">
-                              <span className="text-purple-400 mr-2 flex-shrink-0">•</span>
+                            <li key={idx} className="text-[11px] text-muted-foreground flex items-start leading-relaxed">
+                              <span className="text-primary mr-2 flex-shrink-0">•</span>
                               <span className="line-clamp-2">{project}</span>
                             </li>
                           ))}
@@ -1139,7 +1157,7 @@ export default function NetworkPage() {
                     {/* Notice for unverified labs */}
                     {!selectedLab.verified && (
                       <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                        <p className="text-[11px] text-amber-200/80 leading-relaxed">
+                        <p className="text-[11px] text-amber-700 dark:text-amber-200/80 leading-relaxed">
                           No survey data available. Contact this professor directly for research opportunities.
                         </p>
                       </div>
@@ -1151,7 +1169,7 @@ export default function NetworkPage() {
                         value && (
                           <span
                             key={type}
-                            className="inline-flex items-center text-[10px] px-2 py-1 rounded bg-white/10 text-white/70"
+                            className="inline-flex items-center text-[10px] px-2 py-1 rounded bg-muted text-muted-foreground"
                           >
                             <span
                               className="w-1.5 h-1.5 rounded-full mr-1.5"
@@ -1166,7 +1184,7 @@ export default function NetworkPage() {
                     {/* Link to full page */}
                     <a
                       href={`/labs/${selectedLab.id}`}
-                      className="inline-flex items-center text-xs text-purple-400 hover:text-purple-300 transition-colors font-medium"
+                      className="inline-flex items-center text-xs text-primary hover:text-primary/80 transition-colors font-medium"
                     >
                       View full profile →
                     </a>

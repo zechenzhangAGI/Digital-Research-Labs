@@ -46,6 +46,7 @@
   --radius: 0.625rem;
   --background: oklch(0.99 0 0);
   --foreground: oklch(0.13 0 0);
+  --graph-bg: oklch(0.95 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0 0);
   --popover: oklch(1 0 0);
@@ -80,6 +81,7 @@
 .dark {
   --background: oklch(0.12 0 0);
   --foreground: oklch(0.95 0 0);
+  --graph-bg: oklch(0.10 0 0);
   --card: oklch(0.16 0 0);
   --card-foreground: oklch(0.95 0 0);
   --popover: oklch(0.16 0 0);
@@ -121,4 +123,30 @@
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight;
   }
+}
+
+/* Smooth color transitions for theme switching */
+*, *::before, *::after {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+}
+
+/* Disable transitions on page load to prevent flash */
+.no-transition * {
+  transition: none !important;
+}
+
+/* Page transition animation */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: pageEnter 0.3s ease-out forwards;
 }
