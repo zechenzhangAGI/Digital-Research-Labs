@@ -633,7 +633,8 @@ const labsDetailData: Record<string, LabSurveyData> = {
     groupMeetings: "Yes, once a week",
     qrCodeWilling: "Would like more information",
     videos: [
-      { url: "https://youtu.be/6Qp8xEMrQ-M", title: "Manoharan Lab Tour", description: "Discover soft matter and self-assembly research" }
+      { url: "https://youtu.be/6Qp8xEMrQ-M", title: "Lab Tour", description: "Discover soft matter and self-assembly research" },
+      { url: "https://youtu.be/9QvnYQJ_ICs", title: "Technique Explainer", description: "“Scanning for Viruses”: Holographic Microscopy (illustrated explainer)" }
     ]
   },
   cotler: {

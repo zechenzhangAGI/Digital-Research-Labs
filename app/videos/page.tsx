@@ -16,7 +16,8 @@ interface Video {
   labId?: string;
   labName?: string;
   pi?: string;
-  category: "lab" | "facility";
+  category: "lab_tour" | "explainer" | "facility";
+  badge?: string;
 }
 
 const allVideos: Video[] = [
@@ -28,7 +29,8 @@ const allVideos: Video[] = [
     labId: "cohen",
     labName: "Cohen Lab",
     pi: "Adam Cohen",
-    category: "lab"
+    category: "lab_tour",
+    badge: "Lab Tour"
   },
   {
     id: "manoharan",
@@ -38,7 +40,19 @@ const allVideos: Video[] = [
     labId: "manoharan",
     labName: "Manoharan Group",
     pi: "Vinothan Manoharan",
-    category: "lab"
+    category: "lab_tour",
+    badge: "Lab Tour"
+  },
+  {
+    id: "manoharan-holographic-microscopy",
+    youtubeId: "9QvnYQJ_ICs",
+    title: "“Scanning for Viruses”: Holographic Microscopy",
+    description: "Illustrated technique explainer from Physics 95: how holographic microscopy uses interference fringes and phase shifts to reconstruct 3D information.",
+    labId: "manoharan",
+    labName: "Manoharan Group",
+    pi: "Vinothan Manoharan",
+    category: "explainer",
+    badge: "Technique Explainer"
   },
   {
     id: "mundy-overview",
@@ -48,7 +62,8 @@ const allVideos: Video[] = [
     labId: "mundy",
     labName: "Mundy Group",
     pi: "Julia Mundy",
-    category: "lab"
+    category: "lab_tour",
+    badge: "Lab Tour"
   },
   {
     id: "mundy-tour",
@@ -58,19 +73,28 @@ const allVideos: Video[] = [
     labId: "mundy",
     labName: "Mundy Group",
     pi: "Julia Mundy",
-    category: "lab"
+    category: "lab_tour",
+    badge: "Lab Tour"
   },
   {
     id: "cns",
     youtubeId: "G5iNrFMhW8U",
     title: "Center for Nanoscale Systems (CNS)",
     description: "Explore the Center for Nanoscale Systems at Harvard University. CNS provides state-of-the-art facilities for nanoscale science and engineering, supporting researchers across multiple disciplines.",
-    category: "facility"
+    category: "facility",
+    badge: "Facility"
   }
 ];
 
 function VideoCard({ video, onPlay }: { video: Video; onPlay: () => void }) {
   const thumbnailUrl = `https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`;
+  const badgeText = video.badge ?? "Video";
+  const badgeClass =
+    video.category === "lab_tour"
+      ? "bg-blue-500/90 hover:bg-blue-500/90"
+      : video.category === "explainer"
+        ? "bg-amber-500/90 hover:bg-amber-500/90"
+        : "bg-purple-500/90 hover:bg-purple-500/90";
   
   return (
     <motion.div
@@ -96,13 +120,9 @@ function VideoCard({ video, onPlay }: { video: Video; onPlay: () => void }) {
             </div>
           </div>
           <Badge 
-            className={`absolute top-3 left-3 ${
-              video.category === "lab" 
-                ? "bg-blue-500/90 hover:bg-blue-500/90" 
-                : "bg-purple-500/90 hover:bg-purple-500/90"
-            }`}
+            className={`absolute top-3 left-3 ${badgeClass}`}
           >
-            {video.category === "lab" ? "Lab Tour" : "Facility"}
+            {badgeText}
           </Badge>
         </div>
         <CardContent className="p-4">
@@ -175,13 +195,14 @@ function VideoModal({ video, onClose }: { video: Video; onClose: () => void }) {
 
 export default function VideosPage() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-  const [filter, setFilter] = useState<"all" | "lab" | "facility">("all");
+  const [filter, setFilter] = useState<"all" | "lab_tour" | "explainer" | "facility">("all");
 
   const filteredVideos = allVideos.filter(
     (v) => filter === "all" || v.category === filter
   );
 
-  const labVideos = allVideos.filter((v) => v.category === "lab");
+  const tourVideos = allVideos.filter((v) => v.category === "lab_tour");
+  const explainerVideos = allVideos.filter((v) => v.category === "explainer");
   const facilityVideos = allVideos.filter((v) => v.category === "facility");
 
   return (
@@ -208,11 +229,18 @@ export default function VideosPage() {
               All Videos ({allVideos.length})
             </Button>
             <Button
-              variant={filter === "lab" ? "default" : "ghost"}
+              variant={filter === "lab_tour" ? "default" : "ghost"}
               size="sm"
-              onClick={() => setFilter("lab")}
+              onClick={() => setFilter("lab_tour")}
             >
-              Lab Tours ({labVideos.length})
+              Lab Tours ({tourVideos.length})
+            </Button>
+            <Button
+              variant={filter === "explainer" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setFilter("explainer")}
+            >
+              Explainers ({explainerVideos.length})
             </Button>
             <Button
               variant={filter === "facility" ? "default" : "ghost"}
