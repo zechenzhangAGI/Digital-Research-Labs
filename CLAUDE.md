@@ -31,11 +31,11 @@ git push origin main  # Auto-deploys via GitHub integration
 ## Architecture & Key Components
 
 ### Page Structure (App Router)
-- **`/` (Homepage)**: Hero section focused on research discovery, how to get involved steps, featured labs, AI research matcher
+- **`/` (Homepage)**: Hero section focused on research discovery, how to get involved steps, featured labs, and maps CTA
 - **`/labs`**: Searchable lab directory with research areas, real-time search
 - **`/labs/[id]`**: Individual lab pages with research descriptions, team info, sample projects for undergrads
 - **`/map`**: Interactive SVG floor plans with zoom/pan (react-zoom-pan-pinch), clickable lab rooms for exploring physical locations
-- **`/ai`**: AI-powered research matcher for undergraduates, research area explorer, success stories
+- **`/jefferson`**: Jefferson Lab floor plans
 
 ### Data Flow Architecture
 - All pages use **client-side components** ("use client") for interactivity
@@ -92,7 +92,7 @@ Object.entries(obj).map(([key, value]: [string, any]) => ...)
 - **Lab profiles data**: `/app/labs/page.tsx` (labs array)
 - **Lab details data**: `/app/labs/[id]/page.tsx` (labsDetailData object)
 - **Map floor plan data**: `/app/map/page.tsx` (labsData object)
-- **AI research matcher data**: `/app/ai/page.tsx` (recommended labs, research areas, success stories)
+- **Jefferson floor plan data**: `/app/jefferson/page.tsx` (floor layouts)
 
 ## Future Integration Points
 
@@ -100,4 +100,3 @@ The codebase is structured for easy backend integration:
 - Replace mock data arrays with API calls using TanStack Query
 - Add NextAuth for Harvard SSO integration
 - Implement Prisma models matching current data structures
-- Connect Vercel AI SDK for real collaboration matching

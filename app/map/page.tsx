@@ -100,36 +100,6 @@ const buildingsData: Record<string, {
     ],
     labs: [
       {
-        id: "franklin",
-        name: "Franklin Lab",
-        pi: "Melissa Franklin",
-        room: "Lyman 237",
-        category: "Particle Physics",
-        members: 12,
-        description: "ATLAS experiment at CERN, searching for new particles.",
-        image: "/lab_images/franklin-atlas.jpg"
-      },
-      {
-        id: "huth",
-        name: "Huth Lab",
-        pi: "John Huth",
-        room: "Lyman 236",
-        category: "Particle Physics",
-        members: 8,
-        description: "Higgs boson physics and ATLAS detector development.",
-        image: "/lab_images/huth-atlas.jpg"
-      },
-      {
-        id: "morii",
-        name: "Morii Lab",
-        pi: "Masahiro Morii",
-        room: "Lyman 230",
-        category: "Particle Physics",
-        members: 10,
-        description: "ATLAS silicon tracker upgrades and dark matter searches.",
-        image: "/lab_images/morii-atlas.jpg"
-      },
-      {
         id: "stubbs",
         name: "Stubbs Lab",
         pi: "Christopher Stubbs",
@@ -321,6 +291,52 @@ const buildingsData: Record<string, {
         members: 20,
         description: "Ultrafast optics and nanophotonics.",
         image: "/lab_images/mazur-screwdrivers.png"
+      }
+    ]
+  },
+  "palfrey": {
+    name: "Palfrey House",
+    address: "18 Hammond Street",
+    built: "1831",
+    description: "Historic building housing particle physics research groups working on ATLAS and other high-energy physics experiments.",
+    color: "#a855f7",
+    center: { lat: 42.38067, lng: -71.11572 },
+    coordinates: [
+      { lat: 42.38056, lng: -71.11585 },
+      { lat: 42.38074, lng: -71.11582 },
+      { lat: 42.38074, lng: -71.11563 },
+      { lat: 42.38053, lng: -71.11565 },
+    ],
+    labs: [
+      {
+        id: "franklin",
+        name: "Franklin Lab",
+        pi: "Melissa Franklin",
+        room: "Palfrey 237",
+        category: "Particle Physics",
+        members: 12,
+        description: "ATLAS experiment at CERN, searching for new particles.",
+        image: "/lab_images/franklin-atlas.jpg"
+      },
+      {
+        id: "huth",
+        name: "Huth Lab",
+        pi: "John Huth",
+        room: "Palfrey 236",
+        category: "Particle Physics",
+        members: 8,
+        description: "Higgs boson physics and ATLAS detector development.",
+        image: "/lab_images/huth-atlas.jpg"
+      },
+      {
+        id: "morii",
+        name: "Morii Lab",
+        pi: "Masahiro Morii",
+        room: "Palfrey 230",
+        category: "Particle Physics",
+        members: 10,
+        description: "ATLAS silicon tracker upgrades and dark matter searches.",
+        image: "/lab_images/morii-atlas.jpg"
       }
     ]
   },

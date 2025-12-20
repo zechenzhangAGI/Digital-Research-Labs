@@ -6,7 +6,7 @@ A web platform that helps undergraduate students discover physics research oppor
 
 ## Core Purpose
 
-Make physics research accessible and approachable for undergraduate students by providing clear information about labs, personalized recommendations, and guidance on how to join research projects.
+Make physics research accessible and approachable for undergraduate students by providing clear information about labs, practical guidance, and navigation tools to join research projects.
 
 ## Key User Needs
 
@@ -30,20 +30,19 @@ Make physics research accessible and approachable for undergraduate students by 
 - **Getting Involved**: Information about openings and how to reach out
 - **Visual Content**: Images and graphics showcasing research
 
-### 2. AI Research Matcher
-- **Personalized Recommendations**: Match students with labs based on interests and skills
-- **Research Area Explorer**: Learn about different physics subfields
-- **Success Stories**: Real examples of undergraduates in research
-- **Smart Matching**: Consider coursework, time commitment, and experience level
-
-### 3. Interactive Lab Map
+### 2. Interactive Lab Map
 - **Building Navigation**: Find lab locations across physics buildings
 - **Floor Plans**: Visual layouts of Jefferson, Lyman, and LISE
 - **Lab Information**: Quick details when clicking on rooms
 - **Color-Coded Areas**: Distinguish research types visually
 
+### 3. Student Guidance & Stories
+- **Getting Started**: Clear steps for outreach and first meetings
+- **Success Stories**: Real examples of undergraduates in research
+- **Preparation Tips**: How to email professors, find funding, and plan lab visits
+
 ### 4. Simple & Clean Interface
-- **Easy Navigation**: Three main sections (Labs, Map, AI Matcher)
+- **Easy Navigation**: Three main sections (Labs, Map, Guides)
 - **Search & Filter**: Find labs by research area or PI name
 - **Mobile Friendly**: Works well on phones for on-the-go browsing
 - **Fast Loading**: Optimized for quick information access
@@ -61,14 +60,6 @@ Make physics research accessible and approachable for undergraduate students by 
 - **Database**: Simple data storage for lab information
 - **Content Management**: Easy updates for lab profiles
 
-### AI Integration
-- **Provider**: Vercel AI SDK for natural language matching
-- **Features**:
-  - Natural language interest matching
-  - Lab recommendation based on coursework
-  - Research area explanations
-  - Success story highlighting
-
 ## Design Principles
 
 ### Visual Design
@@ -79,7 +70,7 @@ Make physics research accessible and approachable for undergraduate students by 
 - **Responsive**: Works perfectly on phones for browsing anywhere
 
 ### User Experience
-- **Easy Navigation**: Three main sections - Labs, Map, AI Matcher
+- **Easy Navigation**: Three main sections - Labs, Map, Guides
 - **Quick Discovery**: Find relevant labs in under 1 minute
 - **Clear Actions**: Obvious next steps for getting involved
 - **Accessibility**: WCAG 2.1 AA compliance
@@ -95,7 +86,6 @@ Make physics research accessible and approachable for undergraduate students by 
 ### Phase 1: Core Platform (Current)
 - Lab directory with search and filtering
 - Interactive floor plans
-- AI research matcher interface
 - Clean, student-focused design
 - Mobile-responsive layout
 
@@ -125,10 +115,9 @@ Make physics research accessible and approachable for undergraduate students by 
 
 Unlike generic research directories:
 1. **Student-Focused**: Designed specifically for undergraduates discovering research
-2. **AI-Powered**: Smart matching based on interests and coursework
-3. **Visual Discovery**: Interactive maps and engaging layouts
-4. **Success Stories**: Real examples from current undergraduate researchers
-5. **Simple & Clean**: Easy to use, no overwhelming complexity
+2. **Visual Discovery**: Interactive maps and engaging layouts
+3. **Success Stories**: Real examples from current undergraduate researchers
+4. **Simple & Clean**: Easy to use, no overwhelming complexity
 
 ## Future Vision
 

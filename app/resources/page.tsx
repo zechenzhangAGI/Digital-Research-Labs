@@ -133,7 +133,7 @@ const faqs = [
   },
   {
     question: "How do I know which lab is right for me?",
-    answer: "Read papers from the lab, talk to current members, and consider whether you prefer theoretical vs. experimental work. Use our AI Matcher for personalized suggestions."
+    answer: "Read papers from the lab, talk to current members, and consider whether you prefer theoretical vs. experimental work. Use the lab directory and maps to compare options, and ask upperclassmen for their experiences."
   }
 ];
 
@@ -429,13 +429,12 @@ export default function ResourcesPage() {
               <CardContent className="p-6 text-center">
                 <h3 className="font-semibold mb-2">Still Have Questions?</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Try our AI Research Matcher for personalized lab recommendations, 
-                  or reach out to the Physics Department directly.
+                  Connect with peers, mentors, and department staff to get tailored advice on finding the right lab.
                 </p>
                 <div className="flex justify-center gap-3">
                   <Button asChild>
-                    <Link href="/ai">
-                      Try AI Matcher
+                    <Link href="/network">
+                      Visit the Lab Network
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>

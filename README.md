@@ -15,7 +15,6 @@ The platform helps undergraduate students explore the diverse research happening
 
 - **🔬 Research Lab Directory** - Browse 40+ active physics research groups
 - **🗺️ Interactive Lab Maps** - Navigate physical lab spaces and find lab locations
-- **🤖 AI Research Matcher** - Get personalized lab recommendations based on your interests and skills
 - **📚 Research Areas Explorer** - Learn about different fields in physics research
 - **🎓 Success Stories** - Read about undergraduates thriving in research positions
 - **💡 Simple & Intuitive** - Clean design focused on discovery and connection
@@ -28,7 +27,6 @@ The platform helps undergraduate students explore the diverse research happening
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
 - **Animations:** [Framer Motion](https://www.framer.com/motion/)
 - **Interactive Maps:** React with SVG + [react-zoom-pan-pinch](https://github.com/prc5/react-zoom-pan-pinch)
-- **AI Integration:** [Vercel AI SDK](https://sdk.vercel.ai/)
 - **State Management:** [Zustand](https://github.com/pmndrs/zustand) (configured)
 - **Data Fetching:** [TanStack Query](https://tanstack.com/query)
 - **Icons:** [Lucide React](https://lucide.dev/)
@@ -45,7 +43,7 @@ The platform helps undergraduate students explore the diverse research happening
 │   │       └── page.tsx
 │   ├── map/               # Interactive lab maps
 │   │   └── page.tsx
-│   └── ai/                # AI research matcher
+│   └── jefferson/         # Jefferson floor plans
 │       └── page.tsx
 ├── components/            # Reusable components
 │   ├── navigation.tsx     # Main navigation
@@ -97,12 +95,6 @@ pnpm start
 - **Lab profiles** with descriptions, team info, and sample projects
 - **Student-friendly** information about getting involved
 
-### AI Research Matcher
-- **Personalized recommendations** based on your interests and coursework
-- **Research area explorer** to learn about different fields
-- **Success stories** from current undergraduate researchers
-- **Match scores** showing alignment with each lab
-
 ### Interactive Lab Maps
 - **Multi-floor navigation** with zoom/pan controls
 - **Click-to-explore** lab rooms with instant details
@@ -114,13 +106,11 @@ pnpm start
 ### Phase 1: Core Platform ✅
 - [x] Lab directory with search and filtering
 - [x] Interactive floor plans
-- [x] AI research matcher interface
 - [x] Clean, student-focused design
 - [x] Mobile-responsive layout
 
 ### Phase 2: Enhanced Features (Next)
 - [ ] Real lab data integration
-- [ ] Improved AI matching algorithm
 - [ ] Student submission system for profiles
 - [ ] Lab availability calendars
 - [ ] Faculty profile pages

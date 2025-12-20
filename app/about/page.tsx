@@ -3,6 +3,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { Quote, ChevronRight } from "lucide-react";
 
 const students = [
   "Ben Charette",
@@ -134,6 +136,35 @@ export default function AboutPage() {
                     research fit for their interests and goals.
                   </p>
                 </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Student Reflections Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45 }}
+          >
+            <Card className="border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10">
+              <CardContent className="pt-8">
+                <div className="flex items-start gap-3 mb-4">
+                  <Quote className="w-5 h-5 text-primary/70 flex-shrink-0 mt-1" />
+                  <h2 className="text-xl font-semibold">Student Reflections</h2>
+                </div>
+                <Separator className="mb-6" />
+                <p className="text-muted-foreground mb-6">
+                  Beyond exploring research labs, Physics 95 encouraged students to deeply reflect on the
+                  ethical dimensions of scientific work. One student's thoughtful essay explores the moral
+                  complexities of physics research—from microfluidics and fundamental science to animal testing.
+                </p>
+                <Link
+                  href="/reflections"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium group"
+                >
+                  Read Student Reflection
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </CardContent>
             </Card>
           </motion.div>

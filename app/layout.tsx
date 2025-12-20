@@ -60,27 +60,34 @@ export default function RootLayout({
                 <div>
                   <h3 className="font-semibold mb-3">About</h3>
                   <p className="text-sm text-muted-foreground">
-                    Helping Harvard undergraduates discover physics research opportunities and connect with faculty.
+                    Helping Harvard undergraduates discover physics research opportunities, connect with faculty, and navigate the labs and facilities that support their work.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-3">Quick Links</h3>
+                  <h3 className="font-semibold mb-3">Explore</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li><Link href="/resources" className="hover:text-foreground transition-colors">Getting Started</Link></li>
                     <li><Link href="/labs" className="hover:text-foreground transition-colors">Research Labs</Link></li>
+                    <li><Link href="/network" className="hover:text-foreground transition-colors">Lab Network</Link></li>
                     <li><Link href="/videos" className="hover:text-foreground transition-colors">Lab Videos</Link></li>
-                    <li><Link href="/map" className="hover:text-foreground transition-colors">Campus Map</Link></li>
-                    <li><Link href="/jefferson" className="hover:text-foreground transition-colors">Jefferson Floor Plans</Link></li>
-                    <li><Link href="/ai" className="hover:text-foreground transition-colors">AI Lab Matcher</Link></li>
                     <li><Link href="/about" className="hover:text-foreground transition-colors">About</Link></li>
                   </ul>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-3">Resources</h3>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li><a href="https://physics.harvard.edu" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Harvard Physics</a></li>
-                    <li><a href="https://uraf.harvard.edu" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Undergraduate Research</a></li>
-                  </ul>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold mb-3">Maps & Facilities</h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li><Link href="/map" className="hover:text-foreground transition-colors">Campus Map</Link></li>
+                      <li><Link href="/jefferson" className="hover:text-foreground transition-colors">Jefferson Floor Plans</Link></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-3">University Resources</h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li><a href="https://physics.harvard.edu" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Harvard Physics</a></li>
+                      <li><a href="https://uraf.harvard.edu" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Undergraduate Research</a></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
               <div className="border-t pt-6 text-center text-sm text-muted-foreground">

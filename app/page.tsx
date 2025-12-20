@@ -78,9 +78,9 @@ export default function Home() {
             <div className="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4 text-sm font-semibold">
               2
             </div>
-            <h3 className="font-semibold mb-2">Find Your Match</h3>
+            <h3 className="font-semibold mb-2">Map Your Options</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Use our AI assistant to match your interests with opportunities
+              Use the campus map and floor plans to see where labs are and what they work on
             </p>
           </div>
           <div className="text-center p-6">
@@ -190,20 +190,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AI Research Matching CTA */}
+      {/* Maps & Facilities CTA */}
       <section className="container mx-auto px-4 py-16 lg:py-20">
         <Card className="max-w-3xl mx-auto border-primary/20 bg-primary/2">
           <CardContent className="p-8 sm:p-10 text-center">
-            <h2 className="text-2xl font-semibold mb-3">Find Your Perfect Match</h2>
+            <h2 className="text-2xl font-semibold mb-3">Plan Your Lab Visits</h2>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Tell us about your interests and skills, and our AI will recommend research labs that align with your goals.
+              Preview campus locations and Jefferson floor plans so you can navigate to meetings and lab tours with confidence.
             </p>
-            <Button asChild className="rounded-full px-6">
-              <Link href="/ai">
-                Try AI Matcher
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <div className="flex justify-center gap-3 flex-wrap">
+              <Button asChild className="rounded-full px-6">
+                <Link href="/map">
+                  Open Campus Map
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full px-6">
+                <Link href="/jefferson">
+                  Jefferson Floor Plans
+                </Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </section>
@@ -242,12 +249,12 @@ export default function Home() {
                 </CardContent>
               </Card>
             </Link>
-            <Link href="/ai" className="group">
+            <Link href="/network" className="group">
               <Card className="h-full hover:shadow-md transition-shadow">
                 <CardContent className="p-6 text-center">
-                  <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">AI Matcher</h3>
+                  <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">Lab Network</h3>
                   <p className="text-sm text-muted-foreground">
-                    Get recommendations
+                    Connect with peers and mentors
                   </p>
                 </CardContent>
               </Card>
