@@ -54,10 +54,11 @@ export function LabFlashCard({
       aria-label={`Lab card for ${pi}`}
     >
       <div
-        className="relative w-full h-full transition-transform duration-500"
+        className="relative w-full h-full"
         style={{
           transformStyle: 'preserve-3d',
           transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         {/* FRONT OF CARD */}
