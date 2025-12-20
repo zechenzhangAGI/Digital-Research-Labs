@@ -7,6 +7,7 @@ import { ChevronRight, Quote } from "lucide-react";
 import Link from "next/link";
 
 const tableOfContents = [
+  { id: "introduction", title: "Introduction" },
   { id: "weitz", title: "Visiting Weitz Lab" },
   { id: "dvorkin", title: "Dinner with Professor Dvorkin" },
   { id: "cohen", title: "Mice in the Cohen Lab" },
