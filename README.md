@@ -1,59 +1,66 @@
-# Harvard Physics Research Discovery Platform 🔬
+# Harvard Physics Research Discovery Platform
 
-A web platform helping undergraduate students at Harvard discover physics research opportunities, explore labs, and connect with faculty conducting cutting-edge research.
+A web platform created by Physics 95 students to help undergraduates at Harvard discover physics research opportunities, explore labs, and connect with faculty conducting cutting-edge research.
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC?style=flat-square&logo=tailwind-css)
-![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-## 🚀 Overview
+## About This Project
 
-The platform helps undergraduate students explore the diverse research happening in Harvard's Physics Department, discover opportunities that match their interests and skills, and take the first steps toward joining a research lab.
+This website was created as part of **Physics 95** at Harvard University to help undergraduates discover research opportunities in the Physics Department.
 
-### Key Features
+### Course Leadership
 
-- **🔬 Research Lab Directory** - Browse 40+ active physics research groups
-- **🗺️ Interactive Lab Maps** - Navigate physical lab spaces and find lab locations
-- **📚 Research Areas Explorer** - Learn about different fields in physics research
-- **🎓 Success Stories** - Read about undergraduates thriving in research positions
-- **💡 Simple & Intuitive** - Clean design focused on discovery and connection
+- **Professor Melissa Franklin** - Head Instructor
+- **Zechen Zhang** - Teaching Fellow
 
-## 🛠️ Tech Stack
+### Student Contributors (Fall 2025)
 
-- **Frontend Framework:** [Next.js 15](https://nextjs.org/) with App Router
+Ben Charette, Alessandro Drake, Rachel Fields, Callie Garcia, JaKayla Harris, Sedona Kessler, Katherine Lee, Thomas Leeds, Dominic Lehane, Sara Lia, Gandab Mammadova, Christopher Prainito, Paul Shen, Spenser Sun, Ashwin Vinod Kumar, Nene Zhvania
+
+## Features
+
+- **Research Lab Directory** - Browse 40+ active physics research groups with detailed profiles
+- **Interactive Lab Maps** - Navigate campus buildings and Jefferson Lab floor plans
+- **Lab Tour Videos** - Student-created video tours of research labs
+- **Network Visualization** - Explore connections between labs by research area and techniques
+- **Getting Started Guide** - Timeline and email templates for reaching out to labs
+- **Student Reflections** - Essays on the ethics and experience of physics research
+
+## Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org/) with App Router
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
 - **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Interactive Maps:** React with SVG + [react-zoom-pan-pinch](https://github.com/prc5/react-zoom-pan-pinch)
-- **State Management:** [Zustand](https://github.com/pmndrs/zustand) (configured)
-- **Data Fetching:** [TanStack Query](https://tanstack.com/query)
-- **Icons:** [Lucide React](https://lucide.dev/)
+- **Interactive Maps:** SVG + [react-zoom-pan-pinch](https://github.com/prc5/react-zoom-pan-pinch)
+- **Network Graph:** [react-force-graph-2d](https://github.com/vasturiano/react-force-graph)
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-├── app/                    # Next.js app router pages
-│   ├── layout.tsx         # Root layout with navigation
-│   ├── page.tsx           # Homepage with research discovery focus
-│   ├── labs/              # Lab listings and details
-│   │   ├── page.tsx       # Lab directory
-│   │   └── [id]/          # Individual lab pages
-│   │       └── page.tsx
-│   ├── map/               # Interactive lab maps
-│   │   └── page.tsx
-│   └── jefferson/         # Jefferson floor plans
-│       └── page.tsx
-├── components/            # Reusable components
-│   ├── navigation.tsx     # Main navigation
-│   └── ui/                # shadcn/ui components
-├── lib/                   # Utility functions
-├── public/                # Static assets
-└── package.json          # Dependencies
+app/
+├── page.tsx           # Homepage
+├── labs/              # Lab directory and individual lab pages
+│   ├── page.tsx
+│   └── [id]/page.tsx
+├── map/               # Campus map
+├── jefferson/         # Jefferson Lab floor plans
+├── videos/            # Lab tour videos
+├── network/           # Lab network visualization
+├── resources/         # Getting started guide
+├── reflections/       # Student reflection essays
+└── about/             # About the project
+components/
+├── navigation.tsx     # Main navigation
+├── lab-flashcard.tsx  # Lab card component
+├── jefferson-floor-plan.tsx
+└── ui/                # shadcn/ui components
 ```
 
-## 🚦 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -62,23 +69,19 @@ The platform helps undergraduate students explore the diverse research happening
 
 ### Installation
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/physics-lab-hub.git
-cd physics-lab-hub
-```
+# Clone the repository
+git clone https://github.com/zechenzhangAGI/harvard-physics-website.git
+cd harvard-physics-website
 
-2. Install dependencies:
-```bash
+# Install dependencies
 pnpm install
-```
 
-3. Run the development server:
-```bash
+# Run development server
 pnpm dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Build for Production
 
@@ -87,83 +90,21 @@ pnpm build
 pnpm start
 ```
 
-## 📱 Features in Detail
+## Deployment
 
-### Research Lab Directory
-- **40+ research labs** across all physics subfields
-- **Search and filter** by research area, PI, or keywords
-- **Lab profiles** with descriptions, team info, and sample projects
-- **Student-friendly** information about getting involved
+The project is deployed on Vercel with automatic deployments from the main branch.
 
-### Interactive Lab Maps
-- **Multi-floor navigation** with zoom/pan controls
-- **Click-to-explore** lab rooms with instant details
-- **Color-coded** by research type
-- **Find lab locations** in physics buildings
+## License
 
-## 🎯 Roadmap
+This project is licensed under the MIT License.
 
-### Phase 1: Core Platform ✅
-- [x] Lab directory with search and filtering
-- [x] Interactive floor plans
-- [x] Clean, student-focused design
-- [x] Mobile-responsive layout
-
-### Phase 2: Enhanced Features (Next)
-- [ ] Real lab data integration
-- [ ] Student submission system for profiles
-- [ ] Lab availability calendars
-- [ ] Faculty profile pages
-
-### Phase 3: Community Features
-- [ ] Student research blog/forum
-- [ ] Event calendar for lab tours and talks
-- [ ] Research symposium information
-- [ ] Peer mentorship connections
-- [ ] Research resources library
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📊 Success Metrics
-
-- **80%** of undergraduate physics students aware of platform
-- **50+** students using the platform to find research positions annually
-- **30+** labs with updated, student-friendly profiles
-- **>4.5/5** student satisfaction rating
-- **20+** successful student-lab matches per year
-
-## 🔒 Security
-
-- Secure data transmission
-- Privacy-focused design
-- No sensitive student information collected
-- Compliant with university data policies
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Harvard Physics Department for supporting undergraduate research
+- All faculty who welcomed students into their labs
 - [Vercel](https://vercel.com) for hosting
 - [shadcn](https://twitter.com/shadcn) for the UI component library
-- All faculty and students contributing to research accessibility
-
-## 📧 Contact
-
-- **Project Lead:** [Your Name]
-- **Email:** physics-lab-hub@harvard.edu
-- **Website:** [physics.harvard.edu/lab-hub](https://physics.harvard.edu/lab-hub)
 
 ---
 
-Built with ❤️ for the Harvard Physics Department
+Harvard University Department of Physics | Fall 2025
